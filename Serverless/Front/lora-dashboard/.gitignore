@@ -37,6 +37,13 @@ yarn-error.log
 testem.log
 /typings
 
+# Local environment files with secrets (DO NOT COMMIT)
+src/environments/environment.local.ts
+.env
+.env.local
+.env.development
+.env.production
+
 # System files
 .DS_Store
 Thumbs.db
