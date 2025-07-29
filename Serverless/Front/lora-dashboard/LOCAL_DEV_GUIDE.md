@@ -20,22 +20,29 @@ npm run start:local
 
 ## 🎯 **Wszystkie tryby uruchamiania**
 
-### **A. 🔑 Z tokenem RunPod (Real API)**
+### **A. 🚀 Z tokenem RunPod (Local backend)**
 ```bash
 npm run start:local        # Z tokenem, bez SSL
 npm run start:local-token  # Alias, to samo co wyżej
 npm run dev                # Najkrótszy alias
 ```
 
-### **B. 🧪 Mock Mode (Fake data)**
+### **B. 🚀 RunPod Serverless Backend (Production)**
+```bash
+npm run start:runpod       # Frontend → RunPod backend
+npm run dev:runpod         # Alias, to samo co wyżej
+```
+
+### **C. 🧪 Mock Mode (Fake data)**
 ```bash
 npm run start:mock         # Tylko mock data, bez API
 npm run start              # Standard development (SSL + mock)
 ```
 
-### **C. 🏭 Production Build**
+### **D. 🏭 Production Build**
 ```bash
 npm run build:local        # Build z lokalnym tokenem
+npm run build:runpod       # Build dla RunPod integration
 npm run build:prod         # Production build (bez tokenów)
 ```
 
@@ -98,6 +105,43 @@ src/environments/
 ├── environment.ts          # Default (development)
 ├── environment.prod.ts     # Production (no tokens)
 └── environment.local.ts    # LOCAL ONLY (with your token)
+```
+
+---
+
+## 🚀 **RunPod Integration Setup**
+
+### **🔗 Po deployment backend na RunPod:**
+
+1. **Skopiuj Endpoint URL z RunPod Console:**
+   ```
+   https://abc123def-8000.proxy.runpod.net
+   ```
+
+2. **Zaktualizuj `src/environments/environment.runpod.ts`:**
+   ```typescript
+   apiBaseUrl: 'https://abc123def-8000.proxy.runpod.net/api'
+   ```
+
+3. **Uruchom frontend z RunPod backend:**
+   ```bash
+   npm run dev:runpod
+   ```
+
+### **🎯 Co to robi:**
+- ✅ Frontend localhost:4200
+- ✅ Backend na RunPod Serverless  
+- ✅ GPU A40 auto-scaling
+- ✅ Prawdziwe AI training workloads
+- ✅ Production-ready architecture
+
+### **🔧 Troubleshooting RunPod:**
+```bash
+# Sprawdź health backend na RunPod
+curl https://YOUR_ENDPOINT_ID-8000.proxy.runpod.net/api/health
+
+# Sprawdź logi w RunPod Console
+# Network tab w Developer Tools (F12)
 ```
 
 ---

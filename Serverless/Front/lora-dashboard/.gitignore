@@ -39,6 +39,7 @@ testem.log
 
 # Local environment files with secrets (DO NOT COMMIT)
 src/environments/environment.local.ts
+src/environments/environment.runpod.ts
 .env
 .env.local
 .env.development
