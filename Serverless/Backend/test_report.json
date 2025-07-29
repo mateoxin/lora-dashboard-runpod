@@ -1,0 +1,18 @@
+{
+  "timestamp": 1753711596.126574,
+  "summary": {
+    "total_categories": 1,
+    "passed": 0,
+    "failed": 1
+  },
+  "test_results": {
+    "unit": {
+      "success": false,
+      "returncode": 4,
+      "duration": 2.4593570232391357,
+      "stdout": "",
+      "stderr": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --html=test-report.html --self-contained-html\n  inifile: C:\\Moje\\Repos\\Generowanie lory i backend serverless\\Serverless\\Backend\\pytest.ini\n  rootdir: C:\\Moje\\Repos\\Generowanie lory i backend serverless\\Serverless\\Backend\n\n"
+    }
+  },
+  "quality_checks": {}
+}

@@ -1,0 +1,6 @@
+{
+    "input": {
+        "type": "generate",
+        "config": "job: generate\nconfig:\n  name: \"local_test_generation\"\n  process:\n    - type: to_folder\n      device: cuda:0\n      model:\n        name: \"black-forest-labs/FLUX.1-dev\"\n        repo_id: \"black-forest-labs/FLUX.1-dev\"\n        is_flux: true\n        quantize: true\n        lora_path: \"/workspace/models/test_lora.safetensors\"\n      generate:\n        prompts:\n          - \"A beautiful landscape with test_trigger in the foreground\"\n        height: 512\n        width: 512\n        steps: 20\n        guidance_scale: 3.5\n        seed: 42\n        sample_count: 1"
+    }
+} 

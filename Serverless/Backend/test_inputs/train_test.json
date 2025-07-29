@@ -1,0 +1,6 @@
+{
+    "input": {
+        "type": "train",
+        "config": "job: extension\nconfig:\n  name: \"local_test_training\"\n  process:\n    - type: sd_trainer\n      device: cuda:0\n      trigger_word: \"test_trigger\"\n      training_folder: \"/workspace/training_data\"\n      output_folder: \"/workspace/output\"\n      network:\n        type: lora\n        linear: 16\n        linear_alpha: 16\n      save:\n        dtype: float16\n        save_every_n_epochs: 1\n      datasets:\n        - folder_path: \"/workspace/training_data\"\n          caption_extension: \".txt\"\n          resolution: [512, 512]\n      train:\n        batch_size: 1\n        steps: 100\n        gradient_accumulation_steps: 4\n        train_unet: true\n        train_text_encoder: false\n        gradient_checkpointing: true\n        noise_scheduler: flowmatch\n        optimizer: adamw8bit\n        lr: 1e-4"
+    }
+} 

@@ -1,0 +1,102 @@
+.config-tab {
+  // Monaco editor custom styling
+  .editor-container {
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 50%, #6366f1 100%);
+      z-index: 1;
+    }
+  }
+
+  // Template selector improvements
+  .mat-mdc-form-field {
+    .mat-mdc-select {
+      min-height: 48px;
+    }
+  }
+
+  // Button group styling
+  .flex.flex-wrap.gap-3 {
+    button {
+      min-width: 120px;
+      font-weight: 500;
+      text-transform: none;
+      letter-spacing: 0.025em;
+      
+      &:disabled {
+        opacity: 0.6;
+        transform: none !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+      }
+    }
+  }
+
+  // Validation status card animations
+  .mat-mdc-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+
+  // Template info card styling
+  .bg-gradient-to-r {
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%);
+      z-index: 0;
+    }
+    
+    .mat-mdc-card-header,
+    .mat-mdc-card-content {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  // Monaco editor loading state
+  .editor-container .flex.flex-col {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    
+    .mat-mdc-progress-spinner {
+      margin-bottom: 16px;
+    }
+  }
+
+  // Responsive improvements
+  @media (max-width: 768px) {
+    .flex.flex-col.lg\\:flex-row {
+      gap: 1rem !important;
+    }
+    
+    .w-72 {
+      width: 100% !important;
+    }
+    
+    .flex.flex-wrap.gap-3 {
+      justify-content: center;
+      
+      button {
+        flex: 1;
+        min-width: auto;
+      }
+    }
+  }
+}

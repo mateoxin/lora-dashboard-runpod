@@ -1,0 +1,163 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Angular Material theme imports */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Global styles */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: #f8fafc; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Modern Material Design overrides */
+.mat-mdc-form-field {
+  .mat-mdc-text-field-wrapper {
+    background-color: #ffffff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid #e2e8f0 !important;
+    transition: all 0.2s ease !important;
+    
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+      border-color: #cbd5e1 !important;
+    }
+    
+    &.mdc-text-field--focused {
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+      border-color: #3b82f6 !important;
+    }
+  }
+  
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none; // Hide the line under the field
+  }
+  
+  .mdc-notched-outline {
+    display: none !important; // Remove the default outline
+  }
+}
+
+/* Select dropdown styling */
+.mat-mdc-select {
+  .mat-mdc-select-trigger {
+    border: none !important;
+    background: transparent !important;
+  }
+  
+  .mat-mdc-select-arrow-wrapper {
+    .mat-mdc-select-arrow {
+      color: #64748b !important;
+    }
+  }
+}
+
+/* Panel styling for dropdowns */
+.mat-mdc-select-panel {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #e2e8f0 !important;
+  margin-top: 8px !important;
+  
+  .mat-mdc-option {
+    border-radius: 8px !important;
+    margin: 4px 8px !important;
+    padding: 12px 16px !important;
+    transition: all 0.2s ease !important;
+    
+    &:hover {
+      background-color: #f1f5f9 !important;
+    }
+    
+    &.mat-mdc-option-active {
+      background-color: #eff6ff !important;
+      color: #1d4ed8 !important;
+    }
+  }
+}
+
+/* Button styling improvements */
+.mat-mdc-raised-button {
+  border-radius: 10px !important;
+  padding: 12px 24px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.2s ease !important;
+  
+  &:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  &.mat-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+  }
+}
+
+/* Card styling improvements */
+.mat-mdc-card {
+  border-radius: 16px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  background: #ffffff !important;
+  
+  .mat-mdc-card-header {
+    padding: 24px 24px 0 24px !important;
+  }
+  
+  .mat-mdc-card-content {
+    padding: 24px !important;
+  }
+}
+
+/* Tab styling */
+.mat-mdc-tab-group {
+  .mat-mdc-tab-header {
+    border-bottom: 1px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    
+    .mat-mdc-tab {
+      border-radius: 8px 8px 0 0 !important;
+      margin: 0 8px !important;
+      transition: all 0.2s ease !important;
+      
+      &.mdc-tab--active {
+        background: #f8fafc !important;
+        border-bottom: 2px solid #3b82f6 !important;
+      }
+    }
+  }
+}
+
+/* Icon improvements */
+.mat-icon {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* Spinner improvements */
+.mat-mdc-progress-spinner {
+  .mdc-circular-progress__determinate-circle,
+  .mdc-circular-progress__indeterminate-circle-graphic {
+    stroke: #3b82f6 !important;
+  }
+}

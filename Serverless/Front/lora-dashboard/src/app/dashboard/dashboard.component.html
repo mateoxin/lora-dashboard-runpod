@@ -1,0 +1,106 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+  <!-- Header -->
+  <div class="bg-white shadow-xl border-b border-gray-200">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo/Title -->
+        <div class="flex items-center gap-4">
+          <div class="p-3 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl text-white shadow-lg">
+            <mat-icon class="text-2xl">memory</mat-icon>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold text-gray-800">LoRA Dashboard</h1>
+            <p class="text-sm text-gray-500">AI Model Training & Generation Platform</p>
+          </div>
+        </div>
+        
+        <!-- User Info & Actions -->
+        <div class="flex items-center gap-4">
+          <!-- Health Status Indicator -->
+          <div class="flex items-center gap-2 px-3 py-2 bg-emerald-50 rounded-lg border border-emerald-200">
+            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+            <span class="text-emerald-700 text-sm font-medium">System Online</span>
+          </div>
+          
+          <!-- User Profile -->
+          <div class="flex items-center gap-3 px-4 py-2 bg-gray-50 rounded-xl border border-gray-200">
+            <div class="flex flex-col items-end">
+              <div class="text-sm font-semibold text-gray-800">
+                Welcome, <span class="text-blue-600">{{ getUserDisplayName() }}</span>
+              </div>
+              <div class="text-xs text-orange-600 font-medium" *ngIf="isTokenExpiring()">
+                ⚠️ Session expiring soon
+              </div>
+              <div class="text-xs text-gray-500" *ngIf="!isTokenExpiring()">
+                Session active
+              </div>
+            </div>
+            
+            <!-- User Menu -->
+            <button mat-icon-button [matMenuTriggerFor]="userMenu" 
+                    class="bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all">
+              <mat-icon class="text-gray-600">account_circle</mat-icon>
+            </button>
+            <mat-menu #userMenu="matMenu">
+              <button mat-menu-item (click)="logout()">
+                <mat-icon class="text-red-500">logout</mat-icon>
+                <span class="ml-2">Logout</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container mx-auto p-6">
+    <!-- Navigation Tabs -->
+    <div class="mb-6">
+      <mat-tab-group 
+        [(selectedIndex)]="selectedTabIndex" 
+        (selectedTabChange)="onTabChange($event.index)"
+        class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+        
+        <!-- LoRA Training Tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="flex items-center gap-2 px-2 py-1">
+              <mat-icon class="text-lg">school</mat-icon>
+              <span class="font-medium">LoRA Training</span>
+            </div>
+          </ng-template>
+          <div class="p-0">
+            <app-config-tab></app-config-tab>
+          </div>
+        </mat-tab>
+
+        <!-- Processes Tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="flex items-center gap-2 px-2 py-1">
+              <mat-icon class="text-lg">timeline</mat-icon>
+              <span class="font-medium">Processes</span>
+            </div>
+          </ng-template>
+          <div class="p-6">
+            <app-processes-tab></app-processes-tab>
+          </div>
+        </mat-tab>
+
+        <!-- Photos Generation Tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <div class="flex items-center gap-2 px-2 py-1">
+              <mat-icon class="text-lg">photo_camera</mat-icon>
+              <span class="font-medium">Photos Generation</span>
+            </div>
+          </ng-template>
+          <div class="p-6">
+            <app-lora-tab></app-lora-tab>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

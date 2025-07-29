@@ -1,0 +1,88 @@
+# RunPod Serverless Deployment Configuration
+# Simple configuration for LoRA Dashboard Backend
+
+# This file serves as documentation - RunPod Serverless uses simpler deployment
+# Deploy via Web UI or API with these recommended settings:
+
+deployment:
+  name: "lora-dashboard-backend"
+  description: "LoRA Training & Generation Backend with Dual Mode Architecture"
+  
+  # Container Configuration  
+  image: "your-registry/lora-dashboard-backend:latest"
+  
+  # GPU Requirements
+  gpu:
+    type: "A40"  # Recommended: A40, RTX A6000, or A100
+    count: 1
+    memory: "48GB"
+    
+  # Resource Limits
+  resources:
+    cpu: "4 vCPU"
+    memory: "16GB" 
+    disk: "50GB"
+    
+  # Environment Variables (Production)
+  environment:
+    # Storage Configuration
+    - S3_ENDPOINT_URL: "https://storage.runpod.io"
+    - S3_BUCKET: "your-lora-bucket"
+    - S3_ACCESS_KEY: "YOUR_ACCESS_KEY"  # Use RunPod Secrets
+    - S3_SECRET_KEY: "YOUR_SECRET_KEY"  # Use RunPod Secrets
+    - S3_REGION: "us-east-1"
+    
+    # Redis Configuration  
+    - REDIS_URL: "redis://redis:6379/0"
+    
+    # Application Settings
+    - MAX_CONCURRENT_JOBS: "5"   # 🎯 Match max_workers (increase both together)
+    - GPU_TIMEOUT: "14400"       # 4 hours max per job
+    - DEBUG: "false"
+    - MOCK_MODE: "false"         # Production mode
+    
+    # Paths
+    - WORKSPACE_PATH: "/workspace"
+    - MODELS_PATH: "/workspace/models"
+    - OUTPUT_PATH: "/workspace/output"
+    - LOGS_PATH: "/workspace/logs"
+
+  # Scaling Configuration 🚀
+  scaling:
+    min_workers: 0           # Auto-scale to zero when idle
+    max_workers: 5           # 🎯 MODERATE CAPACITY (Easy to increase via Web UI)
+    target_concurrency: 1    # 1 request per worker
+    idle_timeout: "5m"       # Shutdown after 5 min inactivity
+    
+  # Health Check
+  health_check:
+    path: "/api/health"
+    timeout: "30s"
+    
+# 📈 SCALING WORKERS - How to increase capacity:
+#
+# METHOD 1: RunPod Web UI (EASIEST) 🖱️
+# 1. Go to your RunPod Serverless Endpoint
+# 2. Click "Settings" → "Scaling"  
+# 3. Increase "Max Workers": 3 → 5 → 10 → 20
+# 4. Update environment variable: MAX_CONCURRENT_JOBS to match
+# 5. Save → Auto-deploys in ~30 seconds
+#
+# METHOD 2: Environment Variables 🔧
+# Update these together (keep them equal):
+# - max_workers: 3 → 10        (Scaling section)
+# - MAX_CONCURRENT_JOBS: "3" → "10"  (Environment variable)
+#
+# RECOMMENDED SCALING PATH 🚀
+# Current: 5 workers  ($100-150/day max load)  
+# Medium:  10 workers ($200-300/day max load)
+# Heavy:   20 workers ($400-600/day max load)
+
+# NOTE: 
+# 1. Replace "your-registry/lora-dashboard-backend:latest" with actual image
+# 2. Use RunPod Secrets for sensitive environment variables
+# 3. This YAML is for documentation - deploy via RunPod Web UI
+
+# For detailed deployment instructions see:
+# - RUNPOD_DEPLOYMENT_GUIDE.md
+# - QUICK_START.md 

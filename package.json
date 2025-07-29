@@ -1,0 +1,47 @@
+{
+  "name": "serverless-suite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LoRA Dashboard - Serverless Training & Generation Suite",
+  "workspaces": [
+    "Serverless/*"
+  ],
+  "packageManager": "pnpm@8.15.0",
+  "scripts": {
+    "dev:front": "pnpm --filter @serverless/front dev",
+    "dev:back": "pnpm --filter @serverless/backend dev",
+    "build:front": "pnpm --filter @serverless/front build",
+    "build:back": "pnpm --filter @serverless/backend build",
+    "test:front": "pnpm --filter @serverless/front test",
+    "test:back": "pnpm --filter @serverless/backend test",
+    "lint": "pnpm --filter \"*\" lint",
+    "format": "pnpm --filter \"*\" format",
+    "install:all": "pnpm install",
+    "clean": "pnpm --filter \"*\" clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "keywords": [
+    "lora",
+    "machine-learning",
+    "serverless",
+    "angular",
+    "fastapi",
+    "runpod"
+  ],
+  "author": "Mateusz",
+  "license": "MIT",
+  "dependencies": {
+    "@angular/animations": "^20.1.3",
+    "@angular/cdk": "^20.1.3",
+    "@angular/material": "^20.1.3",
+    "monaco-editor": "^0.44.0"
+  }
+}

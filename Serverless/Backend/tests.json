@@ -1,0 +1,87 @@
+{
+  "tests": [
+    {
+      "name": "health_check_test",
+      "input": {
+        "type": "health",
+        "config": {}
+      },
+      "timeout": 10000
+    },
+    {
+      "name": "mock_training_test",
+      "input": {
+        "type": "train",
+        "config": "job: extension\nconfig:\n  name: test_training\n  process:\n    - type: sd_trainer\n      trigger_word: test_style\n      model:\n        name_or_path: stabilityai/stable-diffusion-xl-base-1.0\n        is_flux: false\n      datasets:\n        - folder_path: /workspace/datasets/test\n          caption_ext: txt\n      train:\n        batch_size: 1\n        steps: 100\n        lr: 0.0001"
+      },
+      "timeout": 30000
+    },
+    {
+      "name": "mock_generation_test", 
+      "input": {
+        "type": "generate",
+        "config": "job: generate\nconfig:\n  name: test_generation\n  process:\n    - type: to_folder\n      output_folder: /workspace/output/test\n      generate:\n        sampler: flowmatch\n        width: 512\n        height: 512\n        guidance_scale: 2.0\n        sample_steps: 20\n        prompts:\n          - \"a test image for validation\"\n      model:\n        name_or_path: /workspace/models/FLUX.1-dev\n        is_flux: true\n        quantize: false\n        dtype: fp16"
+      },
+      "timeout": 60000
+    },
+    {
+      "name": "processes_list_test",
+      "input": {
+        "type": "processes",
+        "config": {}
+      },
+      "timeout": 5000
+    },
+    {
+      "name": "lora_models_test",
+      "input": {
+        "type": "lora",
+        "config": {}
+      },
+      "timeout": 15000
+    }
+  ],
+  "config": {
+    "gpuTypeId": "RTX A6000",
+    "gpuCount": 1,
+    "env": [
+      {
+        "key": "MOCK_MODE",
+        "value": "true"
+      },
+      {
+        "key": "DEBUG", 
+        "value": "true"
+      },
+      {
+        "key": "MAX_CONCURRENT_JOBS",
+        "value": "5"
+      },
+      {
+        "key": "GPU_TIMEOUT",
+        "value": "3600"
+      },
+      {
+        "key": "S3_ENDPOINT_URL",
+        "value": "https://mock-storage.example.com"
+      },
+      {
+        "key": "S3_BUCKET",
+        "value": "test-bucket"
+      },
+      {
+        "key": "S3_ACCESS_KEY",
+        "value": "test_access_key"
+      },
+      {
+        "key": "S3_SECRET_KEY",
+        "value": "test_secret_key"
+      },
+      {
+        "key": "REDIS_URL",
+        "value": "redis://mock-redis:6379/0"
+      }
+    ],
+    "allowedCudaVersions": ["12.1", "12.0", "11.8"]
+  }
+} 

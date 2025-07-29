@@ -1,0 +1,45 @@
+<!-- Loading Spinner -->
+<div *ngIf="isLoading" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-8 flex flex-col items-center">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p class="mt-4 text-gray-600">Loading...</p>
+  </div>
+</div>
+
+<!-- Main Application Content -->
+<div class="min-h-screen bg-gray-50">
+  <!-- Header with Logout -->
+  <header *ngIf="authService.isAuthenticated()" class="bg-white shadow-sm border-b">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <h1 class="text-2xl font-bold text-gray-900">
+          <span class="text-blue-600">LoRA</span> Dashboard
+        </h1>
+        <span class="text-sm text-gray-500">
+          Serverless Training & Generation Suite
+        </span>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-2 text-sm text-gray-600">
+          <mat-icon class="text-green-500">circle</mat-icon>
+          <span>Connected</span>
+        </div>
+        
+        <button 
+          mat-button 
+          color="warn"
+          (click)="logout()"
+          class="flex items-center space-x-1">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Router Outlet -->
+  <main class="container mx-auto">
+    <router-outlet></router-outlet>
+  </main>
+</div>
