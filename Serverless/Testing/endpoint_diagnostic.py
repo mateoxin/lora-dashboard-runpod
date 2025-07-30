@@ -1,23 +1,39 @@
 #!/usr/bin/env python3
 """
-🔧 ENDPOINT DIAGNOSTIC TOOL
-Diagnose why workers are stuck in IN_QUEUE
+🔍 RunPod Endpoint Diagnostic Tool
 
-This will help identify:
-1. Worker status
-2. Container issues  
-3. Resource problems
-4. Provide specific recommendations
+Comprehensive endpoint testing and diagnostics:
+- Connection verification
+- Authorization testing
+- Endpoint availability
+- Response time measurement
+- Health checks
 """
 
-import requests
 import json
+import sys
 import time
 from datetime import datetime
+import requests
+from typing import Dict, Any, Optional
 
-# Configuration
-ENDPOINT_ID = "4z7x4al6ars9ou"  # ✅ UPDATED - New working endpoint
-RUNPOD_TOKEN = "YOUR_RUNPOD_TOKEN_HERE"  # Replace with your actual token
+# Import config loader
+try:
+    from config_loader_shared import get_runpod_token, get_config_value
+except ImportError:
+    print("❌ Could not import config_loader_shared.py")
+    print("Please ensure config_loader_shared.py is in the same directory.")
+    sys.exit(1)
+
+# Configuration - Load from config.env
+try:
+    RUNPOD_TOKEN = get_runpod_token()
+except ValueError as e:
+    print(f"❌ Configuration error: {e}")
+    print("📋 Please copy config.env.template to config.env and set your RunPod token.")
+    sys.exit(1)
+
+ENDPOINT_ID = get_config_value('RUNPOD_ENDPOINT_ID', 'your-endpoint-id-here')
 BASE_URL = f"https://api.runpod.ai/v2/{ENDPOINT_ID}"
 
 def submit_test_job():

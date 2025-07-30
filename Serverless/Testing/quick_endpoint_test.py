@@ -1,23 +1,36 @@
 #!/usr/bin/env python3
 """
-🚀 QUICK ENDPOINT TEST - Minimal diagnosis
-Find out why /runsync operations timeout
+⚡ Quick RunPod Endpoint Test
 
-Strategy:
-1. Test basic connectivity
-2. Try to warm up workers with /run
-3. Test simple /runsync operations
-4. Diagnose worker state
+Fast endpoint verification:
+- Basic connectivity test
+- Simple health check
+- Quick response validation
 """
 
-import requests
 import json
+import sys
 import time
+import requests
 from datetime import datetime
 
-# Configuration
-ENDPOINT_ID = "4z7x4al6ars9ou"  # ✅ UPDATED - New working endpoint
-RUNPOD_TOKEN = "YOUR_RUNPOD_TOKEN_HERE"  # Replace with your actual token
+# Import config loader  
+try:
+    from config_loader_shared import get_runpod_token, get_config_value
+except ImportError:
+    print("❌ Could not import config_loader_shared.py")
+    print("Please ensure config_loader_shared.py is in the same directory.")
+    sys.exit(1)
+
+# Configuration - Load from config.env
+try:
+    RUNPOD_TOKEN = get_runpod_token()
+except ValueError as e:
+    print(f"❌ Configuration error: {e}")
+    print("📋 Please copy config.env.template to config.env and set your RunPod token.")
+    sys.exit(1)
+
+ENDPOINT_ID = get_config_value('RUNPOD_ENDPOINT_ID', 'your-endpoint-id-here')
 BASE_URL = f"https://api.runpod.ai/v2/{ENDPOINT_ID}"
 
 def test_basic_connectivity():

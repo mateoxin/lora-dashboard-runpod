@@ -1,38 +1,62 @@
 #!/usr/bin/env python3
 """
-🧪 RUNPOD BACKEND TESTER v2.0 - IMPROVED
-Fixed issues from v1.0:
-- Correct job type for LoRA models (lora_models → lora)
-- Smaller upload payload (2 images instead of 10)
-- Increased timeout for /runsync operations
-- Better error handling and diagnostics
-- Progressive testing strategy
+🧪 Advanced RunPod Backend Tester v2.0
 
-Author: AI Assistant
-Created: 2025-07-30
+Enhanced testing suite with:
+- Multi-version endpoint testing
+- Async job handling with intelligent polling
+- Progressive complexity testing 
+- Advanced error handling and reporting
+- Performance metrics and analytics
 """
 
-import requests
-import base64
+import asyncio
 import json
+import sys
 import time
-import os
-import logging
 from datetime import datetime
-from typing import Dict, List, Any, Optional
 from pathlib import Path
-import tempfile
-from PIL import Image
-import io
+from typing import Dict, List, Any, Optional
+import aiohttp
+import logging
 
-# 🔧 CONFIGURATION
+# Import config loader
+try:
+    from config_loader_shared import get_runpod_token, get_config_value
+except ImportError:
+    print("❌ Could not import config_loader_shared.py")
+    print("Please ensure config_loader_shared.py is in the same directory.")
+    sys.exit(1)
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+
 class TestConfig:
-    # 🎯 RUNPOD ENDPOINT - UPDATE THIS!
-    ENDPOINT_ID = "noo81tr4l2422v"  # Current endpoint
-    BASE_URL = f"https://api.runpod.ai/v2/{ENDPOINT_ID}"
+    # 🎯 RUNPOD CONFIGURATION - Load from config.env
+    try:
+        RUNPOD_TOKEN = get_runpod_token()
+    except ValueError as e:
+        logger.error(f"❌ Configuration error: {e}")
+        logger.error("📋 Please copy config.env.template to config.env and set your RunPod token.")
+        sys.exit(1)
     
-    # 🔑 AUTHENTICATION
-    RUNPOD_TOKEN = "YOUR_RUNPOD_TOKEN_HERE"  # Replace with your actual token
+    ENDPOINT_ID = get_config_value('RUNPOD_ENDPOINT_ID', 'your-endpoint-id-here')
+    
+    # Endpoint versions to test
+    ENDPOINTS = [
+        f"https://api.runpod.ai/v2/{ENDPOINT_ID}/runsync",
+        f"https://api.runpod.ai/v2/{ENDPOINT_ID}/run",
+    ]
+    
+    # Test configuration
+    TIMEOUT = int(get_config_value('TEST_TIMEOUT', '300'))  # 5 minutes
+    POLLING_INTERVAL = int(get_config_value('POLLING_INTERVAL', '5'))  # 5 seconds
+    MAX_RETRIES = int(get_config_value('MAX_RETRIES', '3'))
     
     # ⚙️ SETTINGS - IMPROVED
     TIMEOUT_SYNC = 120      # Increased for /runsync

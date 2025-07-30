@@ -8,7 +8,20 @@ import requests
 import time
 
 ENDPOINT_ID = "4z7x4al6ars9ou"
-TOKEN = "YOUR_RUNPOD_TOKEN_HERE"  # Replace with your actual token
+# Import config loader
+try:
+    from config_loader_shared import get_runpod_token
+    TOKEN = get_runpod_token()
+except ImportError:
+    print("❌ Could not import config_loader_shared.py")
+    print("Please ensure config_loader_shared.py is in the same directory.")
+    import sys
+    sys.exit(1)
+except ValueError as e:
+    print(f"❌ Configuration error: {e}")
+    print("📋 Please copy config.env.template to config.env and set your RunPod token.")
+    import sys
+    sys.exit(1)
 BASE_URL = f"https://api.runpod.ai/v2/{ENDPOINT_ID}"
 
 def submit_and_check_job(job_type, input_data=None):

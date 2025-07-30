@@ -116,4 +116,16 @@ temp_*
 *credential*
 *token*
 !*template*
-!*example* 
+!*example*
+
+# === CONFIGURATION FILES ===
+# Ignore actual config files but keep templates
+config.env
+.env.local
+.env.production
+.env.development
+environment.runpod.ts
+# Keep template files
+!config.env.template
+!.env.example
+!environment.*.template 

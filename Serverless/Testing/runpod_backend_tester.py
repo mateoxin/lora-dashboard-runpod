@@ -1,49 +1,76 @@
 #!/usr/bin/env python3
 """
-🧪 RUNPOD BACKEND TESTER
-Comprehensive testing script for LoRA Dashboard backend deployed on RunPod
+🧪 Advanced RunPod Backend Tester v2.0
 
-Features:
-- Tests all backend endpoints
-- Sends real image and caption data
-- Logs everything to file
-- Generates test report
-- Simulates frontend behavior
-
-Usage:
-    python runpod_backend_tester.py
-
-Author: AI Assistant
-Created: 2025-07-30
+Comprehensive testing suite for RunPod Serverless endpoints with:
+- Multiple endpoint versions testing
+- Async job handling with polling
+- Progressive complexity testing
+- Comprehensive error handling and reporting
+- Multiple request types (sync/async)
 """
 
-import requests
-import base64
+import asyncio
 import json
-import time
 import os
-import logging
+import sys
+import time
 from datetime import datetime
-from typing import Dict, List, Any, Optional
 from pathlib import Path
-import tempfile
-from PIL import Image
-import io
+from typing import Dict, List, Any, Optional
+import aiohttp
+import logging
 
-# 🔧 CONFIGURATION
+# Add backend utils to path for config loader
+backend_path = Path(__file__).parent.parent / "Backend"
+if backend_path.exists():
+    sys.path.insert(0, str(backend_path))
+    
+try:
+    from app.utils.config_loader import get_runpod_token, get_config_value
+except ImportError:
+    # Fallback if config loader not available
+    def get_runpod_token():
+        token = os.getenv('RUNPOD_TOKEN')
+        if not token:
+            raise ValueError("RUNPOD_TOKEN not found. Please set it in config.env file or environment variable.")
+        if token == "YOUR_RUNPOD_TOKEN_HERE":
+            raise ValueError("Please replace YOUR_RUNPOD_TOKEN_HERE with your actual RunPod token in config.env")
+        return token
+    
+    def get_config_value(key: str, default: str = None):
+        return os.getenv(key, default)
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+
 class TestConfig:
     # 🎯 RUNPOD ENDPOINT - UPDATE THIS!
-    ENDPOINT_ID = "noo81tr4l2422v"  # Current endpoint
-    BASE_URL = f"https://api.runpod.ai/v2/{ENDPOINT_ID}"
+    # Load from config file or environment
+    try:
+        RUNPOD_TOKEN = get_runpod_token()
+    except ValueError as e:
+        logger.error(f"Config error: {e}")
+        logger.error("Please copy config.env.template to config.env and fill in your RunPod token.")
+        sys.exit(1)
     
-    # 🔑 AUTHENTICATION
-    RUNPOD_TOKEN = "YOUR_RUNPOD_TOKEN_HERE"  # Replace with your actual token
+    ENDPOINT_ID = get_config_value('RUNPOD_ENDPOINT_ID', 'your-endpoint-id-here')
     
-    # ⚙️ SETTINGS
-    TIMEOUT = 60
-    RETRY_COUNT = 3
-    LOG_FILE = "runpod_test_log.txt"
-    RESULTS_FILE = "test_results.json"
+    # Endpoint versions to test (add your deployed versions)
+    ENDPOINTS = [
+        "https://api.runpod.ai/v2/{}/runsync".format(ENDPOINT_ID),
+        "https://api.runpod.ai/v2/{}/run".format(ENDPOINT_ID),
+    ]
+    
+    # Test configuration
+    TIMEOUT = int(get_config_value('TEST_TIMEOUT', '300'))  # 5 minutes
+    POLLING_INTERVAL = int(get_config_value('POLLING_INTERVAL', '5'))  # 5 seconds
+    MAX_RETRIES = int(get_config_value('MAX_RETRIES', '3'))
     
     # 📁 TEST DATA
     TEST_TRAINING_NAME = "test_lora_training"
