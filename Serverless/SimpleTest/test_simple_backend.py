@@ -284,13 +284,25 @@ class SimpleBackendTester:
         return self.results
 
 def main():
-    # Configuration - UPDATE THESE
-    ENDPOINT_ID = "UPDATE_ME"  # Set your endpoint ID
-    RUNPOD_TOKEN = "YOUR_RUNPOD_TOKEN_HERE"  # Replace with your actual token
-    
-    if ENDPOINT_ID == "UPDATE_ME":
-        print("❌ Please update ENDPOINT_ID in the script")
+    # Configuration - Load from config file
+    try:
+        from config_loader_shared import get_runpod_token, get_config_value
+        RUNPOD_TOKEN = get_runpod_token()
+        ENDPOINT_ID = get_config_value('RUNPOD_ENDPOINT_ID', 'ig5y0d2g4l5n2k')
+    except ImportError:
+        print("❌ Could not import config_loader_shared.py")
+        ENDPOINT_ID = "ig5y0d2g4l5n2k"  # Fallback to our new endpoint
+        RUNPOD_TOKEN = "YOUR_RUNPOD_TOKEN_HERE"  # Replace with your actual token
+    except ValueError as e:
+        print(f"❌ Configuration error: {e}")
         return
+    
+    if ENDPOINT_ID in ["UPDATE_ME", "your_endpoint_id_here"]:
+        print("❌ Please update ENDPOINT_ID in config.env file")
+        print(f"💡 Current endpoint ID should be: ig5y0d2g4l5n2k")
+        return
+    
+    print(f"🎯 Testing endpoint: {ENDPOINT_ID}")
     
     tester = SimpleBackendTester(ENDPOINT_ID, RUNPOD_TOKEN)
     results = tester.run_all_tests()

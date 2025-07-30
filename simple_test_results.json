@@ -1,0 +1,99 @@
+[
+  {
+    "test": "endpoint_health",
+    "success": true,
+    "message": "Endpoint healthy, 1 workers ready",
+    "data": {
+      "jobs": {
+        "completed": 8,
+        "failed": 0,
+        "inProgress": 0,
+        "inQueue": 0,
+        "retried": 0
+      },
+      "workers": {
+        "idle": 1,
+        "initializing": 0,
+        "ready": 1,
+        "running": 0,
+        "throttled": 0,
+        "unhealthy": 0
+      }
+    },
+    "timestamp": "2025-07-30T15:38:58.587423"
+  },
+  {
+    "test": "health_job",
+    "success": true,
+    "message": "Health job completed successfully",
+    "data": {
+      "message": "Simple backend is working!",
+      "status": "healthy",
+      "timestamp": "2025-07-30T07:38:58.480385"
+    },
+    "timestamp": "2025-07-30T15:39:01.807656"
+  },
+  {
+    "test": "ping_job",
+    "success": true,
+    "message": "Ping job completed successfully",
+    "data": {
+      "status": "pong",
+      "timestamp": "2025-07-30T07:39:01.040501"
+    },
+    "timestamp": "2025-07-30T15:39:02.973598"
+  },
+  {
+    "test": "echo_job",
+    "success": true,
+    "message": "Echo job completed successfully",
+    "data": {
+      "echo": {
+        "array": [
+          1,
+          2,
+          3
+        ],
+        "message": "Hello Simple Backend!",
+        "nested": {
+          "key": "value"
+        },
+        "number": 42,
+        "type": "echo"
+      },
+      "status": "success",
+      "timestamp": "2025-07-30T07:39:02.278209"
+    },
+    "timestamp": "2025-07-30T15:39:04.146671"
+  },
+  {
+    "test": "slow_job",
+    "success": true,
+    "message": "Slow job completed in 3.2s",
+    "data": {
+      "duration": "2 seconds",
+      "message": "Slow job finished",
+      "status": "completed"
+    },
+    "timestamp": "2025-07-30T15:39:07.316250"
+  },
+  {
+    "test": "unknown_job",
+    "success": true,
+    "message": "Unknown job handled correctly",
+    "data": {
+      "available_types": [
+        "health",
+        "echo",
+        "ping",
+        "slow"
+      ],
+      "input_received": {
+        "type": "nonexistent_type"
+      },
+      "received_type": "nonexistent_type",
+      "status": "unknown_type"
+    },
+    "timestamp": "2025-07-30T15:39:10.335255"
+  }
+]
