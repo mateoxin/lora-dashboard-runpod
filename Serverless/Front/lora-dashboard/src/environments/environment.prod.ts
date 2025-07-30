@@ -11,8 +11,8 @@ export const environment = {
   
   // 🚀 RunPod Configuration
   // SECURITY: Never commit real API tokens to git!
-  // Set this via environment variables or configuration service
-  runpodToken: process.env['RUNPOD_API_KEY'] || 'CONFIGURE_IN_PRODUCTION', // Must be set in deployment
+  // Configure this during deployment - use environment.runpod.ts for development
+  runpodToken: 'CONFIGURE_IN_PRODUCTION', // Must be set in deployment
   
   // UI Settings
   autoRefreshInterval: 5000, // 5 seconds

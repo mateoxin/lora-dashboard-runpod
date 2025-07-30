@@ -52,6 +52,48 @@ class GenerateRequest(BaseModel):
     config: str = Field(..., description="YAML configuration for generation")
 
 
+# 📁 FILE UPLOAD MODELS
+class UploadedFile(BaseModel):
+    """Uploaded file information."""
+    filename: str
+    path: str
+    size: int
+    content_type: str
+    uploaded_at: datetime
+
+
+class TrainingDataUploadResponse(BaseModel):
+    """Response for training data upload."""
+    uploaded_files: List[UploadedFile]
+    training_folder: str
+    total_images: int
+    total_captions: int
+    message: str
+
+
+class BulkDownloadRequest(BaseModel):
+    """Request for bulk download."""
+    process_ids: List[str] = Field(..., description="List of process IDs to download")
+    include_images: bool = Field(default=True, description="Include generated images")
+    include_loras: bool = Field(default=True, description="Include LoRA models")
+
+
+class DownloadItem(BaseModel):
+    """Individual download item."""
+    filename: str
+    url: str
+    size: Optional[int] = None
+    type: str  # 'image', 'lora', 'other'
+
+
+class BulkDownloadResponse(BaseModel):
+    """Response for bulk download."""
+    download_items: List[DownloadItem]
+    zip_url: Optional[str] = None
+    total_files: int
+    total_size: int
+
+
 class Process(BaseModel):
     """Process model."""
     id: str

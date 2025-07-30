@@ -67,6 +67,51 @@ export interface LoRAResponse {
   models: LoRAModel[];
 }
 
+// 📁 FILE UPLOAD INTERFACES
+
+export interface UploadedFile {
+  filename: string;
+  path: string;
+  size: number;
+  content_type: string;
+  uploaded_at: string;
+}
+
+export interface TrainingDataUploadRequest {
+  files: File[];
+  training_name: string;
+  trigger_word: string;
+  cleanup_existing?: boolean;
+}
+
+export interface TrainingDataUploadResponse {
+  uploaded_files: UploadedFile[];
+  training_folder: string;
+  total_images: number;
+  total_captions: number;
+  message: string;
+}
+
+export interface BulkDownloadRequest {
+  process_ids: string[];
+  include_images?: boolean;
+  include_loras?: boolean;
+}
+
+export interface DownloadItem {
+  filename: string;
+  url: string;
+  size?: number;
+  type: 'image' | 'lora' | 'other';
+}
+
+export interface BulkDownloadResponse {
+  download_items: DownloadItem[];
+  zip_url?: string;
+  total_files: number;
+  total_size: number;
+}
+
 export const HARDCODED_CREDENTIALS = {
   username: 'Mateusz',
   password: 'Gramercy'

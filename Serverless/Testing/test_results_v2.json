@@ -1,0 +1,87 @@
+{
+  "start_time": "2025-07-30T13:02:59.822108",
+  "endpoint_id": "noo81tr4l2422v",
+  "version": "2.0",
+  "tests": [
+    {
+      "test_name": "endpoint_connectivity",
+      "timestamp": "2025-07-30T13:03:00.358004",
+      "success": true,
+      "duration_seconds": 0.5327937602996826,
+      "response_data": {
+        "status_code": 200
+      },
+      "error": null
+    },
+    {
+      "test_name": "health_check",
+      "timestamp": "2025-07-30T13:04:30.863901",
+      "success": true,
+      "duration_seconds": 90.49735307693481,
+      "response_data": {
+        "id": "sync-d09f5da9-23d2-4a7b-ab6b-44ceeb3fbd5a-e2",
+        "status": "IN_QUEUE"
+      },
+      "error": null
+    },
+    {
+      "test_name": "get_processes",
+      "timestamp": "2025-07-30T13:06:01.263743",
+      "success": true,
+      "duration_seconds": 90.39772748947144,
+      "response_data": {
+        "process_count": 0
+      },
+      "error": null
+    },
+    {
+      "test_name": "get_lora_models_fixed",
+      "timestamp": "2025-07-30T13:07:31.773725",
+      "success": true,
+      "duration_seconds": 90.50711226463318,
+      "response_data": {
+        "model_count": 0
+      },
+      "error": null
+    },
+    {
+      "test_name": "bulk_download_simple",
+      "timestamp": "2025-07-30T13:09:02.180522",
+      "success": true,
+      "duration_seconds": 90.39984583854675,
+      "response_data": {
+        "download_count": 0
+      },
+      "error": null
+    },
+    {
+      "test_name": "upload_training_data_mini",
+      "timestamp": "2025-07-30T13:10:32.664874",
+      "success": true,
+      "duration_seconds": 90.42537641525269,
+      "response_data": {
+        "id": "sync-63ae69a2-23f9-4781-8e81-413a06d456cb-e2",
+        "status": "IN_QUEUE"
+      },
+      "error": null
+    },
+    {
+      "test_name": "start_generation_quick",
+      "timestamp": "2025-07-30T13:10:33.064220",
+      "success": true,
+      "duration_seconds": 0.39711880683898926,
+      "response_data": {
+        "id": "0b5ad60a-4608-452c-89d5-88d2cdb92bdb-e1",
+        "status": "IN_QUEUE"
+      },
+      "error": null
+    }
+  ],
+  "summary": {
+    "total_tests": 7,
+    "passed_tests": 6,
+    "failed_tests": 1,
+    "success_rate": "85.7%",
+    "end_time": "2025-07-30T13:10:33.064477"
+  }
+}

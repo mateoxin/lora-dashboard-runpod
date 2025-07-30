@@ -130,16 +130,7 @@ config:
       if (config.config?.process?.[0]?.model) {
         config.config.process[0].model.lora_path = this.selectedLoRA.path;
         
-        // Update prompts with trigger word if available
-        if (config.config.process[0].generate?.prompts && this.selectedLoRA.metadata?.trigger_word) {
-          const triggerWord = this.selectedLoRA.metadata.trigger_word;
-          config.config.process[0].generate.prompts = config.config.process[0].generate.prompts.map((prompt: string) => {
-            // Check if prompt already contains trigger word
-            return prompt.toLowerCase().includes(triggerWord.toLowerCase())
-              ? prompt
-              : `${triggerWord} ${prompt}`;
-          });
-        }
+        // Note: Prompts are left unchanged - user manages their own captions and prompts
       }
       
       this.yamlConfig = yaml.dump(config, { 

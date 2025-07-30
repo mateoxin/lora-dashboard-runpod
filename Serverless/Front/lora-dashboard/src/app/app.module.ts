@@ -22,6 +22,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 // Monaco Editor - REMOVED (using simple textarea instead)
 
@@ -67,6 +68,7 @@ import { AuthModule } from './auth/auth.module';
     MatDialogModule,
     MatSlideToggleModule,
     MatTooltipModule,
+    MatCheckboxModule,
     
     // Custom Modules
     AuthModule

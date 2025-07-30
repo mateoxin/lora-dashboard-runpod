@@ -1,0 +1,74 @@
+{
+  "start_time": "2025-07-30T12:52:40.043910",
+  "endpoint_id": "noo81tr4l2422v",
+  "tests": [
+    {
+      "test_name": "health_check_native",
+      "timestamp": "2025-07-30T12:52:40.821089",
+      "success": true,
+      "response_data": {
+        "jobs": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 0,
+          "inQueue": 0,
+          "retried": 0
+        },
+        "workers": {
+          "idle": 5,
+          "initializing": 0,
+          "ready": 5,
+          "running": 0,
+          "throttled": 0,
+          "unhealthy": 0
+        }
+      },
+      "error": null
+    },
+    {
+      "test_name": "upload_training_data",
+      "timestamp": "2025-07-30T12:53:41.101825",
+      "success": false,
+      "response_data": null,
+      "error": "HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)"
+    },
+    {
+      "test_name": "start_generation",
+      "timestamp": "2025-07-30T12:53:41.556452",
+      "success": true,
+      "response_data": {
+        "id": "9a0b787b-1e87-4c76-b495-2e63a480a510-e1",
+        "status": "IN_QUEUE"
+      },
+      "error": null
+    },
+    {
+      "test_name": "get_processes",
+      "timestamp": "2025-07-30T12:54:41.560079",
+      "success": false,
+      "response_data": null,
+      "error": "HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)"
+    },
+    {
+      "test_name": "get_lora_models",
+      "timestamp": "2025-07-30T12:55:41.636137",
+      "success": false,
+      "response_data": null,
+      "error": "HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)"
+    },
+    {
+      "test_name": "bulk_download",
+      "timestamp": "2025-07-30T12:56:41.734658",
+      "success": false,
+      "response_data": null,
+      "error": "HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)"
+    }
+  ],
+  "summary": {
+    "total_tests": 7,
+    "passed_tests": 2,
+    "failed_tests": 5,
+    "success_rate": "28.6%",
+    "end_time": "2025-07-30T12:56:41.735526"
+  }
+}

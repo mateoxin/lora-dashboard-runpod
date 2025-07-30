@@ -6,11 +6,14 @@ Serverless Training & Generation Suite
 import asyncio
 import logging
 import os
+import shutil
+import uuid
 import yaml
 from contextlib import asynccontextmanager
+from datetime import datetime
 from typing import Any, Dict, List
 
-from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Depends, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -23,6 +26,10 @@ from app.core.models import (
     LoRAModel,
     ProcessesResponse,
     LoRAResponse,
+    UploadedFile,
+    TrainingDataUploadResponse,
+    BulkDownloadRequest,
+    BulkDownloadResponse,
 )
 from app.services.gpu_manager import GPUManager
 from app.services.process_manager import ProcessManager
@@ -304,6 +311,238 @@ async def get_download_url(process_id: str) -> ApiResponse[Dict[str, str]]:
     except Exception as e:
         logger.error(f"Failed to get download URL for {process_id}: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to get download URL: {str(e)}")
+
+
+# 📁 FILE UPLOAD ENDPOINTS
+
+@app.post("/api/upload/training-data", response_model=ApiResponse[TrainingDataUploadResponse])
+async def upload_training_data(
+    files: List[UploadFile] = File(...),
+    training_name: str = Form(...),
+    trigger_word: str = Form(...),
+    cleanup_existing: bool = Form(default=True)
+) -> ApiResponse[TrainingDataUploadResponse]:
+    """Upload training images and captions for LoRA training."""
+    try:
+        settings = get_settings()
+        
+        # Create unique training folder
+        training_id = str(uuid.uuid4())[:8]
+        safe_name = "".join(c if c.isalnum() or c in '-_' else '_' for c in training_name)
+        training_folder = os.path.join(settings.workspace_path, "training_data", f"{safe_name}_{training_id}")
+        
+        # Clean up existing training data if requested
+        if cleanup_existing:
+            base_training_path = os.path.join(settings.workspace_path, "training_data")
+            if os.path.exists(base_training_path):
+                # Remove old training folders
+                for item in os.listdir(base_training_path):
+                    old_path = os.path.join(base_training_path, item)
+                    if os.path.isdir(old_path):
+                        shutil.rmtree(old_path)
+                        logger.info(f"Cleaned up old training data: {old_path}")
+        
+        # Create training folder
+        os.makedirs(training_folder, exist_ok=True)
+        
+        uploaded_files = []
+        image_count = 0
+        caption_count = 0
+        
+        # Process uploaded files
+        for file in files:
+            if not file.filename:
+                continue
+                
+            # Save file to training folder
+            file_path = os.path.join(training_folder, file.filename)
+            
+            with open(file_path, "wb") as buffer:
+                content = await file.read()
+                buffer.write(content)
+            
+            file_info = UploadedFile(
+                filename=file.filename,
+                path=file_path,
+                size=len(content),
+                content_type=file.content_type or "application/octet-stream",
+                uploaded_at=datetime.now()
+            )
+            uploaded_files.append(file_info)
+            
+            # Count file types
+            if file.content_type and file.content_type.startswith('image/'):
+                image_count += 1
+            elif file.filename.endswith('.txt'):
+                caption_count += 1
+        
+        # Create trigger word info file
+        trigger_file = os.path.join(training_folder, "_training_info.txt")
+        with open(trigger_file, "w") as f:
+            f.write(f"Training Name: {training_name}\n")
+            f.write(f"Trigger Word: {trigger_word}\n")
+            f.write(f"Upload Date: {datetime.now().isoformat()}\n")
+            f.write(f"Total Images: {image_count}\n")
+            f.write(f"Total Captions: {caption_count}\n")
+        
+        response_data = TrainingDataUploadResponse(
+            uploaded_files=uploaded_files,
+            training_folder=training_folder,
+            total_images=image_count,
+            total_captions=caption_count,
+            message=f"Successfully uploaded {len(uploaded_files)} files to {training_folder}"
+        )
+        
+        logger.info(f"Training data uploaded: {training_folder} ({image_count} images, {caption_count} captions)")
+        
+        return ApiResponse(
+            success=True,
+            data=response_data,
+            message="Training data uploaded successfully"
+        )
+        
+    except Exception as e:
+        logger.error(f"Failed to upload training data: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to upload training data: {str(e)}")
+
+
+@app.post("/api/download/bulk", response_model=ApiResponse[BulkDownloadResponse])
+async def bulk_download(request: BulkDownloadRequest) -> ApiResponse[BulkDownloadResponse]:
+    """Create bulk download URLs for multiple processes."""
+    try:
+        storage_service = get_storage_service()
+        download_items = []
+        total_size = 0
+        
+        for process_id in request.process_ids:
+            # List files for this process
+            files = await storage_service.list_files(f"results/{process_id}/")
+            
+            for file_info in files:
+                file_type = "other"
+                if any(ext in file_info['key'].lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']):
+                    if request.include_images:
+                        file_type = "image"
+                    else:
+                        continue
+                elif any(ext in file_info['key'].lower() for ext in ['.safetensors', '.ckpt', '.pt']):
+                    if request.include_loras:
+                        file_type = "lora"
+                    else:
+                        continue
+                
+                # Generate download URL
+                download_url = await storage_service.get_download_url(process_id)
+                if download_url:
+                    download_items.append({
+                        "filename": os.path.basename(file_info['key']),
+                        "url": download_url,
+                        "size": file_info.get('size', 0),
+                        "type": file_type
+                    })
+                    total_size += file_info.get('size', 0)
+        
+        response_data = BulkDownloadResponse(
+            download_items=download_items,
+            zip_url=None,  # TODO: Implement zip creation if needed
+            total_files=len(download_items),
+            total_size=total_size
+        )
+        
+        return ApiResponse(
+            success=True,
+            data=response_data,
+            message=f"Generated {len(download_items)} download URLs"
+        )
+        
+    except Exception as e:
+        logger.error(f"Failed to create bulk download: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to create bulk download: {str(e)}")
+
+
+# 📝 LOGGING ENDPOINTS
+
+@app.get("/api/logs/stats", response_model=ApiResponse[Dict])
+async def get_log_stats() -> ApiResponse[Dict]:
+    """Get logging statistics"""
+    try:
+        from app.core.logger import get_logger
+        logger_instance = get_logger()
+        stats = logger_instance.get_log_stats()
+        
+        return ApiResponse(
+            success=True,
+            data=stats,
+            message="Log statistics retrieved successfully"
+        )
+    except Exception as e:
+        logger.error(f"Failed to get log stats: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to get log stats: {str(e)}")
+
+@app.get("/api/logs/tail/{log_type}")
+async def tail_logs(log_type: str, lines: int = 100) -> ApiResponse[Dict]:
+    """Get last N lines from log file"""
+    try:
+        from app.core.logger import get_logger
+        logger_instance = get_logger()
+        
+        log_files = {
+            "app": "app.log",
+            "requests": "requests.log",
+            "errors": "errors.log"
+        }
+        
+        if log_type not in log_files:
+            raise HTTPException(status_code=400, detail=f"Invalid log type. Available: {list(log_files.keys())}")
+        
+        log_file = logger_instance.log_dir / log_files[log_type]
+        
+        if not log_file.exists():
+            return ApiResponse(
+                success=True,
+                data={"lines": [], "message": f"Log file {log_type} not found"},
+                message="No logs available"
+            )
+        
+        # Read last N lines
+        try:
+            with open(log_file, 'r', encoding='utf-8') as f:
+                all_lines = f.readlines()
+                last_lines = all_lines[-lines:] if len(all_lines) > lines else all_lines
+                
+            return ApiResponse(
+                success=True,
+                data={
+                    "lines": [line.strip() for line in last_lines],
+                    "total_lines": len(all_lines),
+                    "returned_lines": len(last_lines),
+                    "log_type": log_type
+                },
+                message=f"Retrieved last {len(last_lines)} lines from {log_type} log"
+            )
+        except UnicodeDecodeError:
+            # Try with different encoding
+            with open(log_file, 'r', encoding='latin-1') as f:
+                all_lines = f.readlines()
+                last_lines = all_lines[-lines:] if len(all_lines) > lines else all_lines
+                
+            return ApiResponse(
+                success=True,
+                data={
+                    "lines": [line.strip() for line in last_lines],
+                    "total_lines": len(all_lines),
+                    "returned_lines": len(last_lines),
+                    "log_type": log_type,
+                    "encoding": "latin-1"
+                },
+                message=f"Retrieved last {len(last_lines)} lines from {log_type} log"
+            )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to tail logs: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to tail logs: {str(e)}")
 
 
 if __name__ == "__main__":

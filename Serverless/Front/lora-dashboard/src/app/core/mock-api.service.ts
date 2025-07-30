@@ -309,4 +309,68 @@ export class MockApiService {
       }
     }, 10000); // Check every 10 seconds
   }
+
+  // 📁 FILE UPLOAD MOCK METHODS
+
+  /**
+   * Mock upload training data
+   */
+  uploadTrainingData(request: any): Observable<any> {
+    const mockResponse = {
+      uploaded_files: request.files.map((file: any, index: number) => ({
+        filename: file.name || `image_${index}.jpg`,
+        path: `/workspace/training_data/mock_training/${file.name || `image_${index}.jpg`}`,
+        size: file.size || 1024000,
+        content_type: file.type || 'image/jpeg',
+        uploaded_at: new Date().toISOString()
+      })),
+      training_folder: `/workspace/training_data/mock_training`,
+      total_images: request.files.filter((f: any) => f.type?.startsWith('image/')).length,
+      total_captions: request.files.filter((f: any) => f.name?.endsWith('.txt')).length,
+      message: 'Training data uploaded successfully (Mock Mode)'
+    };
+
+    return of(mockResponse).pipe(delay(2000));
+  }
+
+  /**
+   * Mock bulk download URLs
+   */
+  getBulkDownloadUrls(request: any): Observable<any> {
+    const mockItems = [];
+    
+    for (const processId of request.process_ids) {
+      if (request.include_images !== false) {
+        mockItems.push({
+          filename: `generated_image_${processId}_1.png`,
+          url: `https://mock-storage.example.com/results/${processId}/generated_image_1.png`,
+          size: 2048000,
+          type: 'image'
+        });
+        mockItems.push({
+          filename: `generated_image_${processId}_2.png`,
+          url: `https://mock-storage.example.com/results/${processId}/generated_image_2.png`,
+          size: 1856000,
+          type: 'image'
+        });
+      }
+
+      if (request.include_loras !== false) {
+        mockItems.push({
+          filename: `lora_model_${processId}.safetensors`,
+          url: `https://mock-storage.example.com/results/${processId}/lora_model.safetensors`,
+          size: 147456000,
+          type: 'lora'
+        });
+      }
+    }
+
+    const mockResponse = {
+      download_items: mockItems,
+      total_files: mockItems.length,
+      total_size: mockItems.reduce((sum, item) => sum + (item.size || 0), 0)
+    };
+
+    return of(mockResponse).pipe(delay(1000));
+  }
 } 

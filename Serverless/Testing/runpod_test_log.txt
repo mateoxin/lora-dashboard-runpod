@@ -1,0 +1,65 @@
+2025-07-30 12:52:40,044 - INFO - 🚀 Starting RunPod Backend Test Suite
+2025-07-30 12:52:40,045 - INFO - 🎯 Endpoint: noo81tr4l2422v
+2025-07-30 12:52:40,046 - INFO - 📅 Start time: 2025-07-30 12:52:40.045974
+2025-07-30 12:52:40,046 - INFO - 
+🔍 Testing Health Check...
+2025-07-30 12:52:40,821 - INFO - ✅ health_check_native - SUCCESS
+2025-07-30 12:52:40,822 - INFO - 
+📁 Testing Upload Training Data...
+2025-07-30 12:52:40,822 - INFO - 🎨 Generating test dataset...
+2025-07-30 12:52:40,994 - INFO - 📎 Processed: person_001.jpg (11446 bytes)
+2025-07-30 12:52:40,995 - INFO - 📎 Processed: person_001.txt (56 bytes)
+2025-07-30 12:52:41,000 - INFO - 📎 Processed: person_002.jpg (11478 bytes)
+2025-07-30 12:52:41,001 - INFO - 📎 Processed: person_002.txt (45 bytes)
+2025-07-30 12:52:41,002 - INFO - 📎 Processed: person_003.jpg (11441 bytes)
+2025-07-30 12:52:41,004 - INFO - 📎 Processed: person_003.txt (52 bytes)
+2025-07-30 12:52:41,006 - INFO - 📎 Processed: style_001.jpg (11277 bytes)
+2025-07-30 12:52:41,008 - INFO - 📎 Processed: style_001.txt (42 bytes)
+2025-07-30 12:52:41,009 - INFO - 📎 Processed: style_002.jpg (11262 bytes)
+2025-07-30 12:52:41,010 - INFO - 📎 Processed: style_002.txt (36 bytes)
+2025-07-30 12:52:41,010 - INFO - 📡 Making request to https://api.runpod.ai/v2/noo81tr4l2422v/runsync
+2025-07-30 12:52:41,011 - INFO - 📦 Payload type: upload_training_data
+2025-07-30 12:53:41,101 - ERROR - 🚨 Request failed: HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)
+2025-07-30 12:53:41,101 - ERROR - ❌ upload_training_data - FAILED: HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)
+2025-07-30 12:53:41,102 - WARNING - ⚠️ Skipping training test - upload failed
+2025-07-30 12:53:41,102 - INFO - 
+🎨 Testing Start Generation...
+2025-07-30 12:53:41,102 - INFO - 📡 Making request to https://api.runpod.ai/v2/noo81tr4l2422v/run
+2025-07-30 12:53:41,103 - INFO - 📦 Payload type: generate
+2025-07-30 12:53:41,556 - INFO - 📥 Response status: 200
+2025-07-30 12:53:41,556 - INFO - ✅ start_generation - SUCCESS
+2025-07-30 12:53:41,556 - INFO - 
+📋 Testing Get Processes...
+2025-07-30 12:53:41,557 - INFO - 📡 Making request to https://api.runpod.ai/v2/noo81tr4l2422v/runsync
+2025-07-30 12:53:41,557 - INFO - 📦 Payload type: processes
+2025-07-30 12:54:41,559 - ERROR - 🚨 Request failed: HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)
+2025-07-30 12:54:41,560 - ERROR - ❌ get_processes - FAILED: HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)
+2025-07-30 12:54:41,560 - INFO - 
+🎭 Testing Get LoRA Models...
+2025-07-30 12:54:41,560 - INFO - 📡 Making request to https://api.runpod.ai/v2/noo81tr4l2422v/runsync
+2025-07-30 12:54:41,560 - INFO - 📦 Payload type: lora_models
+2025-07-30 12:55:41,635 - ERROR - 🚨 Request failed: HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)
+2025-07-30 12:55:41,636 - ERROR - ❌ get_lora_models - FAILED: HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)
+2025-07-30 12:55:41,636 - INFO - 
+⬇️ Testing Bulk Download...
+2025-07-30 12:55:41,636 - INFO - 📡 Making request to https://api.runpod.ai/v2/noo81tr4l2422v/runsync
+2025-07-30 12:55:41,637 - INFO - 📦 Payload type: bulk_download
+2025-07-30 12:56:41,734 - ERROR - 🚨 Request failed: HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)
+2025-07-30 12:56:41,734 - ERROR - ❌ bulk_download - FAILED: HTTPSConnectionPool(host='api.runpod.ai', port=443): Read timed out. (read timeout=60)
+2025-07-30 12:56:41,735 - INFO - 
+==================================================
+2025-07-30 12:56:41,735 - INFO - 📊 TEST SUMMARY
+2025-07-30 12:56:41,736 - INFO - ==================================================
+2025-07-30 12:56:41,736 - INFO - ✅ Passed: 2/7
+2025-07-30 12:56:41,736 - INFO - ❌ Failed: 5/7
+2025-07-30 12:56:41,736 - INFO - 📈 Success Rate: 28.6%
+2025-07-30 12:56:41,737 - INFO -    health: ✅ PASS
+2025-07-30 12:56:41,738 - INFO -    upload: ❌ FAIL
+2025-07-30 12:56:41,739 - INFO -    training: ❌ FAIL
+2025-07-30 12:56:41,739 - INFO -    generation: ✅ PASS
+2025-07-30 12:56:41,739 - INFO -    processes: ❌ FAIL
+2025-07-30 12:56:41,740 - INFO -    lora_models: ❌ FAIL
+2025-07-30 12:56:41,740 - INFO -    bulk_download: ❌ FAIL
+2025-07-30 12:56:41,740 - INFO - ==================================================
+2025-07-30 12:56:41,744 - INFO - 💾 Results saved to: test_results.json
+2025-07-30 12:56:41,744 - INFO - 📝 Log saved to: runpod_test_log.txt
