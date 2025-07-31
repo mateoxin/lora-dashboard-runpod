@@ -1,0 +1,13 @@
+# 🚀 Minimal requirements for instant startup
+# Heavy dependencies installed at runtime
+
+runpod>=1.5.1
+pyyaml>=6.0
+Pillow>=10.0.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+
+# Optional: Add these if you want them pre-installed
+# torch  # Installed at runtime for faster RunPod cache usage
+# transformers  # Installed at runtime  
+# diffusers  # Installed at runtime
