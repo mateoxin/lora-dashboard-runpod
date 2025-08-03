@@ -1,0 +1,31 @@
+{
+  "start_time": "2025-07-30T22:43:03.806656",
+  "strategy": "async_only_with_polling",
+  "tests": [
+    {
+      "test_name": "health_async",
+      "timestamp": "2025-07-30T22:43:04.893677",
+      "success": true,
+      "data": {
+        "message": "Simple backend is working!",
+        "status": "healthy",
+        "timestamp": "2025-07-30T14:43:04.221382"
+      },
+      "error": null
+    },
+    {
+      "test_name": "upload_async",
+      "timestamp": "2025-07-30T22:43:10.665085",
+      "success": true,
+      "data": {
+        "training_folder": "/workspace/training_data/test_async_4916e63a"
+      },
+      "error": null
+    }
+  ],
+  "summary": {
+    "total_tests": 2,
+    "passed_tests": 2,
+    "success_rate": "100.0%"
+  }
+}

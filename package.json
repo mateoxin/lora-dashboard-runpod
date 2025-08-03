@@ -1,0 +1,58 @@
+{
+  "name": "lora-dashboard-runpod",
+  "version": "1.0.0",
+  "description": "🎨 LoRA Dashboard - Serverless Training & Generation Suite with Angular 17 + FastAPI",
+  "main": "index.js",
+  "scripts": {
+    "install:frontend": "cd Serverless/Front/lora-dashboard && npm install",
+    "install:backend": "cd Serverless/Backend && pip install -r requirements.txt",
+    "install:all": "npm run install:frontend && npm run install:backend",
+    "start:frontend": "cd Serverless/Front/lora-dashboard && npm run start:local",
+    "start:backend": "cd Serverless/Backend && python -m uvicorn app.main:app --reload --port 8000",
+    "start:all": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "build:frontend": "cd Serverless/Front/lora-dashboard && npm run build:prod",
+    "build:backend": "cd Serverless/Backend && docker build -t lora-dashboard-backend .",
+    "test:frontend": "cd Serverless/Front/lora-dashboard && npm test",
+    "test:backend": "cd Serverless/Backend && pytest",
+    "test:all": "npm run test:frontend && npm run test:backend",
+    "deploy:runpod": "cd Serverless/Backend && docker build -t lora-dashboard-backend . && echo 'Deploy to RunPod with pre-configured tokens'",
+    "dev": "npm run start:all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mateoxin/lora-dashboard-runpod.git"
+  },
+  "keywords": [
+    "lora",
+    "ai",
+    "machine-learning",
+    "flux",
+    "image-generation",
+    "training",
+    "angular",
+    "fastapi",
+    "runpod",
+    "serverless",
+    "dashboard",
+    "typescript",
+    "python"
+  ],
+  "author": "Mateusz (mateoxin)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mateoxin/lora-dashboard-runpod/issues"
+  },
+  "homepage": "https://github.com/mateoxin/lora-dashboard-runpod#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "config": {
+    "frontend_url": "http://localhost:4200",
+    "backend_url": "http://localhost:8000",
+    "runpod_endpoint": "https://api.runpod.ai/v2/rqwaizbda7ucsj"
+  }
+}

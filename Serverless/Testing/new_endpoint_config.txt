@@ -1,0 +1,36 @@
+🚀 NOWY ENDPOINT - KONFIGURACJA
+
+📋 SETTINGS:
+=============
+Name: lora-dashboard-backend-fix-v8
+Docker Image: mateoxin/lora-dashboard-backend:v7-runpod-compliant
+GPU Type: RTX 4090/5090 (24GB)
+
+⚙️ CONFIGURATION:
+==================
+Min Workers: 1
+Max Workers: 2
+Idle Timeout: 60 seconds
+Container Disk: 15 GB  ← ZWIĘKSZONE z 10GB
+Container Memory: 12288 MB  ← ZWIĘKSZONE z 10240MB
+
+🔑 ENVIRONMENT VARIABLES:
+==========================
+RUNPOD_SERVERLESS=true
+
+📡 PORTS:
+=========
+8000/http
+
+💡 WAŻNE ZMIANY:
+================
+- Zwiększony Container Disk (15GB zamiast 10GB)
+- Zwiększona Memory (12GB zamiast 10GB) 
+- Tylko 1-2 workery (mniej obciążenia)
+- Dłuższy Idle Timeout (60s)
+
+🎯 PO STWORZENIU:
+=================
+1. Skopiuj nowy Endpoint ID
+2. Aktualizuj verify_fix.py: ENDPOINT_ID = "nowy-id"
+3. Uruchom: python verify_fix.py 

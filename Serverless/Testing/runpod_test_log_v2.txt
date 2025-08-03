@@ -1,0 +1,73 @@
+2025-07-30 13:02:59,822 - INFO - 🚀 Starting RunPod Backend Test Suite v2.0
+2025-07-30 13:02:59,823 - INFO - 🎯 Endpoint: noo81tr4l2422v
+2025-07-30 13:02:59,823 - INFO - 📅 Start time: 2025-07-30 13:02:59.823890
+2025-07-30 13:02:59,824 - INFO - 🔧 Improvements: smaller payloads, correct job types, increased timeouts
+2025-07-30 13:02:59,824 - INFO - 
+🔗 Phase 1: Basic Connectivity
+2025-07-30 13:03:00,358 - INFO - ✅ endpoint_connectivity - SUCCESS (0.5s)
+2025-07-30 13:03:00,358 - INFO - 
+🔍 Phase 2: Health Check
+2025-07-30 13:03:00,359 - INFO - 📡 Making request to https://api.runpod.ai/v2/noo81tr4l2422v/runsync
+2025-07-30 13:03:00,365 - INFO - 📦 Payload: type=health, size=29 bytes, timeout=120s
+2025-07-30 13:04:30,863 - INFO - 📥 Response: status=200, duration=90.5s
+2025-07-30 13:04:30,863 - INFO - ✅ health_check - SUCCESS (90.5s)
+2025-07-30 13:04:30,864 - INFO - 
+⚡ Phase 3: Quick Operations
+2025-07-30 13:04:30,864 - INFO - 📋 Testing Get Processes...
+2025-07-30 13:04:30,864 - INFO - 📡 Making request to https://api.runpod.ai/v2/noo81tr4l2422v/runsync
+2025-07-30 13:04:30,864 - INFO - 📦 Payload: type=processes, size=32 bytes, timeout=120s
+2025-07-30 13:06:01,263 - INFO - 📥 Response: status=200, duration=90.4s
+2025-07-30 13:06:01,263 - INFO - ✅ get_processes - SUCCESS (90.4s)
+2025-07-30 13:06:01,264 - INFO - 📋 Found 0 processes
+2025-07-30 13:06:01,264 - INFO - 🎭 Testing Get LoRA Models (FIXED)...
+2025-07-30 13:06:01,264 - INFO - 📡 Making request to https://api.runpod.ai/v2/noo81tr4l2422v/runsync
+2025-07-30 13:06:01,265 - INFO - 📦 Payload: type=lora, size=27 bytes, timeout=120s
+2025-07-30 13:07:31,772 - INFO - 📥 Response: status=200, duration=90.5s
+2025-07-30 13:07:31,773 - INFO - ✅ get_lora_models_fixed - SUCCESS (90.5s)
+2025-07-30 13:07:31,774 - INFO - 🎭 Found 0 LoRA models
+2025-07-30 13:07:31,776 - INFO - ⬇️ Testing Bulk Download...
+2025-07-30 13:07:31,777 - INFO - 📡 Making request to https://api.runpod.ai/v2/noo81tr4l2422v/runsync
+2025-07-30 13:07:31,778 - INFO - 📦 Payload: type=bulk_download, size=119 bytes, timeout=120s
+2025-07-30 13:09:02,179 - INFO - 📥 Response: status=200, duration=90.4s
+2025-07-30 13:09:02,180 - INFO - ✅ bulk_download_simple - SUCCESS (90.4s)
+2025-07-30 13:09:02,180 - INFO - 
+📁 Phase 4: File Operations
+2025-07-30 13:09:02,181 - INFO - 📁 Testing Upload (Mini Dataset)...
+2025-07-30 13:09:02,181 - INFO - 🎨 Generating minimal test dataset (2 images)...
+2025-07-30 13:09:02,235 - INFO - 📎 Processed: test_001.jpg (1730 bytes)
+2025-07-30 13:09:02,236 - INFO - 📎 Processed: test_001.txt (32 bytes)
+2025-07-30 13:09:02,237 - INFO - 📎 Processed: test_002.jpg (1730 bytes)
+2025-07-30 13:09:02,237 - INFO - 📎 Processed: test_002.txt (28 bytes)
+2025-07-30 13:09:02,238 - INFO - 📊 Total payload: 3520 bytes, 4 files
+2025-07-30 13:09:02,238 - INFO - 📡 Making request to https://api.runpod.ai/v2/noo81tr4l2422v/runsync
+2025-07-30 13:09:02,238 - INFO - 📦 Payload: type=upload_training_data, size=5187 bytes, timeout=120s
+2025-07-30 13:10:32,664 - INFO - 📥 Response: status=200, duration=90.4s
+2025-07-30 13:10:32,664 - INFO - ✅ upload_training_data_mini - SUCCESS (90.4s)
+2025-07-30 13:10:32,665 - INFO - 📁 Training folder: None
+2025-07-30 13:10:32,665 - INFO - 
+🎨 Phase 5: Generation Operations
+2025-07-30 13:10:32,665 - INFO - 🎨 Testing Start Generation...
+2025-07-30 13:10:32,665 - INFO - 📡 Making request to https://api.runpod.ai/v2/noo81tr4l2422v/run
+2025-07-30 13:10:32,666 - INFO - 📦 Payload: type=generate, size=409 bytes, timeout=30s
+2025-07-30 13:10:33,063 - INFO - 📥 Response: status=200, duration=0.4s
+2025-07-30 13:10:33,064 - INFO - ✅ start_generation_quick - SUCCESS (0.4s)
+2025-07-30 13:10:33,064 - INFO - 
+============================================================
+2025-07-30 13:10:33,064 - INFO - 📊 TEST SUMMARY v2.0
+2025-07-30 13:10:33,065 - INFO - ============================================================
+2025-07-30 13:10:33,065 - INFO - ✅ Passed: 6/7
+2025-07-30 13:10:33,065 - INFO - ❌ Failed: 1/7
+2025-07-30 13:10:33,066 - INFO - 📈 Success Rate: 85.7%
+2025-07-30 13:10:33,066 - INFO - 
+📋 DETAILED RESULTS:
+2025-07-30 13:10:33,066 - INFO -    connectivity: ✅ PASS
+2025-07-30 13:10:33,067 - INFO -    health: ✅ PASS
+2025-07-30 13:10:33,067 - INFO -    processes: ✅ PASS
+2025-07-30 13:10:33,067 - INFO -    lora_models: ✅ PASS
+2025-07-30 13:10:33,067 - INFO -    bulk_download: ✅ PASS
+2025-07-30 13:10:33,068 - INFO -    upload_mini: ❌ FAIL
+2025-07-30 13:10:33,068 - INFO -    generation: ✅ PASS
+2025-07-30 13:10:33,068 - INFO - ============================================================
+2025-07-30 13:10:33,069 - INFO - ⚠️ Most tests passed. Check failed tests for minor issues.
+2025-07-30 13:10:33,074 - INFO - 💾 Results saved to: test_results_v2.json
+2025-07-30 13:10:33,074 - INFO - 📝 Log saved to: runpod_test_log_v2.txt

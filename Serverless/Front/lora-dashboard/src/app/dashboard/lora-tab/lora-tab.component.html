@@ -1,0 +1,215 @@
+<div class="p-6 space-y-6">
+  <!-- Header with Actions -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-900">LoRA Image Generation</h2>
+    <div class="flex space-x-2">
+      <button 
+        mat-stroked-button 
+        color="primary"
+        (click)="loadDefaultConfig()"
+        matTooltip="Reset to default configuration">
+        <mat-icon>refresh</mat-icon>
+        Reset
+      </button>
+    </div>
+  </div>
+
+  <!-- LoRA Selection -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- LoRA Model Selection -->
+    <div class="lg:col-span-1">
+      <mat-card class="h-full">
+        <mat-card-header>
+          <mat-card-title class="flex items-center space-x-2">
+            <mat-icon class="text-blue-600">memory</mat-icon>
+            <span>Select LoRA Model</span>
+          </mat-card-title>
+        </mat-card-header>
+        
+        <mat-card-content class="space-y-4">
+          <!-- LoRA Dropdown -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Available LoRA Models</mat-label>
+            <mat-select 
+              [(value)]="selectedLoRA" 
+              (selectionChange)="onLoRASelected()"
+              [disabled]="isLoadingModels">
+              <mat-option *ngFor="let model of loraModels" [value]="model">
+                {{ model.name }} ({{ formatFileSize(model.size) }})
+              </mat-option>
+            </mat-select>
+            <mat-icon matSuffix>model_training</mat-icon>
+          </mat-form-field>
+
+          <!-- Loading indicator -->
+          <div *ngIf="isLoadingModels" class="flex items-center justify-center py-4">
+            <mat-spinner diameter="30"></mat-spinner>
+            <span class="ml-2 text-gray-600">Loading models...</span>
+          </div>
+
+          <!-- Selected Model Info -->
+          <div *ngIf="selectedLoRA && !isLoadingModels" class="bg-gray-50 rounded-lg p-4 space-y-3">
+            <h4 class="font-semibold text-gray-900">{{ selectedLoRA.name }}</h4>
+            
+            <!-- LoRA Path with Copy Button -->
+            <div class="bg-white rounded-lg p-3 border border-gray-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-medium text-gray-700 uppercase tracking-wide">LoRA Path</span>
+                <button mat-icon-button 
+                        (click)="copyLoRAPath()"
+                        matTooltip="Copy LoRA path to clipboard"
+                        class="text-blue-600 hover:bg-blue-50">
+                  <mat-icon class="text-sm">content_copy</mat-icon>
+                </button>
+              </div>
+              <div class="font-mono text-xs text-gray-800 bg-gray-50 p-2 rounded border break-all">
+                {{ selectedLoRA.path }}
+              </div>
+            </div>
+            
+            <!-- Metadata -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="text-sm">
+                <span class="text-gray-500">Created:</span><br>
+                <span class="text-gray-900">{{ selectedLoRA.created_at | date:'medium' }}</span>
+              </div>
+              <div class="text-sm" *ngIf="selectedLoRA.metadata?.trigger_word">
+                <span class="text-gray-500">Trigger Word:</span><br>
+                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">
+                  {{ selectedLoRA.metadata?.trigger_word }}
+                </span>
+              </div>
+            </div>
+            
+            <div class="flex items-center space-x-4 text-sm text-gray-600">
+              <span class="flex items-center space-x-1">
+                <mat-icon class="text-sm">storage</mat-icon>
+                <span>{{ formatFileSize(selectedLoRA.size) }}</span>
+              </span>
+              <span class="flex items-center space-x-1" *ngIf="selectedLoRA.metadata?.steps">
+                <mat-icon class="text-sm">timeline</mat-icon>
+                <span>{{ selectedLoRA.metadata?.steps }} steps</span>
+              </span>
+              <span class="flex items-center space-x-1" *ngIf="selectedLoRA.metadata?.model_type">
+                <mat-icon class="text-sm">memory</mat-icon>
+                <span>{{ selectedLoRA.metadata?.model_type }}</span>
+              </span>
+            </div>
+            
+            <p class="text-xs text-gray-400">
+              Added {{ getRelativeTime(selectedLoRA.created_at) }}
+            </p>
+          </div>
+
+          <!-- No models message -->
+          <div *ngIf="!isLoadingModels && loraModels.length === 0" 
+               class="text-center py-8 text-gray-500">
+            <mat-icon class="text-4xl mb-2">error_outline</mat-icon>
+            <p>No LoRA models available</p>
+            <p class="text-sm">Train a model first or check your storage configuration</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Configuration Editor -->
+    <div class="lg:col-span-2">
+      <mat-card class="h-full">
+        <mat-card-header>
+          <mat-card-title class="flex items-center space-x-2">
+            <mat-icon class="text-green-600">settings</mat-icon>
+            <span>Generation Configuration</span>
+          </mat-card-title>
+          <div class="flex-1"></div>
+          <div class="flex items-center space-x-2">
+            <mat-icon [color]="yamlConfig.trim() ? 'primary' : 'warn'">
+              {{ yamlConfig.trim() ? 'check_circle' : 'error' }}
+            </mat-icon>
+            <span class="text-sm" 
+                  [ngClass]="yamlConfig.trim() ? 'text-green-700' : 'text-red-700'">
+              {{ yamlConfig.trim() ? 'Configuration ready' : 'Configuration required' }}
+            </span>
+          </div>
+        </mat-card-header>
+        
+        <mat-card-content class="h-96 p-0">
+          <!-- Loading indicator for editor -->
+          <div *ngIf="!yamlConfig" class="flex items-center justify-center h-full">
+            <mat-spinner diameter="40"></mat-spinner>
+            <span class="ml-3">Loading configuration...</span>
+          </div>
+
+          <!-- Simple YAML Editor -->
+          <div *ngIf="yamlConfig" class="h-full w-full relative">
+            <div class="absolute top-0 left-0 right-0 bg-gray-800 text-gray-300 px-4 py-2 text-sm border-b border-gray-600 z-10">
+              <div class="flex items-center justify-between">
+                <span class="flex items-center gap-2">
+                  <mat-icon class="text-sm">auto_awesome</mat-icon>
+                  Generation Configuration
+                </span>
+                <span class="text-xs opacity-75">Edit YAML configuration - LoRA path will be auto-updated</span>
+              </div>
+            </div>
+            <textarea 
+              [(ngModel)]="yamlConfig"
+              class="h-full w-full pt-12 p-4 font-mono text-sm bg-gray-900 text-gray-100 border-none outline-none resize-none leading-relaxed"
+              placeholder="# Generation configuration will appear here...
+# The LoRA path will be automatically updated when you select a model"
+              spellcheck="false">
+            </textarea>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Generation Controls -->
+  <div class="flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+      <span class="text-sm text-gray-600">
+        Ready to generate images with {{ selectedLoRA?.name || 'selected LoRA model' }}
+      </span>
+    </div>
+    
+    <div class="flex space-x-3">
+      <button 
+        mat-button 
+        color="primary"
+        (click)="loadDefaultConfig()"
+        [disabled]="isGenerating">
+        <mat-icon>refresh</mat-icon>
+        Reset Config
+      </button>
+      
+      <button 
+        mat-raised-button 
+        color="primary"
+        (click)="startGeneration()"
+        [disabled]="!selectedLoRA || !yamlConfig.trim() || isGenerating"
+        class="min-w-32">
+        <mat-icon *ngIf="!isGenerating">play_arrow</mat-icon>
+        <mat-spinner *ngIf="isGenerating" diameter="20" class="mr-2"></mat-spinner>
+        {{ isGenerating ? 'Generating...' : 'Start Generation' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Info Panel -->
+  <mat-card class="bg-blue-50 border border-blue-200">
+    <mat-card-content>
+      <div class="flex items-start space-x-3">
+        <mat-icon class="text-blue-600 mt-1">info</mat-icon>
+        <div class="flex-1">
+          <h4 class="font-semibold text-blue-900 mb-2">Generation Tips</h4>
+          <ul class="text-sm text-blue-800 space-y-1">
+            <li>• Select a LoRA model that matches your desired style or subject</li>
+            <li>• Make sure your prompts are compatible with the LoRA model</li>
+            <li>• Adjust sample steps (10-30) and guidance scale (1-7) for quality vs speed</li>
+            <li>• Use descriptive prompts for better results</li>
+            <li>• Generation process will appear in the Processes tab</li>
+          </ul>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,1009 @@
+2025-07-31T08:23:06.029975459Z 🚀 Starting Simple RunPod Handler
+2025-07-31T08:23:06.030096958Z ========================================
+2025-07-31T08:23:06.030104318Z --- Starting Serverless Worker |  Version 1.7.13 ---
+2025-07-31T08:25:41.116033295Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:25:41.116084434Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:25:41.116337793Z {"requestId": "sync-838bbd7b-06f7-492d-a700-badd4727274c-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:25:41.116357593Z 🎯 [HANDLER] Received job: {'delayTime': 94, 'id': 'sync-838bbd7b-06f7-492d-a700-badd4727274c-e1', 'input': {'type': 'health'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:25:41.116365553Z 📦 [HANDLER] Processing: health
+2025-07-31T08:25:41.116371363Z ✅ [HANDLER] Success: {'status': 'healthy', 'timestamp': '2025-07-31T08:25:41.116238', 'message': 'Simple backend is working!'}
+2025-07-31T08:25:41.141113238Z {"requestId": "sync-838bbd7b-06f7-492d-a700-badd4727274c-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:25:59.631982560Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:25:59.632024479Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:25:59.632030669Z {"requestId": "sync-7664b7a0-8522-4a90-941f-8cedc392add6-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:25:59.632037199Z 🎯 [HANDLER] Received job: {'delayTime': 101, 'id': 'sync-7664b7a0-8522-4a90-941f-8cedc392add6-e2', 'input': {'type': 'health'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:25:59.632043379Z 📦 [HANDLER] Processing: health
+2025-07-31T08:25:59.632049959Z ✅ [HANDLER] Success: {'status': 'healthy', 'timestamp': '2025-07-31T08:25:59.631856', 'message': 'Simple backend is working!'}
+2025-07-31T08:25:59.663135245Z {"requestId": "sync-7664b7a0-8522-4a90-941f-8cedc392add6-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:26:00.864911717Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:26:00.864942467Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:26:00.864948447Z {"requestId": "sync-68878dae-3f07-4629-bea8-8f36f17b28d2-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:26:00.864956857Z 🎯 [HANDLER] Received job: {'delayTime': 714, 'id': 'sync-68878dae-3f07-4629-bea8-8f36f17b28d2-e1', 'input': {'cleanup_existing': True, 'files': [{'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'test_1.png'}, {'content': 'VGVzdCBpbWFnZSAxLCBhIHNhbXBsZSB0cmFpbmluZyBpbWFnZSBmb3IgTG9SQQ==', 'filename': 'test_1.txt'}, {'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'test_2.png'}, {'content': 'VGVzdCBpbWFnZSAyLCBhIHNhbXBsZSB0cmFpbmluZyBpbWFnZSBmb3IgTG9SQQ==', 'filename': 'test_2.txt'}, {'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'test_3.png'}, {'content': 'VGVzdCBpbWFnZSAzLCBhIHNhbXBsZSB0cmFpbmluZyBpbWFnZSBmb3IgTG9SQQ==', 'filename': 'test_3.txt'}], 'training_name': '4worker_test', 'trigger_word': 'test_subject', 'type': 'upload_training_data'}, 'status': 'IN_PROGRESS'}
+2025-07-31T08:26:00.864968487Z 📦 [HANDLER] Processing: upload_training_data
+2025-07-31T08:26:00.864981057Z 📁 [UPLOAD] Starting upload processing...
+2025-07-31T08:26:00.867787419Z 📂 [UPLOAD] Created folder: /workspace/training_data/4worker_test_782e013d
+2025-07-31T08:26:00.867997088Z ✅ [UPLOAD] Saved: test_1.png (90 bytes)
+2025-07-31T08:26:00.868007768Z ✅ [UPLOAD] Saved: test_1.txt (46 bytes)
+2025-07-31T08:26:00.868013658Z ✅ [UPLOAD] Saved: test_2.png (90 bytes)
+2025-07-31T08:26:00.868175847Z ✅ [UPLOAD] Saved: test_2.txt (46 bytes)
+2025-07-31T08:26:00.868192037Z ✅ [UPLOAD] Saved: test_3.png (90 bytes)
+2025-07-31T08:26:00.868292106Z ✅ [UPLOAD] Saved: test_3.txt (46 bytes)
+2025-07-31T08:26:00.868569774Z 🎉 [UPLOAD] Success: /workspace/training_data/4worker_test_782e013d (0 images, 3 captions)
+2025-07-31T08:26:00.868643304Z ✅ [HANDLER] Success: {'status': 'success', 'uploaded_files': [{'filename': 'test_1.png', 'path': '/workspace/training_data/4worker_test_782e013d/test_1.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:26:00.867746'}, {'filename': 'test_1.txt', 'path': '/workspace/training_data/4worker_test_782e013d/test_1.txt', 'size': 46, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:26:00.867878'}, {'filename': 'test_2.png', 'path': '/workspace/training_data/4worker_test_782e013d/test_2.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:26:00.867959'}, {'filename': 'test_2.txt', 'path': '/workspace/training_data/4worker_test_782e013d/test_2.txt', 'size': 46, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:26:00.868043'}, {'filename': 'test_3.png', 'path': '/workspace/training_data/4worker_test_782e013d/test_3.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:26:00.868135'}, {'filename': 'test_3.txt', 'path': '/workspace/training_data/4worker_test_782e013d/test_3.txt', 'size': 46, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:26:00.868222'}], 'training_folder': '/workspace/training_data/4worker_test_782e013d', 'total_images': 0, 'total_captions': 3, 'training_name': '4worker_test', 'trigger_word': 'test_subject', 'message': 'Successfully uploaded 6 files to /workspace/training_data/4worker_test_782e013d', 'timestamp': '2025-07-31T08:26:00.868414'}
+2025-07-31T08:26:00.898174829Z {"requestId": "sync-68878dae-3f07-4629-bea8-8f36f17b28d2-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:26:02.103525639Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:26:02.103548719Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:26:02.103802997Z {"requestId": "sync-6ee39d87-ed52-4560-8d16-129fa481c8ab-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:26:02.103820167Z 🎯 [HANDLER] Received job: {'delayTime': 771, 'id': 'sync-6ee39d87-ed52-4560-8d16-129fa481c8ab-e2', 'input': {'type': 'train_with_yaml', 'yaml_config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}}, 'status': 'IN_PROGRESS'}
+2025-07-31T08:26:02.103829787Z 📦 [HANDLER] Processing: train_with_yaml
+2025-07-31T08:26:02.103835937Z 📝 [TRAIN_YAML] Starting LoRA training with YAML config...
+2025-07-31T08:26:02.103842247Z 🔧 [TRAIN_YAML] Setting up AI toolkit...
+2025-07-31T08:26:02.103847877Z 🛠️ [AI-TOOLKIT] Already exists at /workspace/ai-toolkit
+2025-07-31T08:26:02.103853317Z 🔍 [AI-TOOLKIT] Found components: ['run.py', 'toolkit', 'config']
+2025-07-31T08:26:02.103860027Z ✅ [AI-TOOLKIT] Verified and ready
+2025-07-31T08:26:02.103865437Z 🎯 [TRAIN_YAML] Letting ai-toolkit handle model download automatically...
+2025-07-31T08:26:02.103871297Z 🎯 [TRAIN_YAML] Keeping original model path in config (ai-toolkit will download)
+2025-07-31T08:26:02.103892157Z 📁 [TRAIN_YAML] Updated dataset path to: /workspace/training_data
+2025-07-31T08:26:02.107874662Z 📝 [TRAIN_YAML] Created config file: /tmp/training_config_18953af0.yaml
+2025-07-31T08:26:02.107897382Z 🔍 [TRAIN_YAML] Config content:
+2025-07-31T08:26:02.109924109Z config:
+2025-07-31T08:26:02.109947289Z   name: 4worker_test_lora
+2025-07-31T08:26:02.109954169Z   process:
+2025-07-31T08:26:02.109959629Z   - datasets:
+2025-07-31T08:26:02.109965239Z     - cache_latents_to_disk: true
+2025-07-31T08:26:02.109971019Z       caption_dropout_rate: 0.1
+2025-07-31T08:26:02.109976429Z       caption_ext: txt
+2025-07-31T08:26:02.109982029Z       folder_path: /workspace/training_data
+2025-07-31T08:26:02.109994859Z       resolution:
+2025-07-31T08:26:02.110027559Z       - 896
+2025-07-31T08:26:02.110033719Z       - 896
+2025-07-31T08:26:02.110040269Z       shuffle_tokens: false
+2025-07-31T08:26:02.110057338Z     device: cuda:0
+2025-07-31T08:26:02.110068868Z     model:
+2025-07-31T08:26:02.110075918Z       is_flux: true
+2025-07-31T08:26:02.110087088Z       name_or_path: black-forest-labs/FLUX.1-dev
+2025-07-31T08:26:02.110093588Z       quantize: false
+2025-07-31T08:26:02.110108208Z     network:
+2025-07-31T08:26:02.110118128Z       linear: 16
+2025-07-31T08:26:02.110124478Z       linear_alpha: 16
+2025-07-31T08:26:02.110135688Z       type: lora
+2025-07-31T08:26:02.110142028Z     sample:
+2025-07-31T08:26:02.110153018Z       guidance_scale: 2
+2025-07-31T08:26:02.110159238Z       height: 896
+2025-07-31T08:26:02.110169778Z       neg: ''
+2025-07-31T08:26:02.110178488Z       prompts:
+2025-07-31T08:26:02.110188588Z       - test_subject, a portrait photo
+2025-07-31T08:26:02.110195088Z       - test_subject, standing in a field
+2025-07-31T08:26:02.110206407Z       sample_every: 50
+2025-07-31T08:26:02.110212307Z       sample_steps: 20
+2025-07-31T08:26:02.110222657Z       sampler: flowmatch
+2025-07-31T08:26:02.110236927Z       seed: 42
+2025-07-31T08:26:02.110246647Z       walk_seed: false
+2025-07-31T08:26:02.110252857Z       width: 896
+2025-07-31T08:26:02.110268607Z     save:
+2025-07-31T08:26:02.110278757Z       dtype: float16
+2025-07-31T08:26:02.110284057Z       max_step_saves_to_keep: 1
+2025-07-31T08:26:02.110291007Z       save_every: 50
+2025-07-31T08:26:02.110302167Z     train:
+2025-07-31T08:26:02.110311817Z       batch_size: 1
+2025-07-31T08:26:02.110322227Z       dtype: bf16
+2025-07-31T08:26:02.110331607Z       ema_config:
+2025-07-31T08:26:02.110340907Z         use_ema: false
+2025-07-31T08:26:02.110350057Z       gradient_accumulation_steps: 4
+2025-07-31T08:26:02.110359166Z       gradient_checkpointing: true
+2025-07-31T08:26:02.110365666Z       lr: 0.0004
+2025-07-31T08:26:02.110376306Z       noise_scheduler: flowmatch
+2025-07-31T08:26:02.110385646Z       optimizer: adamw
+2025-07-31T08:26:02.110396146Z       steps: 10
+2025-07-31T08:26:02.110402836Z       train_text_encoder: false
+2025-07-31T08:26:02.110413906Z       train_unet: true
+2025-07-31T08:26:02.110420716Z     training_folder: /workspace/training_data
+2025-07-31T08:26:02.110432476Z     trigger_word: test_subject
+2025-07-31T08:26:02.110443676Z     type: sd_trainer
+2025-07-31T08:26:02.110454116Z job: extension
+2025-07-31T08:26:02.111240901Z 🚀 [TRAINING] Starting training for process 18953af0✅ [HANDLER] Success: {'status': 'success', 'process_id': '18953af0', 'message': 'Training started with YAML config, process ID: 18953af0', 'config_path': '/tmp/training_config_18953af0.yaml', 'dataset_path': '/workspace/training_data', 'timestamp': '2025-07-31T08:26:02.111009'}
+2025-07-31T08:26:02.111520619Z 🔐 [TRAINING] Logging into HuggingFace...
+2025-07-31T08:26:02.137287668Z {"requestId": "sync-6ee39d87-ed52-4560-8d16-129fa481c8ab-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:26:03.156009744Z ✅ [TRAINING] Successfully logged into HuggingFace
+2025-07-31T08:26:03.156095913Z 🎯 [TRAINING] Starting ai-toolkit with config: /tmp/training_config_18953af0.yaml
+2025-07-31T08:26:03.344402077Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:26:03.344459747Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:26:03.344466567Z {"requestId": "sync-b94cd133-3b28-48fe-9f36-22a380daf94f-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:26:03.344491207Z 🎯 [HANDLER] Received job: {'delayTime': 862, 'id': 'sync-b94cd133-3b28-48fe-9f36-22a380daf94f-e2', 'input': {'process_id': '18953af0', 'type': 'process_status'}, 'status': 'IN_PROGRESS'}
+2025-07-31T08:26:03.344497856Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:26:03.344516936Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '18953af0', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:26:02.109830', 'updated_at': '2025-07-31T08:26:02.111341', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:26:03.344263'}
+2025-07-31T08:26:03.375129435Z {"requestId": "sync-b94cd133-3b28-48fe-9f36-22a380daf94f-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:26:13.943133654Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:26:13.943177283Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:26:13.943183293Z {"requestId": "sync-8601f884-22e4-4fb2-8dff-4feb85cc106b-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:26:13.943189693Z 🎯 [HANDLER] Received job: {'delayTime': 185, 'id': 'sync-8601f884-22e4-4fb2-8dff-4feb85cc106b-e2', 'input': {'process_id': '18953af0', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:26:13.943196533Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:26:13.943256903Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '18953af0', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:26:02.109830', 'updated_at': '2025-07-31T08:26:02.111341', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:26:13.943050'}
+2025-07-31T08:26:13.975088084Z {"requestId": "sync-8601f884-22e4-4fb2-8dff-4feb85cc106b-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:26:24.756359199Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:26:24.756453138Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:26:24.756459448Z {"requestId": "sync-afd5e422-73d2-4a74-84b2-02a7707d9c5a-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:26:24.756465718Z 🎯 [HANDLER] Received job: {'delayTime': 94, 'id': 'sync-afd5e422-73d2-4a74-84b2-02a7707d9c5a-e2', 'input': {'process_id': '18953af0', 'type': 'process_status'}, 'status': 'IN_PROGRESS'}
+2025-07-31T08:26:24.756472058Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:26:24.756479578Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '18953af0', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:26:02.109830', 'updated_at': '2025-07-31T08:26:02.111341', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:26:24.755977'}
+2025-07-31T08:26:24.800262594Z {"requestId": "sync-afd5e422-73d2-4a74-84b2-02a7707d9c5a-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:26:35.588841773Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:26:35.588894753Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:26:35.588901883Z {"requestId": "sync-beb2af74-0ca8-46bd-9d4f-e080608f347e-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:26:35.588908413Z 🎯 [HANDLER] Received job: {'delayTime': 100, 'id': 'sync-beb2af74-0ca8-46bd-9d4f-e080608f347e-e2', 'input': {'process_id': '18953af0', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:26:35.588916843Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:26:35.588924993Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '18953af0', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:26:02.109830', 'updated_at': '2025-07-31T08:26:02.111341', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:26:35.588648'}
+2025-07-31T08:26:35.620664164Z {"requestId": "sync-beb2af74-0ca8-46bd-9d4f-e080608f347e-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:26:46.031267076Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:26:46.031324426Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:26:46.031330576Z {"requestId": "sync-81516c95-1f67-4a0c-bd30-8a6ab08dee41-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:26:46.031336256Z 🎯 [HANDLER] Received job: {'delayTime': 98, 'id': 'sync-81516c95-1f67-4a0c-bd30-8a6ab08dee41-e1', 'input': {'process_id': '18953af0', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:26:46.031344006Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:26:46.031351626Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '18953af0', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:26:02.109830', 'updated_at': '2025-07-31T08:26:02.111341', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:26:46.031062'}
+2025-07-31T08:26:46.063176357Z {"requestId": "sync-81516c95-1f67-4a0c-bd30-8a6ab08dee41-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:26:56.520532706Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:26:56.520587536Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:26:56.520593496Z {"requestId": "sync-99277ff4-7696-49f9-9041-30df4efb0398-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:26:56.520600126Z 🎯 [HANDLER] Received job: {'delayTime': 101, 'id': 'sync-99277ff4-7696-49f9-9041-30df4efb0398-e2', 'input': {'process_id': '18953af0', 'type': 'process_status'}, 'status': 'IN_PROGRESS'}
+2025-07-31T08:26:56.520606506Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:26:56.520614396Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '18953af0', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:26:02.109830', 'updated_at': '2025-07-31T08:26:02.111341', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:26:56.520412'}
+2025-07-31T08:26:56.555075491Z {"requestId": "sync-99277ff4-7696-49f9-9041-30df4efb0398-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:27:07.344906393Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:27:07.344961633Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:27:07.344968563Z {"requestId": "sync-862c58d5-13f7-4739-9ff9-380d8c08765f-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:27:07.344974623Z 🎯 [HANDLER] Received job: {'delayTime': 101, 'id': 'sync-862c58d5-13f7-4739-9ff9-380d8c08765f-e1', 'input': {'process_id': '18953af0', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:27:07.344981873Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:27:07.344989753Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '18953af0', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:26:02.109830', 'updated_at': '2025-07-31T08:26:02.111341', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:27:07.344700'}
+2025-07-31T08:27:07.379845615Z {"requestId": "sync-862c58d5-13f7-4739-9ff9-380d8c08765f-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:27:11.839034197Z ❌ [TRAINING] Training failed for process 18953af0: Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)
+2025-07-31T08:27:11.839097336Z               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:27:11.839104426Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__
+2025-07-31T08:27:11.839109826Z     self.setup_epoch()
+2025-07-31T08:27:11.839116406Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch
+2025-07-31T08:27:11.839121886Z     self.cache_latents_all_latents()
+2025-07-31T08:27:11.839128736Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents
+2025-07-31T08:27:11.839135026Z     file_item.load_and_process_image(self.transform, only_load_latents=True)
+2025-07-31T08:27:11.839140886Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image
+2025-07-31T08:27:11.839148546Z     img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)
+2025-07-31T08:27:11.839153776Z           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:27:11.839159216Z   File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize
+2025-07-31T08:27:11.839194616Z     return self._new(self.im.resize(size, resample, box))
+2025-07-31T08:27:11.839251065Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:27:11.839257325Z ValueError: height and width must be > 0
+2025-07-31T08:27:11.839359255Z Output: ate LoRA for Text Encoder: 0 modules.
+2025-07-31T08:27:11.839398484Z create LoRA for U-Net: 494 modules.
+2025-07-31T08:27:11.839413544Z enable LoRA for U-Net
+2025-07-31T08:27:11.839424274Z Dataset: /workspace/training_data
+2025-07-31T08:27:11.839431154Z   -  Preprocessing image dimensions
+2025-07-31T08:27:11.839438404Z   -  Found 3 images
+2025-07-31T08:27:11.839449294Z Bucket sizes for /workspace/training_data:
+2025-07-31T08:27:11.839460454Z 0x0: 3 files
+2025-07-31T08:27:11.839467324Z 1 buckets made
+2025-07-31T08:27:11.839475254Z Caching latents for /workspace/training_data
+2025-07-31T08:27:11.839486544Z  - Saving latents to disk
+2025-07-31T08:27:11.839496034Z Error running job: height and width must be > 0
+2025-07-31T08:27:11.839522964Z ========================================
+2025-07-31T08:27:11.839539254Z Result:
+2025-07-31T08:27:11.839549734Z  - 0 completed jobs
+2025-07-31T08:27:11.839556034Z  - 1 failure
+2025-07-31T08:27:11.839562103Z ========================================
+2025-07-31T08:27:18.204510490Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:27:18.204558909Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:27:18.204565009Z {"requestId": "sync-ec0689f9-e7d8-4bfa-98d1-31f3d4397890-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:27:18.204572139Z 🎯 [HANDLER] Received job: {'delayTime': 96, 'id': 'sync-ec0689f9-e7d8-4bfa-98d1-31f3d4397890-e2', 'input': {'process_id': '18953af0', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:27:18.204579009Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:27:18.204820388Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '18953af0', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:26:02.109830', 'updated_at': '2025-07-31T08:27:11.839573', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 3 images\nBucket sizes for /workspace/training_data:\n0x0: 3 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, 'timestamp': '2025-07-31T08:27:18.204388'}
+2025-07-31T08:27:18.262374908Z {"requestId": "sync-ec0689f9-e7d8-4bfa-98d1-31f3d4397890-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:27:19.436948460Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:27:19.436978490Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:27:19.436985180Z {"requestId": "sync-6b6558a0-2cd4-4f63-9a45-2f84d4800e9e-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:27:19.436991760Z 🎯 [HANDLER] Received job: {'delayTime': 529, 'id': 'sync-6b6558a0-2cd4-4f63-9a45-2f84d4800e9e-e1', 'input': {'type': 'processes'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:27:19.436998720Z 📦 [HANDLER] Processing: processes
+2025-07-31T08:27:19.437208769Z ✅ [HANDLER] Success: {'status': 'success', 'processes': [{'id': '18953af0', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:26:02.109830', 'updated_at': '2025-07-31T08:27:11.839573', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 3 images\nBucket sizes for /workspace/training_data:\n0x0: 3 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}], 'total_count': 1, 'timestamp': '2025-07-31T08:27:19.436828'}
+2025-07-31T08:27:19.464294369Z {"requestId": "sync-6b6558a0-2cd4-4f63-9a45-2f84d4800e9e-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:33.862299441Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:33.862337461Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:33.862413461Z {"requestId": "sync-d23aab63-8283-400f-a515-b7bf58b4ccb2-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:33.862423221Z 🎯 [HANDLER] Received job: {'delayTime': 95, 'id': 'sync-d23aab63-8283-400f-a515-b7bf58b4ccb2-e1', 'input': {'type': 'health'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:29:33.862426671Z 📦 [HANDLER] Processing: health
+2025-07-31T08:29:33.862430021Z ✅ [HANDLER] Success: {'status': 'healthy', 'timestamp': '2025-07-31T08:29:33.862371', 'message': 'Simple backend is working!'}
+2025-07-31T08:29:33.893096749Z {"requestId": "sync-d23aab63-8283-400f-a515-b7bf58b4ccb2-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:35.096100603Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:35.096128313Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:35.096133673Z {"requestId": "sync-95f74552-6e5f-4085-857b-f16b4c4e3424-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:35.096139693Z 🎯 [HANDLER] Received job: {'delayTime': 539, 'id': 'sync-95f74552-6e5f-4085-857b-f16b4c4e3424-e1', 'input': {'cleanup_existing': True, 'files': [{'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job1_1.png'}, {'content': 'am9iMSBzYW1wbGUgMSwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job1_1.txt'}, {'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job1_2.png'}, {'content': 'am9iMSBzYW1wbGUgMiwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job1_2.txt'}], 'training_name': 'job1', 'trigger_word': 'job1', 'type': 'upload_training_data'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:29:35.096152563Z 📦 [HANDLER] Processing: upload_training_data
+2025-07-31T08:29:35.096158013Z 📁 [UPLOAD] Starting upload processing...
+2025-07-31T08:29:35.096686820Z 🗑️ [UPLOAD] Cleaned up: /workspace/training_data/4worker_test_782e013d
+2025-07-31T08:29:35.096813959Z 🗑️ [UPLOAD] Cleaned up: /workspace/training_data/4worker_test_lora
+2025-07-31T08:29:35.096872439Z 📂 [UPLOAD] Created folder: /workspace/training_data/job1_6523f1ca
+2025-07-31T08:29:35.097032128Z ✅ [UPLOAD] Saved: job1_1.png (90 bytes)
+2025-07-31T08:29:35.097042118Z ✅ [UPLOAD] Saved: job1_1.txt (34 bytes)
+2025-07-31T08:29:35.097236676Z ✅ [UPLOAD] Saved: job1_2.png (90 bytes)
+2025-07-31T08:29:35.097251636Z ✅ [UPLOAD] Saved: job1_2.txt (34 bytes)
+2025-07-31T08:29:35.097352776Z 🎉 [UPLOAD] Success: /workspace/training_data/job1_6523f1ca (0 images, 2 captions)
+2025-07-31T08:29:35.097381275Z ✅ [HANDLER] Success: {'status': 'success', 'uploaded_files': [{'filename': 'job1_1.png', 'path': '/workspace/training_data/job1_6523f1ca/job1_1.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:35.096877'}, {'filename': 'job1_1.txt', 'path': '/workspace/training_data/job1_6523f1ca/job1_1.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:35.096971'}, {'filename': 'job1_2.png', 'path': '/workspace/training_data/job1_6523f1ca/job1_2.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:35.097056'}, {'filename': 'job1_2.txt', 'path': '/workspace/training_data/job1_6523f1ca/job1_2.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:35.097131'}], 'training_folder': '/workspace/training_data/job1_6523f1ca', 'total_images': 0, 'total_captions': 2, 'training_name': 'job1', 'trigger_word': 'job1', 'message': 'Successfully uploaded 4 files to /workspace/training_data/job1_6523f1ca', 'timestamp': '2025-07-31T08:29:35.097264'}
+2025-07-31T08:29:35.126886241Z {"requestId": "sync-95f74552-6e5f-4085-857b-f16b4c4e3424-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:36.325218095Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:36.325240755Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:36.325246155Z {"requestId": "sync-e50062a7-767f-4134-a90e-af2475da1bdc-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:36.325316524Z 🎯 [HANDLER] Received job: {'delayTime': 883, 'id': 'sync-e50062a7-767f-4134-a90e-af2475da1bdc-e2', 'input': {'type': 'train_with_yaml', 'yaml_config': {'config': {'name': 'job1_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job1, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job1', 'type': 'sd_trainer'}]}, 'job': 'extension'}}, 'status': 'IN_QUEUE'}
+2025-07-31T08:29:36.325349094Z 📦 [HANDLER] Processing: train_with_yaml
+2025-07-31T08:29:36.325356454Z 📝 [TRAIN_YAML] Starting LoRA training with YAML config...
+2025-07-31T08:29:36.325365894Z 🔧 [TRAIN_YAML] Setting up AI toolkit...
+2025-07-31T08:29:36.325387884Z 🛠️ [AI-TOOLKIT] Already exists at /workspace/ai-toolkit
+2025-07-31T08:29:36.325401014Z 🔍 [AI-TOOLKIT] Found components: ['run.py', 'toolkit', 'config']
+2025-07-31T08:29:36.325408374Z ✅ [AI-TOOLKIT] Verified and ready
+2025-07-31T08:29:36.325415094Z 🎯 [TRAIN_YAML] Letting ai-toolkit handle model download automatically...
+2025-07-31T08:29:36.325424354Z 🎯 [TRAIN_YAML] Keeping original model path in config (ai-toolkit will download)
+2025-07-31T08:29:36.325433503Z 📁 [TRAIN_YAML] Updated dataset path to: /workspace/training_data
+2025-07-31T08:29:36.327769309Z 📝 [TRAIN_YAML] Created config file: /tmp/training_config_22640a43.yaml
+2025-07-31T08:29:36.327791759Z 🔍 [TRAIN_YAML] Config content:
+2025-07-31T08:29:36.329596537Z config:
+2025-07-31T08:29:36.329617917Z   name: job1_lora
+2025-07-31T08:29:36.329624417Z   process:
+2025-07-31T08:29:36.329629827Z   - datasets:
+2025-07-31T08:29:36.329635417Z     - cache_latents_to_disk: true
+2025-07-31T08:29:36.329640987Z       caption_dropout_rate: 0
+2025-07-31T08:29:36.329647027Z       caption_ext: txt
+2025-07-31T08:29:36.329652507Z       folder_path: /workspace/training_data
+2025-07-31T08:29:36.329657767Z       resolution:
+2025-07-31T08:29:36.329671937Z       - 512
+2025-07-31T08:29:36.329677217Z       - 512
+2025-07-31T08:29:36.329682347Z       shuffle_tokens: false
+2025-07-31T08:29:36.329687787Z     device: cuda:0
+2025-07-31T08:29:36.329693117Z     model:
+2025-07-31T08:29:36.329705617Z       is_flux: true
+2025-07-31T08:29:36.329763506Z       name_or_path: black-forest-labs/FLUX.1-dev
+2025-07-31T08:29:36.329946465Z       quantize: false
+2025-07-31T08:29:36.329956615Z     network:
+2025-07-31T08:29:36.329964205Z       linear: 8
+2025-07-31T08:29:36.329995155Z       linear_alpha: 8
+2025-07-31T08:29:36.330009845Z       type: lora
+2025-07-31T08:29:36.330018085Z     sample:
+2025-07-31T08:29:36.330029345Z       guidance_scale: 2
+2025-07-31T08:29:36.330036105Z       height: 512
+2025-07-31T08:29:36.330042865Z       prompts:
+2025-07-31T08:29:36.330050435Z       - job1, portrait photo
+2025-07-31T08:29:36.330062054Z       sample_every: 5
+2025-07-31T08:29:36.330075924Z       sample_steps: 4
+2025-07-31T08:29:36.330085724Z       sampler: flowmatch
+2025-07-31T08:29:36.330092874Z       width: 512
+2025-07-31T08:29:36.330104184Z     save:
+2025-07-31T08:29:36.330116234Z       dtype: float16
+2025-07-31T08:29:36.330198664Z       max_step_saves_to_keep: 1
+2025-07-31T08:29:36.330208624Z       save_every: 5
+2025-07-31T08:29:36.330219254Z     train:
+2025-07-31T08:29:36.330233573Z       batch_size: 1
+2025-07-31T08:29:36.330245213Z       dtype: bf16
+2025-07-31T08:29:36.330338433Z       ema_config:
+2025-07-31T08:29:36.330356883Z         use_ema: false
+2025-07-31T08:29:36.330367903Z       gradient_accumulation_steps: 1
+2025-07-31T08:29:36.330379023Z       gradient_checkpointing: true
+2025-07-31T08:29:36.330393272Z       lr: 0.0001
+2025-07-31T08:29:36.330404692Z       noise_scheduler: flowmatch
+2025-07-31T08:29:36.330413192Z       optimizer: adamw
+2025-07-31T08:29:36.330420152Z       steps: 5
+2025-07-31T08:29:36.330428422Z       train_text_encoder: false
+2025-07-31T08:29:36.330447672Z       train_unet: true
+2025-07-31T08:29:36.330459362Z     training_folder: /workspace/training_data
+2025-07-31T08:29:36.330467282Z     trigger_word: job1
+2025-07-31T08:29:36.330479552Z     type: sd_trainer
+2025-07-31T08:29:36.330490542Z job: extension
+2025-07-31T08:29:36.330520432Z 🚀 [TRAINING] Starting training for process 22640a43✅ [HANDLER] Success: {'status': 'success', 'process_id': '22640a43', 'message': 'Training started with YAML config, process ID: 22640a43', 'config_path': '/tmp/training_config_22640a43.yaml', 'dataset_path': '/workspace/training_data', 'timestamp': '2025-07-31T08:29:36.330255'}
+2025-07-31T08:29:36.330679171Z 🔐 [TRAINING] Logging into HuggingFace...
+2025-07-31T08:29:36.395680225Z {"requestId": "sync-e50062a7-767f-4134-a90e-af2475da1bdc-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:37.341326137Z ✅ [TRAINING] Successfully logged into HuggingFace
+2025-07-31T08:29:37.341534596Z 🎯 [TRAINING] Starting ai-toolkit with config: /tmp/training_config_22640a43.yaml
+2025-07-31T08:29:37.561322612Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:37.561354862Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:37.561362262Z {"requestId": "sync-837ae266-71fd-458e-bf0a-fa02d134b91b-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:37.561370322Z 🎯 [HANDLER] Received job: {'delayTime': 551, 'id': 'sync-837ae266-71fd-458e-bf0a-fa02d134b91b-e1', 'input': {'process_id': '22640a43', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:29:37.561377422Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:29:37.561385272Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '22640a43', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': 'job1_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job1, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job1', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:36.329516', 'updated_at': '2025-07-31T08:29:36.330593', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:29:37.561180'}
+2025-07-31T08:29:37.591266735Z {"requestId": "sync-837ae266-71fd-458e-bf0a-fa02d134b91b-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:39.302778743Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:39.302815013Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:39.302821923Z {"requestId": "sync-5f8eeea7-0c1e-4174-b78e-0e99dd790559-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:39.302828053Z 🎯 [HANDLER] Received job: {'delayTime': 99, 'id': 'sync-5f8eeea7-0c1e-4174-b78e-0e99dd790559-e1', 'input': {'cleanup_existing': True, 'files': [{'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job2_1.png'}, {'content': 'am9iMiBzYW1wbGUgMSwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job2_1.txt'}, {'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job2_2.png'}, {'content': 'am9iMiBzYW1wbGUgMiwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job2_2.txt'}], 'training_name': 'job2', 'trigger_word': 'job2', 'type': 'upload_training_data'}, 'status': 'IN_PROGRESS'}
+2025-07-31T08:29:39.302834623Z 📦 [HANDLER] Processing: upload_training_data
+2025-07-31T08:29:39.302840983Z 📁 [UPLOAD] Starting upload processing...
+2025-07-31T08:29:39.303206300Z 🗑️ [UPLOAD] Cleaned up: /workspace/training_data/job1_6523f1ca
+2025-07-31T08:29:39.303242540Z 📂 [UPLOAD] Created folder: /workspace/training_data/job2_0c1bf4c6
+2025-07-31T08:29:39.303396599Z ✅ [UPLOAD] Saved: job2_1.png (90 bytes)
+2025-07-31T08:29:39.303420989Z ✅ [UPLOAD] Saved: job2_1.txt (34 bytes)
+2025-07-31T08:29:39.303517848Z ✅ [UPLOAD] Saved: job2_2.png (90 bytes)
+2025-07-31T08:29:39.303559468Z ✅ [UPLOAD] Saved: job2_2.txt (34 bytes)
+2025-07-31T08:29:39.303737727Z 🎉 [UPLOAD] Success: /workspace/training_data/job2_0c1bf4c6 (0 images, 2 captions)
+2025-07-31T08:29:39.303767077Z ✅ [HANDLER] Success: {'status': 'success', 'uploaded_files': [{'filename': 'job2_1.png', 'path': '/workspace/training_data/job2_0c1bf4c6/job2_1.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:39.303246'}, {'filename': 'job2_1.txt', 'path': '/workspace/training_data/job2_0c1bf4c6/job2_1.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:39.303337'}, {'filename': 'job2_2.png', 'path': '/workspace/training_data/job2_0c1bf4c6/job2_2.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:39.303428'}, {'filename': 'job2_2.txt', 'path': '/workspace/training_data/job2_0c1bf4c6/job2_2.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:39.303505'}], 'training_folder': '/workspace/training_data/job2_0c1bf4c6', 'total_images': 0, 'total_captions': 2, 'training_name': 'job2', 'trigger_word': 'job2', 'message': 'Successfully uploaded 4 files to /workspace/training_data/job2_0c1bf4c6', 'timestamp': '2025-07-31T08:29:39.303618'}
+2025-07-31T08:29:39.333231983Z {"requestId": "sync-5f8eeea7-0c1e-4174-b78e-0e99dd790559-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:40.550086401Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:40.550137180Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:40.550144130Z {"requestId": "sync-103b2122-2dde-4f49-98ed-a5d47ffc0e7a-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:40.550167740Z 🎯 [HANDLER] Received job: {'delayTime': 903, 'id': 'sync-103b2122-2dde-4f49-98ed-a5d47ffc0e7a-e1', 'input': {'type': 'train_with_yaml', 'yaml_config': {'config': {'name': 'job2_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job2, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job2', 'type': 'sd_trainer'}]}, 'job': 'extension'}}, 'status': 'IN_QUEUE'}
+2025-07-31T08:29:40.550199670Z 📦 [HANDLER] Processing: train_with_yaml
+2025-07-31T08:29:40.550277189Z 📝 [TRAIN_YAML] Starting LoRA training with YAML config...
+2025-07-31T08:29:40.550303279Z 🔧 [TRAIN_YAML] Setting up AI toolkit...
+2025-07-31T08:29:40.550311829Z 🛠️ [AI-TOOLKIT] Already exists at /workspace/ai-toolkit
+2025-07-31T08:29:40.550333279Z 🔍 [AI-TOOLKIT] Found components: ['run.py', 'toolkit', 'config']
+2025-07-31T08:29:40.550339489Z ✅ [AI-TOOLKIT] Verified and ready
+2025-07-31T08:29:40.550345849Z 🎯 [TRAIN_YAML] Letting ai-toolkit handle model download automatically...
+2025-07-31T08:29:40.550436638Z 🎯 [TRAIN_YAML] Keeping original model path in config (ai-toolkit will download)
+2025-07-31T08:29:40.550481838Z 📁 [TRAIN_YAML] Updated dataset path to: /workspace/training_data
+2025-07-31T08:29:40.553067232Z 📝 [TRAIN_YAML] Created config file: /tmp/training_config_a5852b35.yaml
+2025-07-31T08:29:40.553101812Z 🔍 [TRAIN_YAML] Config content:
+2025-07-31T08:29:40.554975460Z config:
+2025-07-31T08:29:40.555007740Z   name: job2_lora
+2025-07-31T08:29:40.555016210Z   process:
+2025-07-31T08:29:40.555022480Z   - datasets:
+2025-07-31T08:29:40.555028420Z     - cache_latents_to_disk: true
+2025-07-31T08:29:40.555034390Z       caption_dropout_rate: 0
+2025-07-31T08:29:40.555073900Z       caption_ext: txt
+2025-07-31T08:29:40.555081959Z       folder_path: /workspace/training_data
+2025-07-31T08:29:40.555095099Z       resolution:
+2025-07-31T08:29:40.555107659Z       - 512
+2025-07-31T08:29:40.555119849Z       - 512
+2025-07-31T08:29:40.555133869Z       shuffle_tokens: false
+2025-07-31T08:29:40.555139909Z     device: cuda:0
+2025-07-31T08:29:40.555146239Z     model:
+2025-07-31T08:29:40.555151959Z       is_flux: true
+2025-07-31T08:29:40.555159479Z       name_or_path: black-forest-labs/FLUX.1-dev
+2025-07-31T08:29:40.555172119Z       quantize: false
+2025-07-31T08:29:40.555184119Z     network:
+2025-07-31T08:29:40.555190109Z       linear: 8
+2025-07-31T08:29:40.555197789Z       linear_alpha: 8
+2025-07-31T08:29:40.555209609Z       type: lora
+2025-07-31T08:29:40.555218339Z     sample:
+2025-07-31T08:29:40.555229339Z       guidance_scale: 2
+2025-07-31T08:29:40.555240048Z       height: 512
+2025-07-31T08:29:40.555248898Z       prompts:
+2025-07-31T08:29:40.555262198Z       - job2, portrait photo
+2025-07-31T08:29:40.555271468Z       sample_every: 5
+2025-07-31T08:29:40.555277298Z       sample_steps: 4
+2025-07-31T08:29:40.555283348Z       sampler: flowmatch
+2025-07-31T08:29:40.555291308Z       width: 512
+2025-07-31T08:29:40.555303248Z     save:
+2025-07-31T08:29:40.555312728Z       dtype: float16
+2025-07-31T08:29:40.555319068Z       max_step_saves_to_keep: 1
+2025-07-31T08:29:40.555326748Z       save_every: 5
+2025-07-31T08:29:40.555339148Z     train:
+2025-07-31T08:29:40.555350548Z       batch_size: 1
+2025-07-31T08:29:40.555363088Z       dtype: bf16
+2025-07-31T08:29:40.555374718Z       ema_config:
+2025-07-31T08:29:40.555386998Z         use_ema: false
+2025-07-31T08:29:40.555398747Z       gradient_accumulation_steps: 1
+2025-07-31T08:29:40.555410187Z       gradient_checkpointing: true
+2025-07-31T08:29:40.555418207Z       lr: 0.0001
+2025-07-31T08:29:40.555426717Z       noise_scheduler: flowmatch
+2025-07-31T08:29:40.555436917Z       optimizer: adamw
+2025-07-31T08:29:40.555448747Z       steps: 5
+2025-07-31T08:29:40.555475287Z       train_text_encoder: false
+2025-07-31T08:29:40.555490247Z       train_unet: true
+2025-07-31T08:29:40.555502317Z     training_folder: /workspace/training_data
+2025-07-31T08:29:40.555515137Z     trigger_word: job2
+2025-07-31T08:29:40.555526977Z     type: sd_trainer
+2025-07-31T08:29:40.555540237Z job: extension
+2025-07-31T08:29:40.555563346Z 🚀 [TRAINING] Starting training for process a5852b35
+2025-07-31T08:29:40.555571826Z 🔐 [TRAINING] Logging into HuggingFace...
+2025-07-31T08:29:40.555710445Z ✅ [HANDLER] Success: {'status': 'success', 'process_id': 'a5852b35', 'message': 'Training started with YAML config, process ID: a5852b35', 'config_path': '/tmp/training_config_a5852b35.yaml', 'dataset_path': '/workspace/training_data', 'timestamp': '2025-07-31T08:29:40.555619'}
+2025-07-31T08:29:40.588900908Z {"requestId": "sync-103b2122-2dde-4f49-98ed-a5d47ffc0e7a-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:41.557465107Z ✅ [TRAINING] Successfully logged into HuggingFace
+2025-07-31T08:29:41.557565717Z 🎯 [TRAINING] Starting ai-toolkit with config: /tmp/training_config_a5852b35.yaml
+2025-07-31T08:29:41.782015654Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:41.782046924Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:41.782054994Z {"requestId": "sync-0b1689c2-970e-4c63-8758-c0dbed81692d-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:41.782063934Z 🎯 [HANDLER] Received job: {'delayTime': 890, 'id': 'sync-0b1689c2-970e-4c63-8758-c0dbed81692d-e2', 'input': {'process_id': 'a5852b35', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:29:41.782071864Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:29:41.782107494Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': 'a5852b35', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': 'job2_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job2, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job2', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:40.554872', 'updated_at': '2025-07-31T08:29:40.555416', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:29:41.781981'}
+2025-07-31T08:29:41.811237912Z {"requestId": "sync-0b1689c2-970e-4c63-8758-c0dbed81692d-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:44.319351623Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:44.319396223Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:44.319402483Z {"requestId": "sync-966ffa12-6986-4147-a262-b1fc2ec1063b-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:44.319408643Z 🎯 [HANDLER] Received job: {'delayTime': 101, 'id': 'sync-966ffa12-6986-4147-a262-b1fc2ec1063b-e2', 'input': {'cleanup_existing': True, 'files': [{'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job3_1.png'}, {'content': 'am9iMyBzYW1wbGUgMSwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job3_1.txt'}, {'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job3_2.png'}, {'content': 'am9iMyBzYW1wbGUgMiwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job3_2.txt'}], 'training_name': 'job3', 'trigger_word': 'job3', 'type': 'upload_training_data'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:29:44.319433422Z 📦 [HANDLER] Processing: upload_training_data
+2025-07-31T08:29:44.319440182Z 📁 [UPLOAD] Starting upload processing...
+2025-07-31T08:29:44.319795520Z 🗑️ [UPLOAD] Cleaned up: /workspace/training_data/job2_0c1bf4c6
+2025-07-31T08:29:44.319854570Z 📂 [UPLOAD] Created folder: /workspace/training_data/job3_49c6edde
+2025-07-31T08:29:44.319996409Z ✅ [UPLOAD] Saved: job3_1.png (90 bytes)
+2025-07-31T08:29:44.320117098Z ✅ [UPLOAD] Saved: job3_1.txt (34 bytes)
+2025-07-31T08:29:44.320204798Z ✅ [UPLOAD] Saved: job3_2.png (90 bytes)
+2025-07-31T08:29:44.320263737Z ✅ [UPLOAD] Saved: job3_2.txt (34 bytes)
+2025-07-31T08:29:44.320382026Z 🎉 [UPLOAD] Success: /workspace/training_data/job3_49c6edde (0 images, 2 captions)
+2025-07-31T08:29:44.320390706Z ✅ [HANDLER] Success: {'status': 'success', 'uploaded_files': [{'filename': 'job3_1.png', 'path': '/workspace/training_data/job3_49c6edde/job3_1.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:44.319900'}, {'filename': 'job3_1.txt', 'path': '/workspace/training_data/job3_49c6edde/job3_1.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:44.320010'}, {'filename': 'job3_2.png', 'path': '/workspace/training_data/job3_49c6edde/job3_2.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:44.320111'}, {'filename': 'job3_2.txt', 'path': '/workspace/training_data/job3_49c6edde/job3_2.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:29:44.320206'}], 'training_folder': '/workspace/training_data/job3_49c6edde', 'total_images': 0, 'total_captions': 2, 'training_name': 'job3', 'trigger_word': 'job3', 'message': 'Successfully uploaded 4 files to /workspace/training_data/job3_49c6edde', 'timestamp': '2025-07-31T08:29:44.320325'}
+2025-07-31T08:29:44.351623481Z {"requestId": "sync-966ffa12-6986-4147-a262-b1fc2ec1063b-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:45.546895904Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:45.546920654Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:45.546925984Z {"requestId": "sync-aaf4064f-4437-4950-8359-272eb3d29e0f-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:45.546931684Z 🎯 [HANDLER] Received job: {'delayTime': 528, 'id': 'sync-aaf4064f-4437-4950-8359-272eb3d29e0f-e1', 'input': {'type': 'train_with_yaml', 'yaml_config': {'config': {'name': 'job3_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job3, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job3', 'type': 'sd_trainer'}]}, 'job': 'extension'}}, 'status': 'IN_PROGRESS'}
+2025-07-31T08:29:45.546938024Z 📦 [HANDLER] Processing: train_with_yaml
+2025-07-31T08:29:45.546943134Z 📝 [TRAIN_YAML] Starting LoRA training with YAML config...
+2025-07-31T08:29:45.546948204Z 🔧 [TRAIN_YAML] Setting up AI toolkit...
+2025-07-31T08:29:45.546952954Z 🛠️ [AI-TOOLKIT] Already exists at /workspace/ai-toolkit
+2025-07-31T08:29:45.546978233Z 🔍 [AI-TOOLKIT] Found components: ['run.py', 'toolkit', 'config']
+2025-07-31T08:29:45.546983353Z ✅ [AI-TOOLKIT] Verified and ready
+2025-07-31T08:29:45.546988863Z 🎯 [TRAIN_YAML] Letting ai-toolkit handle model download automatically...
+2025-07-31T08:29:45.546993723Z 🎯 [TRAIN_YAML] Keeping original model path in config (ai-toolkit will download)
+2025-07-31T08:29:45.546999223Z 📁 [TRAIN_YAML] Updated dataset path to: /workspace/training_data
+2025-07-31T08:29:45.549080140Z 📝 [TRAIN_YAML] Created config file: /tmp/training_config_16db7c4d.yaml
+2025-07-31T08:29:45.549096120Z 🔍 [TRAIN_YAML] Config content:
+2025-07-31T08:29:45.550865489Z config:
+2025-07-31T08:29:45.550876219Z   name: job3_lora
+2025-07-31T08:29:45.550879389Z   process:
+2025-07-31T08:29:45.550882009Z   - datasets:
+2025-07-31T08:29:45.550884409Z     - cache_latents_to_disk: true
+2025-07-31T08:29:45.550887629Z       caption_dropout_rate: 0
+2025-07-31T08:29:45.550890649Z       caption_ext: txt
+2025-07-31T08:29:45.550893029Z       folder_path: /workspace/training_data
+2025-07-31T08:29:45.550895789Z       resolution:
+2025-07-31T08:29:45.550898109Z       - 512
+2025-07-31T08:29:45.550900599Z       - 512
+2025-07-31T08:29:45.550902979Z       shuffle_tokens: false
+2025-07-31T08:29:45.550905369Z     device: cuda:0
+2025-07-31T08:29:45.550907669Z     model:
+2025-07-31T08:29:45.550910209Z       is_flux: true
+2025-07-31T08:29:45.550912679Z       name_or_path: black-forest-labs/FLUX.1-dev
+2025-07-31T08:29:45.550915009Z       quantize: false
+2025-07-31T08:29:45.550917469Z     network:
+2025-07-31T08:29:45.550919779Z       linear: 8
+2025-07-31T08:29:45.550922119Z       linear_alpha: 8
+2025-07-31T08:29:45.550924459Z       type: lora
+2025-07-31T08:29:45.550926999Z     sample:
+2025-07-31T08:29:45.550929319Z       guidance_scale: 2
+2025-07-31T08:29:45.550931849Z       height: 512
+2025-07-31T08:29:45.550934329Z       prompts:
+2025-07-31T08:29:45.550936629Z       - job3, portrait photo
+2025-07-31T08:29:45.550938999Z       sample_every: 5
+2025-07-31T08:29:45.550941299Z       sample_steps: 4
+2025-07-31T08:29:45.550943739Z       sampler: flowmatch
+2025-07-31T08:29:45.550946059Z       width: 512
+2025-07-31T08:29:45.550948389Z     save:
+2025-07-31T08:29:45.550950879Z       dtype: float16
+2025-07-31T08:29:45.550953319Z       max_step_saves_to_keep: 1
+2025-07-31T08:29:45.550955629Z       save_every: 5
+2025-07-31T08:29:45.550958089Z     train:
+2025-07-31T08:29:45.550960379Z       batch_size: 1
+2025-07-31T08:29:45.550962669Z       dtype: bf16
+2025-07-31T08:29:45.550971919Z       ema_config:
+2025-07-31T08:29:45.550974439Z         use_ema: false
+2025-07-31T08:29:45.550976908Z       gradient_accumulation_steps: 1
+2025-07-31T08:29:45.550979488Z       gradient_checkpointing: true
+2025-07-31T08:29:45.550982078Z       lr: 0.0001
+2025-07-31T08:29:45.550984628Z       noise_scheduler: flowmatch
+2025-07-31T08:29:45.550986968Z       optimizer: adamw
+2025-07-31T08:29:45.550989708Z       steps: 5
+2025-07-31T08:29:45.550992308Z       train_text_encoder: false
+2025-07-31T08:29:45.550995088Z       train_unet: true
+2025-07-31T08:29:45.551000388Z     training_folder: /workspace/training_data
+2025-07-31T08:29:45.551005468Z     trigger_word: job3
+2025-07-31T08:29:45.551009198Z     type: sd_trainer
+2025-07-31T08:29:45.551013668Z job: extension
+2025-07-31T08:29:45.551403376Z 🚀 [TRAINING] Starting training for process 16db7c4d✅ [HANDLER] Success: {'status': 'success', 'process_id': '16db7c4d', 'message': 'Training started with YAML config, process ID: 16db7c4d', 'config_path': '/tmp/training_config_16db7c4d.yaml', 'dataset_path': '/workspace/training_data', 'timestamp': '2025-07-31T08:29:45.551224'}
+2025-07-31T08:29:45.551886353Z 🔐 [TRAINING] Logging into HuggingFace...
+2025-07-31T08:29:45.596374595Z {"requestId": "sync-aaf4064f-4437-4950-8359-272eb3d29e0f-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:46.536415132Z ✅ [TRAINING] Successfully logged into HuggingFace
+2025-07-31T08:29:46.536681340Z 🎯 [TRAINING] Starting ai-toolkit with config: /tmp/training_config_16db7c4d.yaml
+2025-07-31T08:29:46.781269622Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:46.781293632Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:46.781310102Z {"requestId": "sync-c6db85df-91bf-4864-9d54-1e0e1a573aa3-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:46.781315172Z 🎯 [HANDLER] Received job: {'delayTime': 886, 'id': 'sync-c6db85df-91bf-4864-9d54-1e0e1a573aa3-e2', 'input': {'process_id': '16db7c4d', 'type': 'process_status'}, 'status': 'IN_PROGRESS'}
+2025-07-31T08:29:46.781320812Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:29:46.781332142Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '16db7c4d', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': 'job3_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job3, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job3', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:45.550799', 'updated_at': '2025-07-31T08:29:45.551582', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:29:46.781174'}
+2025-07-31T08:29:46.813609060Z {"requestId": "sync-c6db85df-91bf-4864-9d54-1e0e1a573aa3-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:48.367108135Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:48.367128485Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:48.367323534Z {"requestId": "sync-99879f95-b34f-40fb-a8f7-a8e432954338-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:48.367355294Z 🎯 [HANDLER] Received job: {'delayTime': 100, 'id': 'sync-99879f95-b34f-40fb-a8f7-a8e432954338-e1', 'input': {'process_id': '22640a43', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:29:48.367360054Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:29:48.367439863Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '22640a43', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': 'job1_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job1, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job1', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:36.329516', 'updated_at': '2025-07-31T08:29:36.330593', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:29:48.367323'}
+2025-07-31T08:29:48.396112554Z {"requestId": "sync-99879f95-b34f-40fb-a8f7-a8e432954338-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:52.235662097Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:52.236595871Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:52.236946999Z {"requestId": "sync-55a5f6b1-a6df-4424-ab57-d5cc0fd363e4-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:52.237121608Z 🎯 [HANDLER] Received job: {'delayTime': 102, 'id': 'sync-55a5f6b1-a6df-4424-ab57-d5cc0fd363e4-e2', 'input': {'process_id': 'a5852b35', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:29:52.237126418Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:29:52.237178768Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': 'a5852b35', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': 'job2_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job2, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job2', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:40.554872', 'updated_at': '2025-07-31T08:29:40.555416', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:29:52.237038'}
+2025-07-31T08:29:52.271453493Z {"requestId": "sync-55a5f6b1-a6df-4424-ab57-d5cc0fd363e4-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:56.200972724Z ❌ [TRAINING] Training failed for process 22640a43: Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)
+2025-07-31T08:29:56.201030264Z               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:29:56.201033994Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__
+2025-07-31T08:29:56.201036644Z     self.setup_epoch()
+2025-07-31T08:29:56.201040064Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch
+2025-07-31T08:29:56.201042534Z     self.cache_latents_all_latents()
+2025-07-31T08:29:56.201045934Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents
+2025-07-31T08:29:56.201049284Z     file_item.load_and_process_image(self.transform, only_load_latents=True)
+2025-07-31T08:29:56.201051914Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image
+2025-07-31T08:29:56.201055684Z     img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)
+2025-07-31T08:29:56.201058574Z           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:29:56.201060974Z   File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize
+2025-07-31T08:29:56.201063614Z     return self._new(self.im.resize(size, resample, box))
+2025-07-31T08:29:56.201067314Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:29:56.201069724Z ValueError: height and width must be > 0
+2025-07-31T08:29:56.201074534Z Output: ate LoRA for Text Encoder: 0 modules.
+2025-07-31T08:29:56.201076964Z create LoRA for U-Net: 494 modules.
+2025-07-31T08:29:56.201079444Z enable LoRA for U-Net
+2025-07-31T08:29:56.201081884Z Dataset: /workspace/training_data
+2025-07-31T08:29:56.201084294Z   -  Preprocessing image dimensions
+2025-07-31T08:29:56.201086904Z   -  Found 2 images
+2025-07-31T08:29:56.201089304Z Bucket sizes for /workspace/training_data:
+2025-07-31T08:29:56.201091744Z 0x0: 2 files
+2025-07-31T08:29:56.201095184Z 1 buckets made
+2025-07-31T08:29:56.201107184Z Caching latents for /workspace/training_data
+2025-07-31T08:29:56.201109874Z  - Saving latents to disk
+2025-07-31T08:29:56.201113204Z Error running job: height and width must be > 0
+2025-07-31T08:29:56.201117954Z ========================================
+2025-07-31T08:29:56.201120354Z Result:
+2025-07-31T08:29:56.201122864Z  - 0 completed jobs
+2025-07-31T08:29:56.201125283Z  - 1 failure
+2025-07-31T08:29:56.201127683Z ========================================
+2025-07-31T08:29:57.213657578Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:57.213692568Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:57.213698398Z {"requestId": "sync-bf93ed78-fc02-4fed-9963-bb208cab74fc-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:57.213703878Z 🎯 [HANDLER] Received job: {'delayTime': 101, 'id': 'sync-bf93ed78-fc02-4fed-9963-bb208cab74fc-e1', 'input': {'process_id': '16db7c4d', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:29:57.213709947Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:29:57.213885826Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '16db7c4d', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': 'job3_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job3, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job3', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:45.550799', 'updated_at': '2025-07-31T08:29:45.551582', 'output_path': None, 'error': None}, 'timestamp': '2025-07-31T08:29:57.213600'}
+2025-07-31T08:29:57.252085848Z {"requestId": "sync-bf93ed78-fc02-4fed-9963-bb208cab74fc-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:29:58.807417811Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:29:58.807453361Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:29:58.807459041Z {"requestId": "sync-f2fdb312-3328-4b06-b398-a937e924a698-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:29:58.807464531Z 🎯 [HANDLER] Received job: {'delayTime': 101, 'id': 'sync-f2fdb312-3328-4b06-b398-a937e924a698-e2', 'input': {'process_id': '22640a43', 'type': 'process_status'}, 'status': 'IN_PROGRESS'}
+2025-07-31T08:29:58.807471001Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:29:58.807609830Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '22640a43', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': 'job1_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job1, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job1', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:36.329516', 'updated_at': '2025-07-31T08:29:56.200763', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 2 images\nBucket sizes for /workspace/training_data:\n0x0: 2 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, 'timestamp': '2025-07-31T08:29:58.807396'}
+2025-07-31T08:29:58.845862511Z {"requestId": "sync-f2fdb312-3328-4b06-b398-a937e924a698-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:30:01.351839265Z ❌ [TRAINING] Training failed for process a5852b35: Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)
+2025-07-31T08:30:01.351901075Z               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:30:01.351905305Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__
+2025-07-31T08:30:01.351908045Z     self.setup_epoch()
+2025-07-31T08:30:01.351911405Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch
+2025-07-31T08:30:01.351914255Z     self.cache_latents_all_latents()
+2025-07-31T08:30:01.351918465Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents
+2025-07-31T08:30:01.351922125Z     file_item.load_and_process_image(self.transform, only_load_latents=True)
+2025-07-31T08:30:01.351924975Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image
+2025-07-31T08:30:01.351928905Z     img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)
+2025-07-31T08:30:01.351932305Z           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:30:01.351939645Z   File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize
+2025-07-31T08:30:01.351967815Z     return self._new(self.im.resize(size, resample, box))
+2025-07-31T08:30:01.351973314Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:30:01.351979574Z ValueError: height and width must be > 0
+2025-07-31T08:30:01.351997354Z Output: ate LoRA for Text Encoder: 0 modules.
+2025-07-31T08:30:01.352000234Z create LoRA for U-Net: 494 modules.
+2025-07-31T08:30:01.352007324Z enable LoRA for U-Net
+2025-07-31T08:30:01.352016134Z Dataset: /workspace/training_data
+2025-07-31T08:30:01.352022804Z   -  Preprocessing image dimensions
+2025-07-31T08:30:01.352032944Z   -  Found 2 images
+2025-07-31T08:30:01.352041934Z Bucket sizes for /workspace/training_data:
+2025-07-31T08:30:01.352071134Z 0x0: 2 files
+2025-07-31T08:30:01.352100314Z 1 buckets made
+2025-07-31T08:30:01.352109544Z Caching latents for /workspace/training_data
+2025-07-31T08:30:01.352119364Z  - Saving latents to disk
+2025-07-31T08:30:01.352124424Z Error running job: height and width must be > 0
+2025-07-31T08:30:01.352138823Z ========================================
+2025-07-31T08:30:01.352145003Z Result:
+2025-07-31T08:30:01.352153863Z  - 0 completed jobs
+2025-07-31T08:30:01.352160443Z  - 1 failure
+2025-07-31T08:30:01.352167623Z ========================================
+2025-07-31T08:30:02.722012595Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:30:02.722055595Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:30:02.722062625Z {"requestId": "sync-c4acbfe3-1336-4091-9a09-18fbf2ebdcbf-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:30:02.722068955Z 🎯 [HANDLER] Received job: {'delayTime': 98, 'id': 'sync-c4acbfe3-1336-4091-9a09-18fbf2ebdcbf-e1', 'input': {'process_id': 'a5852b35', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:30:02.722075275Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:30:02.722143485Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': 'a5852b35', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': 'job2_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job2, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job2', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:40.554872', 'updated_at': '2025-07-31T08:30:01.351607', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 2 images\nBucket sizes for /workspace/training_data:\n0x0: 2 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, 'timestamp': '2025-07-31T08:30:02.721970'}
+2025-07-31T08:30:02.754365763Z {"requestId": "sync-c4acbfe3-1336-4091-9a09-18fbf2ebdcbf-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:30:05.823809297Z ❌ [TRAINING] Training failed for process 16db7c4d: Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)
+2025-07-31T08:30:05.823868057Z               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:30:05.823873907Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__
+2025-07-31T08:30:05.823882697Z     self.setup_epoch()
+2025-07-31T08:30:05.823888397Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch
+2025-07-31T08:30:05.823893467Z     self.cache_latents_all_latents()
+2025-07-31T08:30:05.823898847Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents
+2025-07-31T08:30:05.823904507Z     file_item.load_and_process_image(self.transform, only_load_latents=True)
+2025-07-31T08:30:05.823908827Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image
+2025-07-31T08:30:05.823914067Z     img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)
+2025-07-31T08:30:05.823918367Z           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:30:05.823922667Z   File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize
+2025-07-31T08:30:05.823927467Z     return self._new(self.im.resize(size, resample, box))
+2025-07-31T08:30:05.823932547Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:30:05.823936897Z ValueError: height and width must be > 0
+2025-07-31T08:30:05.823945647Z Output: ate LoRA for Text Encoder: 0 modules.
+2025-07-31T08:30:05.823950167Z create LoRA for U-Net: 494 modules.
+2025-07-31T08:30:05.823954747Z enable LoRA for U-Net
+2025-07-31T08:30:05.823959067Z Dataset: /workspace/training_data
+2025-07-31T08:30:05.823963566Z   -  Preprocessing image dimensions
+2025-07-31T08:30:05.823967996Z   -  Found 2 images
+2025-07-31T08:30:05.823972306Z Bucket sizes for /workspace/training_data:
+2025-07-31T08:30:05.823976966Z 0x0: 2 files
+2025-07-31T08:30:05.823982546Z 1 buckets made
+2025-07-31T08:30:05.823987006Z Caching latents for /workspace/training_data
+2025-07-31T08:30:05.823991436Z  - Saving latents to disk
+2025-07-31T08:30:05.823996736Z Error running job: height and width must be > 0
+2025-07-31T08:30:05.824005526Z ========================================
+2025-07-31T08:30:05.824009856Z Result:
+2025-07-31T08:30:05.824070866Z  - 0 completed jobs
+2025-07-31T08:30:05.824075536Z  - 1 failure
+2025-07-31T08:30:05.824079976Z ========================================
+2025-07-31T08:30:07.689572221Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:30:07.689616331Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:30:07.689622421Z {"requestId": "sync-0f6f16f9-30ac-4bbb-b8d5-329e3c090163-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:30:07.689628991Z 🎯 [HANDLER] Received job: {'delayTime': 102, 'id': 'sync-0f6f16f9-30ac-4bbb-b8d5-329e3c090163-e1', 'input': {'process_id': '16db7c4d', 'type': 'process_status'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:30:07.689635871Z 📦 [HANDLER] Processing: process_status
+2025-07-31T08:30:07.690050478Z ✅ [HANDLER] Success: {'status': 'success', 'process': {'id': '16db7c4d', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': 'job3_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job3, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job3', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:45.550799', 'updated_at': '2025-07-31T08:30:05.823619', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 2 images\nBucket sizes for /workspace/training_data:\n0x0: 2 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, 'timestamp': '2025-07-31T08:30:07.689537'}
+2025-07-31T08:30:07.719138507Z {"requestId": "sync-0f6f16f9-30ac-4bbb-b8d5-329e3c090163-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:30:08.924891244Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:30:08.924928104Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:30:08.924931124Z {"requestId": "sync-95380fb7-d65d-4338-8ed0-dd25b35e8706-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:30:08.924934714Z 🎯 [HANDLER] Received job: {'delayTime': 895, 'id': 'sync-95380fb7-d65d-4338-8ed0-dd25b35e8706-e1', 'input': {'type': 'processes'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:30:08.924938404Z 📦 [HANDLER] Processing: processes
+2025-07-31T08:30:08.925236082Z ✅ [HANDLER] Success: {'status': 'success', 'processes': [{'id': '18953af0', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:26:02.109830', 'updated_at': '2025-07-31T08:27:11.839573', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 3 images\nBucket sizes for /workspace/training_data:\n0x0: 3 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, {'id': '22640a43', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': 'job1_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job1, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job1', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:36.329516', 'updated_at': '2025-07-31T08:29:56.200763', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 2 images\nBucket sizes for /workspace/training_data:\n0x0: 2 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, {'id': 'a5852b35', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': 'job2_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job2, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job2', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:40.554872', 'updated_at': '2025-07-31T08:30:01.351607', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 2 images\nBucket sizes for /workspace/training_data:\n0x0: 2 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, {'id': '16db7c4d', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': 'job3_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job3, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job3', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:45.550799', 'updated_at': '2025-07-31T08:30:05.823619', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 2 images\nBucket sizes for /workspace/training_data:\n0x0: 2 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}], 'total_count': 4, 'timestamp': '2025-07-31T08:30:08.924880'}
+2025-07-31T08:30:08.963885560Z {"requestId": "sync-95380fb7-d65d-4338-8ed0-dd25b35e8706-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:35:09.533113404Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:35:09.533192514Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:35:09.533198644Z {"requestId": "sync-83f58bb2-8d90-42a2-bdeb-a66317e17bb6-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:35:09.533205033Z 🎯 [HANDLER] Received job: {'delayTime': 109, 'id': 'sync-83f58bb2-8d90-42a2-bdeb-a66317e17bb6-e2', 'input': {'type': 'health'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:35:09.533211603Z 📦 [HANDLER] Processing: health
+2025-07-31T08:35:09.533218213Z ✅ [HANDLER] Success: {'status': 'healthy', 'timestamp': '2025-07-31T08:35:09.532962', 'message': 'Simple backend is working!'}
+2025-07-31T08:35:09.563631153Z {"requestId": "sync-83f58bb2-8d90-42a2-bdeb-a66317e17bb6-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:35:10.768480736Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:35:10.768506096Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:35:10.768512186Z {"requestId": "sync-d89aac1a-d705-4cc3-9303-45ed962a0319-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:35:10.768518846Z 🎯 [HANDLER] Received job: {'delayTime': 564, 'id': 'sync-d89aac1a-d705-4cc3-9303-45ed962a0319-e2', 'input': {'cleanup_existing': True, 'files': [{'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job1_1.png'}, {'content': 'am9iMSBzYW1wbGUgMSwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job1_1.txt'}, {'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job1_2.png'}, {'content': 'am9iMSBzYW1wbGUgMiwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job1_2.txt'}], 'training_name': 'job1', 'trigger_word': 'job1', 'type': 'upload_training_data'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:35:10.768545956Z 📦 [HANDLER] Processing: upload_training_data
+2025-07-31T08:35:10.768552686Z 📁 [UPLOAD] Starting upload processing...
+2025-07-31T08:35:10.768916164Z 🗑️ [UPLOAD] Cleaned up: /workspace/training_data/job3_49c6edde
+2025-07-31T08:35:10.769014763Z 🗑️ [UPLOAD] Cleaned up: /workspace/training_data/job1_lora
+2025-07-31T08:35:10.769155872Z 🗑️ [UPLOAD] Cleaned up: /workspace/training_data/job2_lora
+2025-07-31T08:35:10.769170302Z 🗑️ [UPLOAD] Cleaned up: /workspace/training_data/job3_lora
+2025-07-31T08:35:10.769270191Z 📂 [UPLOAD] Created folder: /workspace/training_data/job1_f12671c2
+2025-07-31T08:35:10.769390881Z ✅ [UPLOAD] Saved: job1_1.png (90 bytes)
+2025-07-31T08:35:10.769481820Z ✅ [UPLOAD] Saved: job1_1.txt (34 bytes)
+2025-07-31T08:35:10.769555490Z ✅ [UPLOAD] Saved: job1_2.png (90 bytes)
+2025-07-31T08:35:10.769674379Z ✅ [UPLOAD] Saved: job1_2.txt (34 bytes)
+2025-07-31T08:35:10.769793858Z 🎉 [UPLOAD] Success: /workspace/training_data/job1_f12671c2 (0 images, 2 captions)
+2025-07-31T08:35:10.769821498Z ✅ [HANDLER] Success: {'status': 'success', 'uploaded_files': [{'filename': 'job1_1.png', 'path': '/workspace/training_data/job1_f12671c2/job1_1.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:10.769304'}, {'filename': 'job1_1.txt', 'path': '/workspace/training_data/job1_f12671c2/job1_1.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:10.769423'}, {'filename': 'job1_2.png', 'path': '/workspace/training_data/job1_f12671c2/job1_2.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:10.769507'}, {'filename': 'job1_2.txt', 'path': '/workspace/training_data/job1_f12671c2/job1_2.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:10.769586'}], 'training_folder': '/workspace/training_data/job1_f12671c2', 'total_images': 0, 'total_captions': 2, 'training_name': 'job1', 'trigger_word': 'job1', 'message': 'Successfully uploaded 4 files to /workspace/training_data/job1_f12671c2', 'timestamp': '2025-07-31T08:35:10.769719'}
+2025-07-31T08:35:10.798770947Z {"requestId": "sync-d89aac1a-d705-4cc3-9303-45ed962a0319-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:35:11.984756008Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:35:11.984778758Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:35:11.984784718Z {"requestId": "3205579a-5615-43ff-81c5-415137384a94-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:35:11.984790758Z 🎯 [HANDLER] Received job: {'delayTime': 530, 'id': '3205579a-5615-43ff-81c5-415137384a94-e2', 'input': {'type': 'train_with_yaml', 'yaml_config': {'config': {'name': 'job1_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job1, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job1', 'type': 'sd_trainer'}]}, 'job': 'extension'}}, 'status': 'IN_QUEUE'}
+2025-07-31T08:35:11.984799848Z 📦 [HANDLER] Processing: train_with_yaml
+2025-07-31T08:35:11.984805738Z 📝 [TRAIN_YAML] Starting LoRA training with YAML config...
+2025-07-31T08:35:11.984811437Z 🔧 [TRAIN_YAML] Setting up AI toolkit...
+2025-07-31T08:35:11.984832477Z 🛠️ [AI-TOOLKIT] Already exists at /workspace/ai-toolkit
+2025-07-31T08:35:11.984853287Z 🔍 [AI-TOOLKIT] Found components: ['run.py', 'toolkit', 'config']
+2025-07-31T08:35:11.984864197Z ✅ [AI-TOOLKIT] Verified and ready
+2025-07-31T08:35:11.984869877Z 🎯 [TRAIN_YAML] Letting ai-toolkit handle model download automatically...
+2025-07-31T08:35:11.984878627Z 🎯 [TRAIN_YAML] Keeping original model path in config (ai-toolkit will download)
+2025-07-31T08:35:11.984889487Z 📁 [TRAIN_YAML] Updated dataset path to: /workspace/training_data
+2025-07-31T08:35:11.987266712Z 📝 [TRAIN_YAML] Created config file: /tmp/training_config_d9ec2898.yaml
+2025-07-31T08:35:11.987288962Z 🔍 [TRAIN_YAML] Config content:
+2025-07-31T08:35:11.989113351Z config:
+2025-07-31T08:35:11.989142830Z   name: job1_lora
+2025-07-31T08:35:11.989151570Z   process:
+2025-07-31T08:35:11.989158440Z   - datasets:
+2025-07-31T08:35:11.989164340Z     - cache_latents_to_disk: true
+2025-07-31T08:35:11.989170250Z       caption_dropout_rate: 0
+2025-07-31T08:35:11.989175860Z       caption_ext: txt
+2025-07-31T08:35:11.989181110Z       folder_path: /workspace/training_data
+2025-07-31T08:35:11.989186410Z       resolution:
+2025-07-31T08:35:11.989191710Z       - 512
+2025-07-31T08:35:11.989196950Z       - 512
+2025-07-31T08:35:11.989203200Z       shuffle_tokens: false
+2025-07-31T08:35:11.989210010Z     device: cuda:0
+2025-07-31T08:35:11.989216770Z     model:
+2025-07-31T08:35:11.989223530Z       is_flux: true
+2025-07-31T08:35:11.989230090Z       name_or_path: black-forest-labs/FLUX.1-dev
+2025-07-31T08:35:11.989238130Z       quantize: false
+2025-07-31T08:35:11.989276600Z     network:
+2025-07-31T08:35:11.989285360Z       linear: 8
+2025-07-31T08:35:11.989293410Z       linear_alpha: 8
+2025-07-31T08:35:11.989313349Z       type: lora
+2025-07-31T08:35:11.989325269Z     sample:
+2025-07-31T08:35:11.989336709Z       guidance_scale: 2
+2025-07-31T08:35:11.989347409Z       height: 512
+2025-07-31T08:35:11.989355119Z       prompts:
+2025-07-31T08:35:11.989368319Z       - job1, portrait photo
+2025-07-31T08:35:11.989376719Z       sample_every: 5
+2025-07-31T08:35:11.989391289Z       sample_steps: 4
+2025-07-31T08:35:11.989400109Z       sampler: flowmatch
+2025-07-31T08:35:11.989414539Z       width: 512
+2025-07-31T08:35:11.989426359Z     save:
+2025-07-31T08:35:11.989438229Z       dtype: float16
+2025-07-31T08:35:11.989446949Z       max_step_saves_to_keep: 1
+2025-07-31T08:35:11.989460919Z       save_every: 5
+2025-07-31T08:35:11.989474628Z     train:
+2025-07-31T08:35:11.989486648Z       batch_size: 1
+2025-07-31T08:35:11.989495348Z       dtype: bf16
+2025-07-31T08:35:11.989509938Z       ema_config:
+2025-07-31T08:35:11.989517668Z         use_ema: false
+2025-07-31T08:35:11.989530518Z       gradient_accumulation_steps: 1
+2025-07-31T08:35:11.989538328Z       gradient_checkpointing: true
+2025-07-31T08:35:11.989551228Z       lr: 0.0001
+2025-07-31T08:35:11.989559228Z       noise_scheduler: flowmatch
+2025-07-31T08:35:11.989572548Z       optimizer: adamw
+2025-07-31T08:35:11.989580388Z       steps: 5
+2025-07-31T08:35:11.989592958Z       train_text_encoder: false
+2025-07-31T08:35:11.989604718Z       train_unet: true
+2025-07-31T08:35:11.989615608Z     training_folder: /workspace/training_data
+2025-07-31T08:35:11.989623348Z     trigger_word: job1
+2025-07-31T08:35:11.989636937Z     type: sd_trainer
+2025-07-31T08:35:11.989644827Z job: extension
+2025-07-31T08:35:11.990089185Z 🚀 [TRAINING] Starting training for process d9ec2898
+2025-07-31T08:35:11.990155114Z 🔐 [TRAINING] Logging into HuggingFace...
+2025-07-31T08:35:11.990315163Z ✅ [HANDLER] Success: {'status': 'success', 'process_id': 'd9ec2898', 'message': 'Training started with YAML config, process ID: d9ec2898', 'config_path': '/tmp/training_config_d9ec2898.yaml', 'dataset_path': '/workspace/training_data', 'timestamp': '2025-07-31T08:35:11.990124'}
+2025-07-31T08:35:12.020777273Z {"requestId": "3205579a-5615-43ff-81c5-415137384a94-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:35:13.017214508Z ✅ [TRAINING] Successfully logged into HuggingFace
+2025-07-31T08:35:13.017276467Z 🎯 [TRAINING] Starting ai-toolkit with config: /tmp/training_config_d9ec2898.yaml
+2025-07-31T08:35:15.339506490Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:35:15.339559259Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:35:15.339565569Z {"requestId": "sync-6290d441-5565-473a-8f74-ae4172a0b3bd-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:35:15.339573019Z 🎯 [HANDLER] Received job: {'delayTime': 100, 'id': 'sync-6290d441-5565-473a-8f74-ae4172a0b3bd-e1', 'input': {'cleanup_existing': True, 'files': [{'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job2_1.png'}, {'content': 'am9iMiBzYW1wbGUgMSwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job2_1.txt'}, {'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job2_2.png'}, {'content': 'am9iMiBzYW1wbGUgMiwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job2_2.txt'}], 'training_name': 'job2', 'trigger_word': 'job2', 'type': 'upload_training_data'}, 'status': 'IN_PROGRESS'}
+2025-07-31T08:35:15.339593149Z 📦 [HANDLER] Processing: upload_training_data
+2025-07-31T08:35:15.339599729Z 📁 [UPLOAD] Starting upload processing...
+2025-07-31T08:35:15.339961897Z 🗑️ [UPLOAD] Cleaned up: /workspace/training_data/job1_f12671c2
+2025-07-31T08:35:15.339990947Z 📂 [UPLOAD] Created folder: /workspace/training_data/job2_4836b1b6
+2025-07-31T08:35:15.340081886Z ✅ [UPLOAD] Saved: job2_1.png (90 bytes)
+2025-07-31T08:35:15.340142716Z ✅ [UPLOAD] Saved: job2_1.txt (34 bytes)
+2025-07-31T08:35:15.340234875Z ✅ [UPLOAD] Saved: job2_2.png (90 bytes)
+2025-07-31T08:35:15.340307275Z ✅ [UPLOAD] Saved: job2_2.txt (34 bytes)
+2025-07-31T08:35:15.340503804Z 🎉 [UPLOAD] Success: /workspace/training_data/job2_4836b1b6 (0 images, 2 captions)
+2025-07-31T08:35:15.340522673Z ✅ [HANDLER] Success: {'status': 'success', 'uploaded_files': [{'filename': 'job2_1.png', 'path': '/workspace/training_data/job2_4836b1b6/job2_1.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:15.339978'}, {'filename': 'job2_1.txt', 'path': '/workspace/training_data/job2_4836b1b6/job2_1.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:15.340064'}, {'filename': 'job2_2.png', 'path': '/workspace/training_data/job2_4836b1b6/job2_2.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:15.340154'}, {'filename': 'job2_2.txt', 'path': '/workspace/training_data/job2_4836b1b6/job2_2.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:15.340235'}], 'training_folder': '/workspace/training_data/job2_4836b1b6', 'total_images': 0, 'total_captions': 2, 'training_name': 'job2', 'trigger_word': 'job2', 'message': 'Successfully uploaded 4 files to /workspace/training_data/job2_4836b1b6', 'timestamp': '2025-07-31T08:35:15.340374'}
+2025-07-31T08:35:15.373793335Z {"requestId": "sync-6290d441-5565-473a-8f74-ae4172a0b3bd-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:35:16.605165643Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:35:16.605189323Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:35:16.605196043Z {"requestId": "052ba8ca-433f-4dec-aff0-f7721b14bcb0-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:35:16.605203923Z 🎯 [HANDLER] Received job: {'delayTime': 547, 'id': '052ba8ca-433f-4dec-aff0-f7721b14bcb0-e1', 'input': {'type': 'train_with_yaml', 'yaml_config': {'config': {'name': 'job2_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job2, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job2', 'type': 'sd_trainer'}]}, 'job': 'extension'}}, 'status': 'IN_QUEUE'}
+2025-07-31T08:35:16.605227062Z 📦 [HANDLER] Processing: train_with_yaml
+2025-07-31T08:35:16.605233602Z 📝 [TRAIN_YAML] Starting LoRA training with YAML config...
+2025-07-31T08:35:16.605239622Z 🔧 [TRAIN_YAML] Setting up AI toolkit...
+2025-07-31T08:35:16.605245372Z 🛠️ [AI-TOOLKIT] Already exists at /workspace/ai-toolkit
+2025-07-31T08:35:16.605250992Z 🔍 [AI-TOOLKIT] Found components: ['run.py', 'toolkit', 'config']
+2025-07-31T08:35:16.605257312Z ✅ [AI-TOOLKIT] Verified and ready
+2025-07-31T08:35:16.605292922Z 🎯 [TRAIN_YAML] Letting ai-toolkit handle model download automatically...
+2025-07-31T08:35:16.605298732Z 🎯 [TRAIN_YAML] Keeping original model path in config (ai-toolkit will download)
+2025-07-31T08:35:16.605304272Z 📁 [TRAIN_YAML] Updated dataset path to: /workspace/training_data
+2025-07-31T08:35:16.607409229Z 📝 [TRAIN_YAML] Created config file: /tmp/training_config_924922f5.yaml
+2025-07-31T08:35:16.607437689Z 🔍 [TRAIN_YAML] Config content:
+2025-07-31T08:35:16.609269777Z config:
+2025-07-31T08:35:16.609293207Z   name: job2_lora
+2025-07-31T08:35:16.609300287Z   process:
+2025-07-31T08:35:16.609305987Z   - datasets:
+2025-07-31T08:35:16.609311447Z     - cache_latents_to_disk: true
+2025-07-31T08:35:16.609317017Z       caption_dropout_rate: 0
+2025-07-31T08:35:16.609323197Z       caption_ext: txt
+2025-07-31T08:35:16.609328577Z       folder_path: /workspace/training_data
+2025-07-31T08:35:16.609333977Z       resolution:
+2025-07-31T08:35:16.609339427Z       - 512
+2025-07-31T08:35:16.609344717Z       - 512
+2025-07-31T08:35:16.609350087Z       shuffle_tokens: false
+2025-07-31T08:35:16.609355417Z     device: cuda:0
+2025-07-31T08:35:16.609360717Z     model:
+2025-07-31T08:35:16.609366097Z       is_flux: true
+2025-07-31T08:35:16.609371426Z       name_or_path: black-forest-labs/FLUX.1-dev
+2025-07-31T08:35:16.609377136Z       quantize: false
+2025-07-31T08:35:16.609382536Z     network:
+2025-07-31T08:35:16.609387836Z       linear: 8
+2025-07-31T08:35:16.609393206Z       linear_alpha: 8
+2025-07-31T08:35:16.609405076Z       type: lora
+2025-07-31T08:35:16.609440096Z     sample:
+2025-07-31T08:35:16.609445586Z       guidance_scale: 2
+2025-07-31T08:35:16.609450906Z       height: 512
+2025-07-31T08:35:16.609456186Z       prompts:
+2025-07-31T08:35:16.609466006Z       - job2, portrait photo
+2025-07-31T08:35:16.609481296Z       sample_every: 5
+2025-07-31T08:35:16.609490586Z       sample_steps: 4
+2025-07-31T08:35:16.609496016Z       sampler: flowmatch
+2025-07-31T08:35:16.609503046Z       width: 512
+2025-07-31T08:35:16.609515116Z     save:
+2025-07-31T08:35:16.609524116Z       dtype: float16
+2025-07-31T08:35:16.609533995Z       max_step_saves_to_keep: 1
+2025-07-31T08:35:16.609540935Z       save_every: 5
+2025-07-31T08:35:16.609552015Z     train:
+2025-07-31T08:35:16.609558405Z       batch_size: 1
+2025-07-31T08:35:16.609570065Z       dtype: bf16
+2025-07-31T08:35:16.609580215Z       ema_config:
+2025-07-31T08:35:16.609590155Z         use_ema: false
+2025-07-31T08:35:16.609596575Z       gradient_accumulation_steps: 1
+2025-07-31T08:35:16.609608695Z       gradient_checkpointing: true
+2025-07-31T08:35:16.609615175Z       lr: 0.0001
+2025-07-31T08:35:16.609625995Z       noise_scheduler: flowmatch
+2025-07-31T08:35:16.609632315Z       optimizer: adamw
+2025-07-31T08:35:16.609648855Z       steps: 5
+2025-07-31T08:35:16.609658535Z       train_text_encoder: false
+2025-07-31T08:35:16.609664985Z       train_unet: true
+2025-07-31T08:35:16.609676075Z     training_folder: /workspace/training_data
+2025-07-31T08:35:16.609682455Z     trigger_word: job2
+2025-07-31T08:35:16.609693414Z     type: sd_trainer
+2025-07-31T08:35:16.609699724Z job: extension
+2025-07-31T08:35:16.609803814Z 🚀 [TRAINING] Starting training for process 924922f5✅ [HANDLER] Success: {'status': 'success', 'process_id': '924922f5', 'message': 'Training started with YAML config, process ID: 924922f5', 'config_path': '/tmp/training_config_924922f5.yaml', 'dataset_path': '/workspace/training_data', 'timestamp': '2025-07-31T08:35:16.609553'}
+2025-07-31T08:35:16.610025092Z 🔐 [TRAINING] Logging into HuggingFace...
+2025-07-31T08:35:16.640004315Z {"requestId": "052ba8ca-433f-4dec-aff0-f7721b14bcb0-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:35:17.581034496Z ✅ [TRAINING] Successfully logged into HuggingFace
+2025-07-31T08:35:17.581093046Z 🎯 [TRAINING] Starting ai-toolkit with config: /tmp/training_config_924922f5.yaml
+2025-07-31T08:35:19.982339894Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:35:19.982393904Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:35:19.982401004Z {"requestId": "sync-8d998377-bcc8-4e78-b5ac-27a9e2199b31-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:35:19.982408464Z 🎯 [HANDLER] Received job: {'delayTime': 104, 'id': 'sync-8d998377-bcc8-4e78-b5ac-27a9e2199b31-e2', 'input': {'cleanup_existing': True, 'files': [{'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job3_1.png'}, {'content': 'am9iMyBzYW1wbGUgMSwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job3_1.txt'}, {'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAACklEQVR4nGNgYGAAAAAEAAFdzNuNAAAAAElFTkSuQmCC', 'filename': 'job3_2.png'}, {'content': 'am9iMyBzYW1wbGUgMiwgdGVzdCB0cmFpbmluZyBpbWFnZQ==', 'filename': 'job3_2.txt'}], 'training_name': 'job3', 'trigger_word': 'job3', 'type': 'upload_training_data'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:35:19.982416124Z 📦 [HANDLER] Processing: upload_training_data
+2025-07-31T08:35:19.982423364Z 📁 [UPLOAD] Starting upload processing...
+2025-07-31T08:35:19.982617543Z 🗑️ [UPLOAD] Cleaned up: /workspace/training_data/job2_4836b1b6
+2025-07-31T08:35:19.982647983Z 📂 [UPLOAD] Created folder: /workspace/training_data/job3_88fb0642
+2025-07-31T08:35:19.982870751Z ✅ [UPLOAD] Saved: job3_1.png (90 bytes)
+2025-07-31T08:35:19.982901261Z ✅ [UPLOAD] Saved: job3_1.txt (34 bytes)
+2025-07-31T08:35:19.982956251Z ✅ [UPLOAD] Saved: job3_2.png (90 bytes)
+2025-07-31T08:35:19.983041820Z ✅ [UPLOAD] Saved: job3_2.txt (34 bytes)
+2025-07-31T08:35:19.983503767Z 🎉 [UPLOAD] Success: /workspace/training_data/job3_88fb0642 (0 images, 2 captions)
+2025-07-31T08:35:19.983522047Z ✅ [HANDLER] Success: {'status': 'success', 'uploaded_files': [{'filename': 'job3_1.png', 'path': '/workspace/training_data/job3_88fb0642/job3_1.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:19.982668'}, {'filename': 'job3_1.txt', 'path': '/workspace/training_data/job3_88fb0642/job3_1.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:19.982767'}, {'filename': 'job3_2.png', 'path': '/workspace/training_data/job3_88fb0642/job3_2.png', 'size': 90, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:19.982848'}, {'filename': 'job3_2.txt', 'path': '/workspace/training_data/job3_88fb0642/job3_2.txt', 'size': 34, 'content_type': 'application/octet-stream', 'uploaded_at': '2025-07-31T08:35:19.982945'}], 'training_folder': '/workspace/training_data/job3_88fb0642', 'total_images': 0, 'total_captions': 2, 'training_name': 'job3', 'trigger_word': 'job3', 'message': 'Successfully uploaded 4 files to /workspace/training_data/job3_88fb0642', 'timestamp': '2025-07-31T08:35:19.983321'}
+2025-07-31T08:35:20.014848581Z {"requestId": "sync-8d998377-bcc8-4e78-b5ac-27a9e2199b31-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:35:21.256654303Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:35:21.256685583Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:35:21.256692763Z {"requestId": "a70233ef-38e1-47d9-a07c-ba9d9dd77665-e1", "message": "Started.", "level": "INFO"}
+2025-07-31T08:35:21.256699693Z 🎯 [HANDLER] Received job: {'delayTime': 915, 'id': 'a70233ef-38e1-47d9-a07c-ba9d9dd77665-e1', 'input': {'type': 'train_with_yaml', 'yaml_config': {'config': {'name': 'job3_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job3, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job3', 'type': 'sd_trainer'}]}, 'job': 'extension'}}, 'status': 'IN_QUEUE'}
+2025-07-31T08:35:21.256741163Z 📦 [HANDLER] Processing: train_with_yaml
+2025-07-31T08:35:21.256752733Z 📝 [TRAIN_YAML] Starting LoRA training with YAML config...
+2025-07-31T08:35:21.256761123Z 🔧 [TRAIN_YAML] Setting up AI toolkit...
+2025-07-31T08:35:21.256830282Z 🛠️ [AI-TOOLKIT] Already exists at /workspace/ai-toolkit
+2025-07-31T08:35:21.256835992Z 🔍 [AI-TOOLKIT] Found components: ['run.py', 'toolkit', 'config']
+2025-07-31T08:35:21.256841552Z ✅ [AI-TOOLKIT] Verified and ready
+2025-07-31T08:35:21.256847202Z 🎯 [TRAIN_YAML] Letting ai-toolkit handle model download automatically...
+2025-07-31T08:35:21.256853792Z 🎯 [TRAIN_YAML] Keeping original model path in config (ai-toolkit will download)
+2025-07-31T08:35:21.256862392Z 📁 [TRAIN_YAML] Updated dataset path to: /workspace/training_data
+2025-07-31T08:35:21.259102638Z 📝 [TRAIN_YAML] Created config file: /tmp/training_config_8f511c67.yaml
+2025-07-31T08:35:21.259129828Z 🔍 [TRAIN_YAML] Config content:
+2025-07-31T08:35:21.260906097Z config:
+2025-07-31T08:35:21.260930867Z   name: job3_lora
+2025-07-31T08:35:21.260938407Z   process:
+2025-07-31T08:35:21.260944377Z   - datasets:
+2025-07-31T08:35:21.260949837Z     - cache_latents_to_disk: true
+2025-07-31T08:35:21.260955627Z       caption_dropout_rate: 0
+2025-07-31T08:35:21.260961567Z       caption_ext: txt
+2025-07-31T08:35:21.260966807Z       folder_path: /workspace/training_data
+2025-07-31T08:35:21.260973017Z       resolution:
+2025-07-31T08:35:21.260979566Z       - 512
+2025-07-31T08:35:21.260984896Z       - 512
+2025-07-31T08:35:21.260990106Z       shuffle_tokens: false
+2025-07-31T08:35:21.260995366Z     device: cuda:0
+2025-07-31T08:35:21.261000716Z     model:
+2025-07-31T08:35:21.261006086Z       is_flux: true
+2025-07-31T08:35:21.261011626Z       name_or_path: black-forest-labs/FLUX.1-dev
+2025-07-31T08:35:21.261016966Z       quantize: false
+2025-07-31T08:35:21.261056186Z     network:
+2025-07-31T08:35:21.261064936Z       linear: 8
+2025-07-31T08:35:21.261073826Z       linear_alpha: 8
+2025-07-31T08:35:21.261087456Z       type: lora
+2025-07-31T08:35:21.261094666Z     sample:
+2025-07-31T08:35:21.261106986Z       guidance_scale: 2
+2025-07-31T08:35:21.261114656Z       height: 512
+2025-07-31T08:35:21.261126446Z       prompts:
+2025-07-31T08:35:21.261133815Z       - job3, portrait photo
+2025-07-31T08:35:21.261146455Z       sample_every: 5
+2025-07-31T08:35:21.261153945Z       sample_steps: 4
+2025-07-31T08:35:21.261165415Z       sampler: flowmatch
+2025-07-31T08:35:21.261173025Z       width: 512
+2025-07-31T08:35:21.261184885Z     save:
+2025-07-31T08:35:21.261192285Z       dtype: float16
+2025-07-31T08:35:21.261204465Z       max_step_saves_to_keep: 1
+2025-07-31T08:35:21.261212075Z       save_every: 5
+2025-07-31T08:35:21.261225035Z     train:
+2025-07-31T08:35:21.261233665Z       batch_size: 1
+2025-07-31T08:35:21.261245705Z       dtype: bf16
+2025-07-31T08:35:21.261252975Z       ema_config:
+2025-07-31T08:35:21.261265005Z         use_ema: false
+2025-07-31T08:35:21.261272995Z       gradient_accumulation_steps: 1
+2025-07-31T08:35:21.261284515Z       gradient_checkpointing: true
+2025-07-31T08:35:21.261305884Z       lr: 0.0001
+2025-07-31T08:35:21.261318454Z       noise_scheduler: flowmatch
+2025-07-31T08:35:21.261326504Z       optimizer: adamw
+2025-07-31T08:35:21.261338784Z       steps: 5
+2025-07-31T08:35:21.261344064Z       train_text_encoder: false
+2025-07-31T08:35:21.261353954Z       train_unet: true
+2025-07-31T08:35:21.261365294Z     training_folder: /workspace/training_data
+2025-07-31T08:35:21.261374394Z     trigger_word: job3
+2025-07-31T08:35:21.261385134Z     type: sd_trainer
+2025-07-31T08:35:21.261394394Z job: extension
+2025-07-31T08:35:21.261417334Z 🚀 [TRAINING] Starting training for process 8f511c67✅ [HANDLER] Success: {'status': 'success', 'process_id': '8f511c67', 'message': 'Training started with YAML config, process ID: 8f511c67', 'config_path': '/tmp/training_config_8f511c67.yaml', 'dataset_path': '/workspace/training_data', 'timestamp': '2025-07-31T08:35:21.261205'}
+2025-07-31T08:35:21.261743312Z 🔐 [TRAINING] Logging into HuggingFace...
+2025-07-31T08:35:21.294352758Z {"requestId": "a70233ef-38e1-47d9-a07c-ba9d9dd77665-e1", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:35:22.250381895Z ✅ [TRAINING] Successfully logged into HuggingFace
+2025-07-31T08:35:22.250472185Z 🎯 [TRAINING] Starting ai-toolkit with config: /tmp/training_config_8f511c67.yaml
+2025-07-31T08:35:30.423606454Z ❌ [TRAINING] Training failed for process d9ec2898: Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)
+2025-07-31T08:35:30.423673904Z               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:35:30.423680384Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__
+2025-07-31T08:35:30.423684954Z     self.setup_epoch()
+2025-07-31T08:35:30.423690684Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch
+2025-07-31T08:35:30.423695694Z     self.cache_latents_all_latents()
+2025-07-31T08:35:30.423701324Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents
+2025-07-31T08:35:30.423707084Z     file_item.load_and_process_image(self.transform, only_load_latents=True)
+2025-07-31T08:35:30.423725914Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image
+2025-07-31T08:35:30.423735703Z     img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)
+2025-07-31T08:35:30.423740813Z           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:35:30.423745553Z   File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize
+2025-07-31T08:35:30.423750053Z     return self._new(self.im.resize(size, resample, box))
+2025-07-31T08:35:30.423755693Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:35:30.423761013Z ValueError: height and width must be > 0
+2025-07-31T08:35:30.423773993Z Output: ate LoRA for Text Encoder: 0 modules.
+2025-07-31T08:35:30.423833553Z create LoRA for U-Net: 494 modules.
+2025-07-31T08:35:30.423839613Z enable LoRA for U-Net
+2025-07-31T08:35:30.423844923Z Dataset: /workspace/training_data
+2025-07-31T08:35:30.423850143Z   -  Preprocessing image dimensions
+2025-07-31T08:35:30.423856413Z   -  Found 2 images
+2025-07-31T08:35:30.423865673Z Bucket sizes for /workspace/training_data:
+2025-07-31T08:35:30.423876393Z 0x0: 2 files
+2025-07-31T08:35:30.423884713Z 1 buckets made
+2025-07-31T08:35:30.423897662Z Caching latents for /workspace/training_data
+2025-07-31T08:35:30.423905282Z  - Saving latents to disk
+2025-07-31T08:35:30.423918402Z Error running job: height and width must be > 0
+2025-07-31T08:35:30.423933002Z ========================================
+2025-07-31T08:35:30.423940582Z Result:
+2025-07-31T08:35:30.423952182Z  - 0 completed jobs
+2025-07-31T08:35:30.423960172Z  - 1 failure
+2025-07-31T08:35:30.423974262Z ========================================
+2025-07-31T08:35:31.779479123Z {"requestId": null, "message": "Jobs in queue: 1", "level": "INFO"}
+2025-07-31T08:35:31.779519373Z {"requestId": null, "message": "Jobs in progress: 1", "level": "INFO"}
+2025-07-31T08:35:31.779525893Z {"requestId": "sync-30160f9a-6d82-4219-89c4-6982cddd30fc-e2", "message": "Started.", "level": "INFO"}
+2025-07-31T08:35:31.779548993Z 🎯 [HANDLER] Received job: {'delayTime': 101, 'id': 'sync-30160f9a-6d82-4219-89c4-6982cddd30fc-e2', 'input': {'type': 'processes'}, 'status': 'IN_QUEUE'}
+2025-07-31T08:35:31.779555993Z 📦 [HANDLER] Processing: processes
+2025-07-31T08:35:31.780040660Z ✅ [HANDLER] Success: {'status': 'success', 'processes': [{'id': '18953af0', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': '4worker_test_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0.1, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [896, 896], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 16, 'linear_alpha': 16, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 896, 'neg': '', 'prompts': ['test_subject, a portrait photo', 'test_subject, standing in a field'], 'sample_every': 50, 'sample_steps': 20, 'sampler': 'flowmatch', 'seed': 42, 'walk_seed': False, 'width': 896}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 50}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 4, 'gradient_checkpointing': True, 'lr': 0.0004, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 10, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'test_subject', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:26:02.109830', 'updated_at': '2025-07-31T08:27:11.839573', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 3 images\nBucket sizes for /workspace/training_data:\n0x0: 3 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, {'id': '22640a43', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': 'job1_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job1, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job1', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:36.329516', 'updated_at': '2025-07-31T08:29:56.200763', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 2 images\nBucket sizes for /workspace/training_data:\n0x0: 2 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, {'id': 'a5852b35', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': 'job2_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job2, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job2', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:40.554872', 'updated_at': '2025-07-31T08:30:01.351607', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 2 images\nBucket sizes for /workspace/training_data:\n0x0: 2 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, {'id': '16db7c4d', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': 'job3_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job3, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job3', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:29:45.550799', 'updated_at': '2025-07-31T08:30:05.823619', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 2 images\nBucket sizes for /workspace/training_data:\n0x0: 2 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, {'id': 'd9ec2898', 'type': 'train_yaml', 'status': 'failed', 'config': {'config': {'name': 'job1_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job1, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job1', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:35:11.988993', 'updated_at': '2025-07-31T08:35:30.423307', 'output_path': None, 'error': 'Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__\n    self.setup_epoch()\n  File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch\n    self.cache_latents_all_latents()\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents\n    file_item.load_and_process_image(self.transform, only_load_latents=True)\n  File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image\n    img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize\n    return self._new(self.im.resize(size, resample, box))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: height and width must be > 0\n\nOutput: ate LoRA for Text Encoder: 0 modules.\ncreate LoRA for U-Net: 494 modules.\nenable LoRA for U-Net\nDataset: /workspace/training_data\n  -  Preprocessing image dimensions\n  -  Found 2 images\nBucket sizes for /workspace/training_data:\n0x0: 2 files\n1 buckets made\nCaching latents for /workspace/training_data\n - Saving latents to disk\nError running job: height and width must be > 0\n\n========================================\nResult:\n - 0 completed jobs\n - 1 failure\n========================================\n'}, {'id': '924922f5', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': 'job2_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job2, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', 'steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job2', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:35:16.609161', 'updated_at': '2025-07-31T08:35:16.609866', 'output_path': None, 'error': None}, {'id': '8f511c67', 'type': 'train_yaml', 'status': 'running', 'config': {'config': {'name': 'job3_lora', 'process': [{'datasets': [{'cache_latents_to_disk': True, 'caption_dropout_rate': 0, 'caption_ext': 'txt', 'folder_path': '/workspace/training_data', 'resolution': [512, 512], 'shuffle_tokens': False}], 'device': 'cuda:0', 'model': {'is_flux': True, 'name_or_path': 'black-forest-labs/FLUX.1-dev', 'quantize': False}, 'network': {'linear': 8, 'linear_alpha': 8, 'type': 'lora'}, 'sample': {'guidance_scale': 2, 'height': 512, 'prompts': ['job3, portrait photo'], 'sample_every': 5, 'sample_steps': 4, 'sampler': 'flowmatch', 'width': 512}, 'save': {'dtype': 'float16', 'max_step_saves_to_keep': 1, 'save_every': 5}, 'train': {'batch_size': 1, 'dtype': 'bf16', 'ema_config': {'use_ema': False}, 'gradient_accumulation_steps': 1, 'gradient_checkpointing': True, 'lr': 0.0001, 'noise_scheduler': 'flowmatch', 'optimizer': 'adamw', '2025-07-31T08:35:31.780040660Z steps': 5, 'train_text_encoder': False, 'train_unet': True}, 'training_folder': '/workspace/training_data', 'trigger_word': 'job3', 'type': 'sd_trainer'}]}, 'job': 'extension'}, 'created_at': '2025-07-31T08:35:21.260791', 'updated_at': '2025-07-31T08:35:21.261640', 'output_path': None, 'error': None}], 'total_count': 7, 'timestamp': '2025-07-31T08:35:31.779411'}
+2025-07-31T08:35:31.821843619Z {"requestId": "sync-30160f9a-6d82-4219-89c4-6982cddd30fc-e2", "message": "Finished.", "level": "INFO"}
+2025-07-31T08:35:35.516955634Z ❌ [TRAINING] Training failed for process 924922f5: Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)
+2025-07-31T08:35:35.517031924Z               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:35:35.517040224Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__
+2025-07-31T08:35:35.517046104Z     self.setup_epoch()
+2025-07-31T08:35:35.517052554Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch
+2025-07-31T08:35:35.517058224Z     self.cache_latents_all_latents()
+2025-07-31T08:35:35.517065394Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents
+2025-07-31T08:35:35.517072204Z     file_item.load_and_process_image(self.transform, only_load_latents=True)
+2025-07-31T08:35:35.517077893Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image
+2025-07-31T08:35:35.517085103Z     img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)
+2025-07-31T08:35:35.517091103Z           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:35:35.517096913Z   File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize
+2025-07-31T08:35:35.517102813Z     return self._new(self.im.resize(size, resample, box))
+2025-07-31T08:35:35.517109133Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:35:35.517115613Z ValueError: height and width must be > 0
+2025-07-31T08:35:35.517162043Z Output: ate LoRA for Text Encoder: 0 modules.
+2025-07-31T08:35:35.517172253Z create LoRA for U-Net: 494 modules.
+2025-07-31T08:35:35.517191863Z enable LoRA for U-Net
+2025-07-31T08:35:35.517201243Z Dataset: /workspace/training_data
+2025-07-31T08:35:35.517213753Z   -  Preprocessing image dimensions
+2025-07-31T08:35:35.517223663Z   -  Found 2 images
+2025-07-31T08:35:35.517237952Z Bucket sizes for /workspace/training_data:
+2025-07-31T08:35:35.517246762Z 0x0: 2 files
+2025-07-31T08:35:35.517259402Z 1 buckets made
+2025-07-31T08:35:35.517269302Z Caching latents for /workspace/training_data
+2025-07-31T08:35:35.517286392Z  - Saving latents to disk
+2025-07-31T08:35:35.517298502Z Error running job: height and width must be > 0
+2025-07-31T08:35:35.517320042Z ========================================
+2025-07-31T08:35:35.517327502Z Result:
+2025-07-31T08:35:35.517335292Z  - 0 completed jobs
+2025-07-31T08:35:35.517345412Z  - 1 failure
+2025-07-31T08:35:35.517360102Z ========================================
+2025-07-31T08:35:41.519587734Z ❌ [TRAINING] Training failed for process 8f511c67: Training failed (exit code 1): onfig, batch_size=batch_size, sd=sd)
+2025-07-31T08:35:41.519649764Z               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:35:41.519653694Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 548, in __init__
+2025-07-31T08:35:41.519657284Z     self.setup_epoch()
+2025-07-31T08:35:41.519660704Z   File "/workspace/ai-toolkit/toolkit/data_loader.py", line 558, in setup_epoch
+2025-07-31T08:35:41.519676124Z     self.cache_latents_all_latents()
+2025-07-31T08:35:41.519680444Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 1736, in cache_latents_all_latents
+2025-07-31T08:35:41.519683703Z     file_item.load_and_process_image(self.transform, only_load_latents=True)
+2025-07-31T08:35:41.519686413Z   File "/workspace/ai-toolkit/toolkit/dataloader_mixins.py", line 687, in load_and_process_image
+2025-07-31T08:35:41.519689743Z     img = img.resize((self.scale_to_width, self.scale_to_height), Image.BICUBIC)
+2025-07-31T08:35:41.519692483Z           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:35:41.519695053Z   File "/usr/local/lib/python3.12/site-packages/PIL/Image.py", line 2321, in resize
+2025-07-31T08:35:41.519697813Z     return self._new(self.im.resize(size, resample, box))
+2025-07-31T08:35:41.519700903Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-07-31T08:35:41.519703573Z ValueError: height and width must be > 0
+2025-07-31T08:35:41.519708743Z Output: ate LoRA for Text Encoder: 0 modules.
+2025-07-31T08:35:41.519789763Z create LoRA for U-Net: 494 modules.
+2025-07-31T08:35:41.519828133Z enable LoRA for U-Net
+2025-07-31T08:35:41.519830693Z Dataset: /workspace/training_data
+2025-07-31T08:35:41.519839043Z   -  Preprocessing image dimensions
+2025-07-31T08:35:41.519841493Z   -  Found 2 images
+2025-07-31T08:35:41.519844362Z Bucket sizes for /workspace/training_data:
+2025-07-31T08:35:41.519847322Z 0x0: 2 files
+2025-07-31T08:35:41.519850792Z 1 buckets made
+2025-07-31T08:35:41.519937562Z Caching latents for /workspace/training_data
+2025-07-31T08:35:41.519970542Z  - Saving latents to disk
+2025-07-31T08:35:41.519983912Z Error running job: height and width must be > 0
+2025-07-31T08:35:41.520001152Z ========================================
+2025-07-31T08:35:41.520007701Z Result:
+2025-07-31T08:35:41.520015171Z  - 0 completed jobs
+2025-07-31T08:35:41.520026591Z  - 1 failure
+2025-07-31T08:35:41.520040351Z ========================================
+2025-07-31T09:04:33.550385130Z {"requestId": null, "message": "Failed to get job. | Error Type: ClientResponseError | Error Message: 502, message='Bad Gateway', url='https://api.runpod.ai/v2/rqwaizbda7ucsj/job-take/8lpp1q45j67zlj?gpu=NVIDIA+GeForce+RTX+3090&job_in_progress=0'", "level": "ERROR"}

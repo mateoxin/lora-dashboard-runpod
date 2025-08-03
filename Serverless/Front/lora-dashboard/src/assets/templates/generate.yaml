@@ -1,0 +1,30 @@
+job: generate
+config:
+  name: flux_gen
+  process:
+    - type: to_folder
+      output_folder: "/workspace/samples_flux"
+      device: cuda:0
+      generate:
+        sampler: flowmatch
+        width: 896
+        height: 896
+        guidance_scale: 2
+        sample_steps: 20
+        prompts:
+          - "Matt in casual clothes playing in guitar sitting in the sofa"
+          - "Matt on a luxuries yacht behind a steering wheel navigating the sailing boat. A beautiful sunset in the background behind him. Matt is relaxed but focused. He's wearing a white shirt. the photo is taken from in front of him. Matt has focus face no smiling"
+          - "A rugged man named Matt is riding a brown horse across an open, grassy prairie under a clear sky. Mat has a short beard and is wearing a light green button-up shirt, dark blue jeans, and cowboy boots. He sits confidently in the saddle, holding the reins with one hand while looking ahead with a calm, determined expression. The golden sunlight casts soft shadows, highlighting the dry grass and the horse's muscular build. The landscape is vast and open, with gentle hills in the background and no other people or structures in sight, evoking a sense of freedom and adventure."
+          - "A serene tropical scene featuring a Matt in blue swim trunks sitting on the edge of an infinity pool, reflecting the cloudy sky. The backdrop is a lush green rice field and tall palm trees under a moody, overcast sky. The atmosphere is peaceful and introspective, evoking a sense of calm and reflection. The composition captures a birthday moment in a remote, tropical paradise, with natural tones and a cinematic feel"
+          - "Matt in action-packed image of a surfer riding a powerful wave in the open ocean. The surfer is shirtless, wearing colorful board shorts, and maintains a low stance on the surfboard with one arm extended for balance. The wave is large and dynamic, with white foam crashing around him and a deep blue undertone that contrasts against the sunlit spray. The scene captures the energy and intensity of surfing, as well as the raw beauty of the ocean, with sunlight highlighting the waves and giving a sense of movement and adrenaline."
+          - "Matt as a young, athletic man standing on a sandy beach with a large surfboard tucked under his arm. He has a relaxed, contemplative expression as he gazes out over the ocean. The man is shirtless, wearing dark board shorts, and has slightly messy, beach-textured hair. The beach is quiet, with a few tropical plants framing the scene, and the ocean horizon stretches out under a soft, pastel sky at either sunrise or sunset. The atmosphere is peaceful and captures the essence of a calm, surfing lifestyle by the sea."
+          - "Matt on a luxuries yacht behind a steering wheel navigating the sailing boat. A beautiful sunset in the background behind him. Matt is relaxed but focused. He's wearing a white shirt. the photo is taken from in front of him. Matt has focus face no smiling"
+          - "Matt on a luxuries yacht behind a steering wheel navigating the sailing boat. A beautiful sunset in the background behind him. Matt is relaxed but focused. He's wearing a white shirt. the photo is taken from in front of him. Matt has focus face no smiling"
+      model:
+        name_or_path: "/workspace/models/FLUX.1-dev"
+        is_flux: true
+        quantize: false    # na próbę bez low-bitów
+        dtype: fp16
+        lora_dtype: fp16   # ← klucz, którego Ci brakowało
+        lora_path: "/workspace/ai-toolkit/output/mati_flux_lora_v1/mati_flux_lora_v1.safetensors"
+        lora_scale: 1.0 

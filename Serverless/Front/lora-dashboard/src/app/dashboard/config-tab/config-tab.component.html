@@ -1,0 +1,453 @@
+<div class="config-tab p-6 min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+  <!-- Header Controls -->
+  <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-4">
+    <div class="flex flex-col lg:flex-row items-start lg:items-center gap-6">
+              <div class="flex items-center gap-3">
+          <div class="p-2 bg-green-100 rounded-lg">
+            <mat-icon class="text-green-600">school</mat-icon>
+          </div>
+          <div>
+            <h2 class="text-3xl font-bold text-gray-800">LoRA Training Configuration</h2>
+            <p class="text-gray-600">Configure and start LoRA model training</p>
+          </div>
+        </div>
+      
+      <!-- Training Type Selector -->
+      <mat-form-field appearance="outline" class="w-72">
+        <mat-label>Training Template</mat-label>
+        <mat-select [(value)]="selectedTemplate" (selectionChange)="onTemplateChange()">
+          <mat-option *ngFor="let template of templates" [value]="template.value">
+            <div class="flex items-center gap-2">
+              <mat-icon class="text-sm">school</mat-icon>
+              {{ template.label }}
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-3">
+              <button mat-raised-button 
+                color="primary" 
+                (click)="formatYAML()"
+                [disabled]="!editorContent"
+                class="shadow-lg">
+          <mat-icon>code</mat-icon>
+          <span class="ml-2">Format YAML</span>
+        </button>
+        
+        <button mat-raised-button 
+                (click)="copyToClipboard()"
+                [disabled]="!editorContent"
+                class="shadow-lg">
+          <mat-icon>copy</mat-icon>
+          <span class="ml-2">Copy</span>
+        </button>
+        
+                <button mat-raised-button 
+                (click)="downloadConfig()"
+                [disabled]="!editorContent"
+                class="shadow-lg">
+          <mat-icon>file_download</mat-icon>
+          <span class="ml-2">Download</span>
+        </button>
+        
+        <!-- Start Training Button -->
+        <button mat-raised-button 
+                color="accent"
+                (click)="startTraining()"
+                [disabled]="!editorContent || !getValidationStatus().isValid || isStarting"
+                class="shadow-lg bg-gradient-to-r from-green-500 to-emerald-600 text-white">
+          <mat-icon *ngIf="!isStarting">school</mat-icon>
+          <mat-spinner *ngIf="isStarting" diameter="20" class="mr-2"></mat-spinner>
+          <span class="ml-2">{{ isStarting ? 'Training...' : 'Start LoRA Training' }}</span>
+        </button>
+      </div>
+  </div>
+
+  <!-- Validation Status -->
+  <div class="mb-6">
+    <mat-card [ngClass]="getValidationStatus().isValid ? 'border-emerald-200 bg-emerald-50' : 'border-red-200 bg-red-50'" 
+              class="border-2 transition-all duration-200">
+      <mat-card-content class="py-4">
+        <div class="flex items-center gap-3">
+          <div [ngClass]="getValidationStatus().isValid ? 'bg-emerald-100 text-emerald-600' : 'bg-red-100 text-red-600'" 
+               class="p-2 rounded-lg">
+            <mat-icon>
+              {{ getValidationStatus().isValid ? 'check_circle' : 'error' }}
+            </mat-icon>
+          </div>
+          <div>
+            <p class="font-semibold" 
+               [ngClass]="getValidationStatus().isValid ? 'text-emerald-800' : 'text-red-800'">
+              {{ getValidationStatus().isValid ? 'Configuration Valid' : 'Configuration Error' }}
+            </p>
+            <p class="text-sm" 
+               [ngClass]="getValidationStatus().isValid ? 'text-emerald-600' : 'text-red-600'">
+              {{ getValidationStatus().message }}
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- 📁 FILE UPLOAD SECTION -->
+  <mat-card class="shadow-xl border border-gray-200 bg-white relative overflow-hidden mb-8">
+    <mat-card-header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
+      <mat-card-title class="flex items-center gap-3">
+        <mat-icon class="text-2xl">cloud_upload</mat-icon>
+        <div>
+          <h3 class="text-xl font-bold">Training Data Upload</h3>
+          <p class="text-blue-100 text-sm">Upload images and captions for LoRA training</p>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content class="p-6 space-y-6">
+      <!-- Training Info Form -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Training Name (optional)</mat-label>
+          <input matInput 
+                 [(ngModel)]="trainingName" 
+                 placeholder="Leave empty for auto-generated name"
+                 maxlength="50">
+          <mat-icon matSuffix>label</mat-icon>
+          <mat-hint>Will auto-generate if left empty</mat-hint>
+        </mat-form-field>
+
+      </div>
+
+      <!-- File Upload Area -->
+      <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-gray-50 hover:bg-gray-100 transition-colors"
+           [class.border-blue-500]="isDragOver"
+           [class.bg-blue-50]="isDragOver"
+           (dragover)="onDragOver($event)"
+           (dragleave)="onDragLeave($event)"
+           (drop)="onDrop($event)"
+           (click)="fileInput.click()">
+        
+        <input #fileInput 
+               type="file" 
+               multiple 
+               accept=".jpg,.jpeg,.png,.webp,.txt"
+               (change)="onFilesSelected($event)"
+               class="hidden">
+        
+        <mat-icon class="text-6xl text-gray-400 mb-4">cloud_upload</mat-icon>
+        <h4 class="text-lg font-semibold text-gray-700 mb-2">
+          Drop files here or click to upload
+        </h4>
+        <p class="text-gray-500 mb-4">
+          Support: JPG, PNG, WebP images and TXT caption files
+        </p>
+        <p class="text-sm text-gray-400">
+          Maximum file size: 50MB per file
+        </p>
+      </div>
+
+      <!-- Uploaded Files List -->
+      <div *ngIf="uploadedFiles.length > 0" class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h4 class="text-lg font-semibold text-gray-800">
+            Uploaded Files ({{ uploadedFiles.length }})
+          </h4>
+          <button mat-stroked-button 
+                  color="warn" 
+                  (click)="clearFiles()"
+                  class="text-sm">
+            <mat-icon>clear</mat-icon>
+            Clear All
+          </button>
+        </div>
+
+        <div class="max-h-64 overflow-y-auto border border-gray-200 rounded-lg">
+          <div *ngFor="let file of uploadedFiles; let i = index" 
+               class="flex items-center justify-between p-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50">
+            <div class="flex items-center gap-3">
+              <mat-icon [class]="getFileTypeIcon(file)" class="text-lg">
+                {{ getFileTypeIcon(file) === 'text-blue-600' ? 'image' : 'description' }}
+              </mat-icon>
+              <div>
+                <p class="text-sm font-medium text-gray-800">{{ file.name }}</p>
+                <p class="text-xs text-gray-500">{{ formatFileSize(file.size) }}</p>
+              </div>
+            </div>
+            <button mat-icon-button 
+                    color="warn" 
+                    (click)="removeFile(i)"
+                    matTooltip="Remove file">
+              <mat-icon class="text-sm">delete</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Upload Summary -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+              <p class="text-2xl font-bold text-blue-600">{{ getImageCount() }}</p>
+              <p class="text-sm text-blue-800">Images</p>
+            </div>
+            <div>
+              <p class="text-2xl font-bold text-green-600">{{ getCaptionCount() }}</p>
+              <p class="text-sm text-green-800">Captions</p>
+            </div>
+            <div>
+              <p class="text-2xl font-bold text-purple-600">{{ formatFileSize(getTotalSize()) }}</p>
+              <p class="text-sm text-purple-800">Total Size</p>
+            </div>
+            <div>
+              <button mat-raised-button 
+                      color="primary" 
+                      (click)="uploadFiles()"
+                      [disabled]="!canUpload() || isUploading"
+                      class="w-full">
+                <mat-spinner *ngIf="isUploading" diameter="20" class="mr-2"></mat-spinner>
+                <mat-icon *ngIf="!isUploading">cloud_upload</mat-icon>
+                {{ isUploading ? 'Uploading...' : 'Upload Files' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upload Options -->
+      <div class="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+        <mat-checkbox [(ngModel)]="cleanupExisting" class="text-sm">
+          Clean up old training data before upload
+        </mat-checkbox>
+        <div class="text-sm text-gray-600">
+          <mat-icon class="text-sm mr-1">info</mat-icon>
+          This will remove previous training datasets
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Monaco Editor -->
+  <div class="editor-container bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200" 
+       style="height: 600px;">
+    
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="flex flex-col items-center justify-center h-full gap-4">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p class="text-gray-600 text-lg">Loading editor...</p>
+    </div>
+
+    <!-- Simple YAML Editor -->
+    <div *ngIf="!isLoading" class="h-full w-full relative">
+      <div class="absolute top-0 left-0 right-0 bg-gray-800 text-gray-300 px-4 py-2 text-sm border-b border-gray-600 z-10">
+        <div class="flex items-center justify-between">
+          <span class="flex items-center gap-2">
+            <mat-icon class="text-sm">school</mat-icon>
+            LoRA Training Configuration Editor
+          </span>
+          <span class="text-xs opacity-75">Edit training parameters - Click "Start LoRA Training" when ready</span>
+        </div>
+      </div>
+      <textarea 
+        [(ngModel)]="editorContent"
+        (ngModelChange)="onContentChange($event)"
+        class="h-full w-full pt-12 p-4 font-mono text-sm bg-gray-900 text-gray-100 border-none outline-none resize-none leading-relaxed"
+        placeholder="# YAML configuration will appear here...
+# Example:
+job: training
+config:
+  name: example_config
+  # Add your configuration here"
+        spellcheck="false">
+      </textarea>
+    </div>
+  </div>
+
+  <!-- Training Information -->
+  <div class="mt-8">
+    <mat-card class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200">
+      <mat-card-header>
+        <mat-card-title class="flex items-center gap-2 text-green-800">
+          <mat-icon>school</mat-icon>
+          LoRA Training Information
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="text-green-700">
+          <div class="space-y-3">
+            <div class="flex items-start gap-3">
+              <mat-icon class="text-green-500 mt-1">school</mat-icon>
+              <div>
+                <p class="font-semibold text-lg mb-2">Conservative Training Configuration</p>
+                <p class="mb-2">Optimized LoRA training settings for stable and reliable results.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                  <div class="bg-white p-3 rounded-lg border border-green-200">
+                    <p class="font-medium text-green-800">Network Settings</p>
+                    <p class="text-sm">Linear layers: 20, Alpha: 20, Dropout: 0.08</p>
+                  </div>
+                  <div class="bg-white p-3 rounded-lg border border-green-200">
+                    <p class="font-medium text-green-800">Training Params</p>
+                    <p class="text-sm">Learning rate: 0.00011, Batch size: 1, Steps: 1000</p>
+                  </div>
+                  <div class="bg-white p-3 rounded-lg border border-green-200">
+                    <p class="font-medium text-green-800">Output</p>
+                    <p class="text-sm">FLUX LoRA model (.safetensors format)</p>
+                  </div>
+                </div>
+                <div class="mt-4 p-3 bg-green-100 rounded-lg border border-green-300">
+                  <p class="font-medium text-green-800 mb-1">📁 Requirements:</p>
+                  <p class="text-sm">Place your training images in: <code class="bg-white px-1 rounded">/workspace/my_lora_images</code></p>
+                  <p class="text-sm">Each image should have a corresponding .txt file with captions</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- 📝 BACKEND LOGS SECTION -->
+  <div class="mb-8">
+    <mat-card class="bg-gradient-to-r from-purple-50 to-indigo-50 border-l-4 border-purple-500">
+      <mat-card-header>
+        <mat-card-title class="flex items-center gap-2 text-purple-800">
+          <mat-icon>bug_report</mat-icon>
+          Backend Logs Access
+        </mat-card-title>
+        <mat-card-subtitle>Download logs for debugging and monitoring</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="pt-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Errors Log -->
+          <div class="bg-white p-4 rounded-lg border border-red-200">
+            <div class="flex items-center gap-2 mb-3">
+              <mat-icon class="text-red-600">error</mat-icon>
+              <h4 class="font-semibold text-red-800">Error Logs</h4>
+            </div>
+            <p class="text-sm text-red-700 mb-3">Backend errors and stack traces</p>
+            <button mat-raised-button 
+                    color="warn" 
+                    class="w-full"
+                    (click)="downloadBackendLogs('errors')"
+                    [disabled]="isDownloadingLogs">
+              <mat-icon>download</mat-icon>
+              Download Errors
+            </button>
+          </div>
+
+          <!-- App Log -->
+          <div class="bg-white p-4 rounded-lg border border-blue-200">
+            <div class="flex items-center gap-2 mb-3">
+              <mat-icon class="text-blue-600">info</mat-icon>
+              <h4 class="font-semibold text-blue-800">App Logs</h4>
+            </div>
+            <p class="text-sm text-blue-700 mb-3">General application activity</p>
+            <button mat-raised-button 
+                    color="primary" 
+                    class="w-full"
+                    (click)="downloadBackendLogs('app')"
+                    [disabled]="isDownloadingLogs">
+              <mat-icon>download</mat-icon>
+              Download App Logs
+            </button>
+          </div>
+
+          <!-- Requests Log -->
+          <div class="bg-white p-4 rounded-lg border border-green-200">
+            <div class="flex items-center gap-2 mb-3">
+              <mat-icon class="text-green-600">http</mat-icon>
+              <h4 class="font-semibold text-green-800">Request Logs</h4>
+            </div>
+            <p class="text-sm text-green-700 mb-3">Detailed request/response data</p>
+            <button mat-raised-button 
+                    color="accent" 
+                    class="w-full"
+                    (click)="downloadBackendLogs('requests')"
+                    [disabled]="isDownloadingLogs">
+              <mat-icon>download</mat-icon>
+              Download Requests
+            </button>
+          </div>
+        </div>
+
+        <!-- 📝 FRONTEND LOGS SECTION -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          <!-- Frontend Logs -->
+          <div class="bg-white p-4 rounded-lg border border-orange-200">
+            <div class="flex items-center gap-2 mb-3">
+              <mat-icon class="text-orange-600">web</mat-icon>
+              <h4 class="font-semibold text-orange-800">Frontend Logs</h4>
+            </div>
+            <p class="text-sm text-orange-700 mb-3">Client-side requests, responses and file operations</p>
+            <button mat-raised-button 
+                    color="primary" 
+                    class="w-full mb-2"
+                    (click)="downloadFrontendLogs()">
+              <mat-icon>download</mat-icon>
+              Download Frontend Logs
+            </button>
+            <div class="text-xs text-orange-600 mt-2">
+              Total logs: {{ getFrontendLogStats().total || 0 }}
+            </div>
+          </div>
+
+          <!-- Combined Logs -->
+          <div class="bg-white p-4 rounded-lg border border-purple-200">
+            <div class="flex items-center gap-2 mb-3">
+              <mat-icon class="text-purple-600">merge_type</mat-icon>
+              <h4 class="font-semibold text-purple-800">Complete Analysis</h4>
+            </div>
+            <p class="text-sm text-purple-700 mb-3">Both frontend and backend logs for full debugging</p>
+            <button mat-raised-button 
+                    color="accent" 
+                    class="w-full mb-1"
+                    (click)="downloadFrontendLogs()">
+              <mat-icon>cloud_download</mat-icon>
+              Get Client Logs
+            </button>
+            <button mat-stroked-button 
+                    class="w-full"
+                    (click)="downloadBackendLogs('requests')"
+                    [disabled]="isDownloadingLogs">
+              <mat-icon>server</mat-icon>
+              Get Server Logs
+            </button>
+          </div>
+        </div>
+
+        <!-- Log Statistics -->
+        <div class="mt-6 p-4 bg-white rounded-lg border border-gray-200">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="font-semibold text-gray-800 flex items-center gap-2">
+              <mat-icon>analytics</mat-icon>
+              Log Statistics
+            </h4>
+            <button mat-button 
+                    color="primary"
+                    (click)="refreshLogStats()"
+                    [disabled]="isLoadingStats">
+              <mat-icon>refresh</mat-icon>
+              Refresh
+            </button>
+          </div>
+          
+          <div *ngIf="logStats; else noStats" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div *ngFor="let file of logStats.files" class="text-center">
+              <p class="text-2xl font-bold text-purple-600">{{ formatFileSize(file.size) }}</p>
+              <p class="text-sm text-gray-600">{{ file.name }}</p>
+              <p class="text-xs text-gray-500">{{ formatDate(file.modified) }}</p>
+            </div>
+          </div>
+          
+          <ng-template #noStats>
+            <div class="text-center text-gray-500">
+              <mat-icon class="text-4xl mb-2">cloud_off</mat-icon>
+              <p>Click Refresh to load log statistics</p>
+            </div>
+          </ng-template>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">LoRA Dashboard</h1>
+      <p class="text-gray-600">Serverless Training & Generation Suite</p>
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <!-- Username Field -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput 
+               formControlName="username" 
+               placeholder="Enter username"
+               autocomplete="username">
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="getFieldError('username')">
+          {{ getFieldError('username') }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Password Field -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput 
+               [type]="hidePassword ? 'password' : 'text'"
+               formControlName="password" 
+               placeholder="Enter password"
+               autocomplete="current-password">
+        <button mat-icon-button 
+                matSuffix 
+                type="button"
+                (click)="hidePassword = !hidePassword"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hidePassword">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="getFieldError('password')">
+          {{ getFieldError('password') }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" 
+           class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+        <div class="flex items-center">
+          <mat-icon class="text-red-500 mr-2">error</mat-icon>
+          {{ errorMessage }}
+        </div>
+      </div>
+
+      <!-- Login Button -->
+      <button mat-raised-button 
+              color="primary"
+              type="submit"
+              [disabled]="!loginForm.valid || isLoading"
+              class="w-full py-3 text-lg">
+        <span *ngIf="!isLoading">Login</span>
+        <mat-spinner *ngIf="isLoading" diameter="20" class="inline-block"></mat-spinner>
+        <span *ngIf="isLoading" class="ml-2">Authenticating...</span>
+      </button>
+    </form>
+
+    <!-- Footer -->
+    <div class="mt-8 text-center text-sm text-gray-500">
+      <p>Hardcoded credentials: Mateusz / Gramercy</p>
+      <p class="mt-2">AES-256 encrypted • Client-side authentication</p>
+    </div>
+  </div>
+</div>

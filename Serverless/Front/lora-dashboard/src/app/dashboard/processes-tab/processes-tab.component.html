@@ -1,0 +1,403 @@
+<div class="processes-tab">
+  <!-- Header Controls -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-800">Process Monitor</h2>
+    
+    <div class="flex items-center space-x-4">
+      <!-- Auto Refresh Toggle -->
+      <mat-slide-toggle 
+        [(ngModel)]="autoRefresh" 
+        (change)="toggleAutoRefresh()"
+        color="primary">
+        Auto Refresh (5s)
+      </mat-slide-toggle>
+      
+      <!-- Manual Refresh -->
+      <button mat-raised-button 
+              color="primary" 
+              (click)="loadProcesses()"
+              [disabled]="isLoading">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading && processes.length === 0" 
+       class="flex items-center justify-center py-12">
+    <mat-spinner diameter="50"></mat-spinner>
+    <span class="ml-4 text-gray-600">Loading processes...</span>
+  </div>
+
+  <!-- Processes Table -->
+  <div *ngIf="!isLoading || processes.length > 0" class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <mat-table [dataSource]="processes" class="w-full">
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef class="font-semibold">Name</mat-header-cell>
+        <mat-cell *matCellDef="let process">
+          <div class="flex items-center">
+            <mat-icon [color]="getStatusColor(process.status)" class="mr-2">
+              {{ getProcessTypeIcon(process.type) }}
+            </mat-icon>
+            <span class="font-medium">{{ process.name }}</span>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Type Column -->
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef class="font-semibold">Type</mat-header-cell>
+        <mat-cell *matCellDef="let process">
+          <mat-chip [color]="process.type === 'training' ? 'primary' : 'accent'" selected>
+            {{ process.type | titlecase }}
+          </mat-chip>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef class="font-semibold">Status</mat-header-cell>
+        <mat-cell *matCellDef="let process">
+          <mat-chip [color]="getStatusColor(process.status)" selected>
+            {{ process.status | titlecase }}
+          </mat-chip>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Progress Column -->
+      <ng-container matColumnDef="progress">
+        <mat-header-cell *matHeaderCellDef class="font-semibold">Progress</mat-header-cell>
+        <mat-cell *matCellDef="let process">
+          <div class="w-32">
+            <mat-progress-bar 
+              mode="determinate" 
+              [value]="process.progress"
+              [color]="getStatusColor(process.status)">
+            </mat-progress-bar>
+            <div class="text-xs text-gray-600 mt-1">
+              {{ process.progress }}%
+              <span *ngIf="process.step && process.total_steps">
+                ({{ process.step }}/{{ process.total_steps }})
+              </span>
+            </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- LoRA Info Column -->
+      <ng-container matColumnDef="lora_info">
+        <mat-header-cell *matHeaderCellDef class="font-semibold">LoRA Info</mat-header-cell>
+        <mat-cell *matCellDef="let process">
+          <div *ngIf="getLoRAInfo(process) as loraInfo" class="max-w-xs">
+            <div class="text-xs text-gray-500 mb-1">{{ loraInfo.type }}</div>
+            <div class="flex items-center gap-1">
+              <span class="font-mono text-xs bg-gray-100 px-2 py-1 rounded truncate flex-1" 
+                    [title]="loraInfo.value">
+                {{ loraInfo.value }}
+              </span>
+              <button *ngIf="loraInfo.copyable" 
+                      mat-icon-button 
+                      (click)="copyToClipboard(loraInfo.value)"
+                      matTooltip="Copy to clipboard"
+                      class="text-blue-600 hover:bg-blue-50"
+                      style="width: 24px; height: 24px;">
+                <mat-icon style="font-size: 16px;">content_copy</mat-icon>
+              </button>
+            </div>
+          </div>
+          <span *ngIf="!getLoRAInfo(process)" class="text-gray-400 text-xs">N/A</span>
+        </mat-cell>
+      </ng-container>
+
+      <!-- GPU ID Column -->
+      <ng-container matColumnDef="gpu_id">
+        <mat-header-cell *matHeaderCellDef class="font-semibold">GPU</mat-header-cell>
+        <mat-cell *matCellDef="let process">
+          <span *ngIf="process.gpu_id" class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">
+            GPU {{ process.gpu_id }}
+          </span>
+          <span *ngIf="!process.gpu_id" class="text-gray-400">N/A</span>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Elapsed Time Column -->
+      <ng-container matColumnDef="elapsed_time">
+        <mat-header-cell *matHeaderCellDef class="font-semibold">Elapsed</mat-header-cell>
+        <mat-cell *matCellDef="let process">
+          <span class="text-sm text-gray-600">
+            {{ formatElapsedTime(process.elapsed_time) }}
+          </span>
+        </mat-cell>
+      </ng-container>
+
+      <!-- ETA Column -->
+      <ng-container matColumnDef="eta">
+        <mat-header-cell *matHeaderCellDef class="font-semibold">ETA</mat-header-cell>
+        <mat-cell *matCellDef="let process">
+          <span class="text-sm text-gray-600">
+            {{ formatETA(process.eta) }}
+          </span>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="font-semibold">Actions</mat-header-cell>
+        <mat-cell *matCellDef="let process">
+          <div class="flex space-x-2">
+            <!-- Cancel Button -->
+            <button mat-icon-button 
+                    color="warn"
+                    *ngIf="canCancelProcess(process)"
+                    (click)="cancelProcess(process)"
+                    matTooltip="Cancel Process">
+              <mat-icon>cancel</mat-icon>
+            </button>
+            
+            <!-- Download Button -->
+            <button mat-icon-button 
+                    color="primary"
+                    *ngIf="process.status === 'completed'"
+                    (click)="downloadResults(process)"
+                    matTooltip="Download Results">
+              <mat-icon>download</mat-icon>
+            </button>
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <!-- Empty State -->
+    <div *ngIf="processes.length === 0 && !isLoading" 
+         class="text-center py-12 text-gray-500">
+      <mat-icon class="text-6xl mb-4 text-gray-300">inbox</mat-icon>
+      <h3 class="text-xl font-medium mb-2">No processes found</h3>
+      <p>Start a training or generation job to see processes here.</p>
+    </div>
+  </div>
+
+  <!-- 📁 BULK DOWNLOAD SECTION -->
+  <mat-card class="mt-6 bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-200" *ngIf="getCompletedProcesses().length > 0">
+    <mat-card-header class="bg-gradient-to-r from-purple-600 to-blue-600 text-white">
+      <mat-card-title class="flex items-center gap-3">
+        <mat-icon>file_download</mat-icon>
+        <span>Bulk Download</span>
+      </mat-card-title>
+      <mat-card-subtitle class="text-purple-100">
+        Download images and LoRAs from completed processes
+      </mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content class="p-6">
+      <!-- Selection Controls -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <h4 class="text-lg font-semibold text-gray-800">Select Processes</h4>
+          <div class="flex gap-2">
+            <button mat-stroked-button 
+                    (click)="selectAllCompleted()"
+                    [disabled]="allCompletedSelected()">
+              <mat-icon>select_all</mat-icon>
+              Select All
+            </button>
+            <button mat-stroked-button 
+                    (click)="clearSelection()"
+                    [disabled]="selectedProcessIds.length === 0">
+              <mat-icon>clear</mat-icon>
+              Clear Selection
+            </button>
+          </div>
+        </div>
+
+        <!-- Completed Processes List -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-64 overflow-y-auto">
+          <div *ngFor="let process of getCompletedProcesses()" 
+               class="border border-gray-200 rounded-lg p-3 cursor-pointer transition-all hover:shadow-md"
+               [class.bg-blue-50]="isProcessSelected(process.id)"
+               [class.border-blue-300]="isProcessSelected(process.id)"
+               (click)="toggleProcessSelection(process.id)">
+            <div class="flex items-center gap-3">
+              <mat-checkbox 
+                [checked]="isProcessSelected(process.id)"
+                (click)="$event.stopPropagation()"
+                (change)="toggleProcessSelection(process.id)">
+              </mat-checkbox>
+              <div class="flex-1">
+                <p class="font-medium text-gray-800 text-sm">{{ process.name }}</p>
+                <p class="text-xs text-gray-500">{{ formatDate(process.created_at) }}</p>
+                <div class="flex items-center gap-1 mt-1">
+                  <mat-icon class="text-sm text-gray-400">{{ getProcessTypeIcon(process.type) }}</mat-icon>
+                  <span class="text-xs text-gray-600">{{ process.type }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Download Options -->
+      <div class="mb-6">
+        <h4 class="text-lg font-semibold text-gray-800 mb-3">Download Options</h4>
+        <div class="flex flex-wrap gap-4">
+          <mat-checkbox [(ngModel)]="includeImages" class="text-sm">
+            <mat-icon class="text-sm mr-1">image</mat-icon>
+            Generated Images
+          </mat-checkbox>
+          <mat-checkbox [(ngModel)]="includeLoras" class="text-sm">
+            <mat-icon class="text-sm mr-1">memory</mat-icon>
+            LoRA Models
+          </mat-checkbox>
+        </div>
+      </div>
+
+      <!-- Download Action -->
+      <div class="flex items-center justify-between bg-white p-4 rounded-lg border border-gray-200">
+        <div>
+          <p class="font-medium text-gray-800">
+            {{ selectedProcessIds.length }} process(es) selected
+          </p>
+          <p class="text-sm text-gray-600">
+            Ready to generate download links
+          </p>
+        </div>
+        <button mat-raised-button 
+                color="primary"
+                (click)="generateBulkDownloadUrls()"
+                [disabled]="selectedProcessIds.length === 0 || isBulkDownloading || (!includeImages && !includeLoras)"
+                class="min-w-32">
+          <mat-spinner *ngIf="isBulkDownloading" diameter="20" class="mr-2"></mat-spinner>
+          <mat-icon *ngIf="!isBulkDownloading">file_download</mat-icon>
+          {{ isBulkDownloading ? 'Generating...' : 'Generate Downloads' }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Download Links Modal/Section -->
+  <mat-card class="mt-4" *ngIf="downloadItems.length > 0">
+    <mat-card-header>
+      <mat-card-title class="flex items-center gap-2">
+        <mat-icon class="text-green-600">download_done</mat-icon>
+        <span>Download Links Ready</span>
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ downloadItems.length }} files ready for download
+      </mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content class="p-6">
+      <!-- Download Summary -->
+      <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div>
+            <p class="text-2xl font-bold text-green-600">{{ downloadItems.length }}</p>
+            <p class="text-sm text-green-800">Total Files</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-blue-600">{{ getDownloadItemsByType('image').length }}</p>
+            <p class="text-sm text-blue-800">Images</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-purple-600">{{ getDownloadItemsByType('lora').length }}</p>
+            <p class="text-sm text-purple-800">LoRAs</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-gray-600">{{ formatFileSize(getTotalDownloadSize()) }}</p>
+            <p class="text-sm text-gray-800">Total Size</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Download List -->
+      <div class="max-h-64 overflow-y-auto border border-gray-200 rounded-lg">
+        <div *ngFor="let item of downloadItems; let i = index" 
+             class="flex items-center justify-between p-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50">
+          <div class="flex items-center gap-3">
+            <mat-icon [class]="getDownloadItemIcon(item.type)" class="text-lg">
+              {{ item.type === 'image' ? 'image' : item.type === 'lora' ? 'memory' : 'description' }}
+            </mat-icon>
+            <div>
+              <p class="text-sm font-medium text-gray-800">{{ item.filename }}</p>
+              <p class="text-xs text-gray-500">{{ formatFileSize(item.size || 0) }}</p>
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <button mat-icon-button 
+                    color="primary"
+                    (click)="downloadFile(item)"
+                    matTooltip="Download file">
+              <mat-icon class="text-sm">download</mat-icon>
+            </button>
+            <button mat-icon-button 
+                    (click)="copyDownloadUrl(item)"
+                    matTooltip="Copy URL">
+              <mat-icon class="text-sm">content_copy</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex justify-between items-center mt-4">
+        <button mat-stroked-button 
+                (click)="clearDownloadItems()"
+                color="warn">
+          <mat-icon>clear</mat-icon>
+          Clear Downloads
+        </button>
+        <button mat-raised-button 
+                color="primary"
+                (click)="downloadAllFiles()"
+                [disabled]="downloadItems.length === 0">
+          <mat-icon>file_download</mat-icon>
+          Download All Files
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Process Summary Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6" *ngIf="processes.length > 0">
+    <mat-card class="p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">Running</h3>
+          <p class="text-2xl font-bold text-blue-600">
+            {{ getProcessCountByStatus('running') }}
+          </p>
+        </div>
+        <mat-icon class="text-blue-500 text-3xl">play_circle</mat-icon>
+      </div>
+    </mat-card>
+
+    <mat-card class="p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">Completed</h3>
+          <p class="text-2xl font-bold text-green-600">
+            {{ getProcessCountByStatus('completed') }}
+          </p>
+        </div>
+        <mat-icon class="text-green-500 text-3xl">check_circle</mat-icon>
+      </div>
+    </mat-card>
+
+    <mat-card class="p-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">Failed</h3>
+          <p class="text-2xl font-bold text-red-600">
+            {{ getProcessCountByStatus('failed') }}
+          </p>
+        </div>
+        <mat-icon class="text-red-500 text-3xl">error</mat-icon>
+      </div>
+    </mat-card>
+  </div>
+</div>

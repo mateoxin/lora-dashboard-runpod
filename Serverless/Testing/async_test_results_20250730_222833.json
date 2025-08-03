@@ -1,0 +1,25 @@
+{
+  "start_time": "2025-07-30T22:26:57.984349",
+  "strategy": "async_only_with_polling",
+  "tests": [
+    {
+      "test_name": "health_async",
+      "timestamp": "2025-07-30T22:27:30.629433",
+      "success": false,
+      "data": null,
+      "error": "Job did not complete in time"
+    },
+    {
+      "test_name": "upload_async",
+      "timestamp": "2025-07-30T22:28:33.847640",
+      "success": false,
+      "data": null,
+      "error": "Job did not complete in time"
+    }
+  ],
+  "summary": {
+    "total_tests": 2,
+    "passed_tests": 0,
+    "success_rate": "0.0%"
+  }
+}

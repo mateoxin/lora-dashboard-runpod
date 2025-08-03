@@ -1,0 +1,48 @@
+{
+  "start_time": "2025-07-30T13:26:44.014121",
+  "strategy": "async_only_with_polling",
+  "tests": [
+    {
+      "test_name": "health_async",
+      "timestamp": "2025-07-30T13:27:16.743644",
+      "success": false,
+      "data": null,
+      "error": "Job did not complete in time"
+    },
+    {
+      "test_name": "processes_async",
+      "timestamp": "2025-07-30T13:27:49.274844",
+      "success": false,
+      "data": null,
+      "error": "Job did not complete in time"
+    },
+    {
+      "test_name": "lora_async",
+      "timestamp": "2025-07-30T13:28:21.791024",
+      "success": false,
+      "data": null,
+      "error": "Job did not complete in time"
+    },
+    {
+      "test_name": "upload_async",
+      "timestamp": "2025-07-30T13:29:23.201446",
+      "success": false,
+      "data": null,
+      "error": "Job did not complete in time"
+    },
+    {
+      "test_name": "generation_async",
+      "timestamp": "2025-07-30T13:29:28.833576",
+      "success": true,
+      "data": {
+        "job_status": "IN_QUEUE"
+      },
+      "error": null
+    }
+  ],
+  "summary": {
+    "total_tests": 5,
+    "passed_tests": 1,
+    "success_rate": "20.0%"
+  }
+}

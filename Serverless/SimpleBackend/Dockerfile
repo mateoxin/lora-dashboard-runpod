@@ -1,0 +1,83 @@
+# 🚀 FIXED DOCKERFILE - Complete build with image validation and worker isolation
+# Based on Dockerfile.full-backup but with PIL and our fixes
+FROM python:3.12-slim
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    HF_TOKEN="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" \
+    WORKSPACE_PATH="/workspace" \
+    DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies for ai-toolkit + PIL dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    build-essential \
+    python3-dev \
+    wget \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    libjpeg-dev \
+    libpng-dev \
+    libfreetype6-dev \
+    libtiff-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Work directory
+WORKDIR /app
+
+# Install Python dependencies for LoRA training (optimized order for caching)
+# Added PIL/Pillow for image validation
+RUN pip install --no-cache-dir \
+    runpod \
+    pyyaml \
+    Pillow \
+    python-dotenv
+
+# Install PyTorch with CUDA support (large download - ~4GB)
+RUN pip install --no-cache-dir \
+    torch \
+    torchvision \
+    torchaudio \
+    --index-url https://download.pytorch.org/whl/cu121
+
+# Install ML libraries with GPU optimizations
+RUN pip install --no-cache-dir \
+    diffusers \
+    transformers \
+    accelerate \
+    datasets \
+    safetensors \
+    bitsandbytes \
+    triton \
+    albumentations \
+    peft
+
+# Create workspace directory
+RUN mkdir -p /workspace /workspace/models /workspace/ai-toolkit /workspace/training_data
+
+# Install upgraded HuggingFace CLI
+RUN pip install --upgrade "huggingface_hub[cli]"
+
+# Clone and setup ai-toolkit
+RUN cd /workspace && \
+    git clone https://github.com/ostris/ai-toolkit.git && \
+    cd ai-toolkit && \
+    python -m pip install -r requirements.txt || echo "Some ai-toolkit requirements may have failed - continuing"
+
+# Note: FLUX.1-dev model will be downloaded at runtime when needed
+# This keeps Docker build fast and allows for model updates
+
+# Copy our FIXED handler with image validation and worker isolation
+COPY handler.py .
+
+# Expose port (RunPod standard)
+EXPOSE 8000
+
+# Start handler
+CMD ["python", "-u", "handler.py"] 

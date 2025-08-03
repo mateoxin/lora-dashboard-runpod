@@ -1,0 +1,9 @@
+{
+  "runpodToken": "your_runpod_api_token_here",
+  "runpodEndpointUrl": "https://your-endpoint-id.runpod.net/api",
+  "apiBaseUrl": "http://localhost:8000/api",
+  "encryptionKey": "LoRA-Dashboard-Secret-Key-2024",
+  "autoRefreshInterval": 5000,
+  "maxFileSize": 52428800,
+  "mockMode": false
+} 
