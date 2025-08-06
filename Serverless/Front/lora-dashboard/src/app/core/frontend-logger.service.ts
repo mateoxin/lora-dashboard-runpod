@@ -163,7 +163,33 @@ export class FrontendLoggerService {
   clearLogs(): void {
     this.logs = [];
     this.saveLogsToStorage();
-    console.log('🧹 [FRONTEND] Logs cleared');
+    
+    // IMPORTANT: Also clear text file buffer
+    this.clearTextBuffer();
+    
+    console.log('🧹 [FRONTEND] Logs and text buffer cleared');
+  }
+
+  /**
+   * Clear text file buffer
+   */
+  clearTextBuffer(): void {
+    const bufferKey = this.storageKey + '_text_buffer';
+    try {
+      // Download current buffer before clearing (optional - user choice)
+      const buffer = localStorage.getItem(bufferKey);
+      if (buffer && buffer.trim()) {
+        console.log('📁 [FRONTEND] Text buffer found with', buffer.split('\n').length, 'lines');
+        // Uncomment the line below if you want to auto-download before clearing
+        // this.downloadTextBuffer(buffer);
+      }
+      
+      // Clear the buffer
+      localStorage.removeItem(bufferKey);
+      console.log('🧹 [FRONTEND] Text buffer cleared');
+    } catch (e) {
+      console.warn('Failed to clear text buffer:', e);
+    }
   }
 
   /**

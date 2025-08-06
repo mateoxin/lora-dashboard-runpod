@@ -4,7 +4,7 @@ export const environment = {
   // 🏗️ DUAL MODE BACKEND CONFIG  
   // FastAPI Mode (Development): http://localhost:8000/api
   // RunPod Mode (Production): https://YOUR_ENDPOINT_ID-8000.proxy.runpod.net/api
-  apiBaseUrl: 'https://your-runpod-endpoint.runpod.ai/api',
+  apiBaseUrl: 'https://api.runpod.ai/v2/x64wt6hgrh9sai',
   
   // Security
   encryptionKey: 'LoRA-Dashboard-Secret-Key-2024-PROD',

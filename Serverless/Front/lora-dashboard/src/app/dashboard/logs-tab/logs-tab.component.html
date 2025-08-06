@@ -72,6 +72,10 @@
             <button mat-icon-button (click)="downloadBackendLogs()">
               <mat-icon>download</mat-icon>
             </button>
+            <button mat-icon-button (click)="clearBackendLogs()" [disabled]="isLoadingBackend"
+                    matTooltip="Clear backend logs">
+              <mat-icon>clear</mat-icon>
+            </button>
           </div>
         </div>
       </div>
@@ -143,6 +147,10 @@
             <button mat-icon-button (click)="loadFrontendLogs()" [disabled]="isLoadingFrontend">
               <mat-icon>refresh</mat-icon>
             </button>
+            <button mat-icon-button (click)="generateTestLogs()" [disabled]="isLoadingFrontend"
+                    matTooltip="Generate test logs">
+              <mat-icon>bug_report</mat-icon>
+            </button>
             <button mat-icon-button (click)="downloadFrontendLogs()">
               <mat-icon>download</mat-icon>
             </button>
@@ -168,6 +176,12 @@
           <div class="text-center">
             <mat-icon class="text-4xl mb-2 opacity-50">web</mat-icon>
             <p>No frontend logs available</p>
+            <div class="mt-4 text-xs text-gray-500 max-w-md">
+              <p>💡 Frontend logs include API requests, responses, and file operations.</p>
+              <p>📁 Text logs are automatically saved to downloadable .txt files.</p>
+              <p>🧹 <strong>Clear button</strong> removes both JSON logs AND text file buffer.</p>
+              <p>⚠️ Download text buffer before clearing if needed!</p>
+            </div>
           </div>
         </div>
 

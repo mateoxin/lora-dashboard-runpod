@@ -101,6 +101,24 @@ export class LogsTabComponent implements OnInit, OnDestroy {
     this.isLoadingFrontend = true;
     try {
       this.frontendLogs = this.frontendLogger.getLogs();
+      
+      // DEBUG: Log frontend logs loading
+      console.log('🔍 [DEBUG] Frontend logs loaded:', {
+        count: this.frontendLogs.length,
+        logs: this.frontendLogs.slice(0, 3), // Show first 3 logs
+        loggerStats: this.frontendLogger.getLogStats(),
+        fileLoggingEnabled: this.frontendLogger.isFileLoggingEnabled(),
+        automaticLogging: 'HTTP Interceptor active - ALL requests/responses logged automatically'
+      });
+      
+      // If no logs, try to generate a test log
+      if (this.frontendLogs.length === 0) {
+        console.log('⚠️ [DEBUG] No frontend logs found, generating test log...');
+        this.frontendLogger.logRequest('/debug/test', 'GET', { test: true });
+        this.frontendLogs = this.frontendLogger.getLogs();
+        console.log('🔍 [DEBUG] After test log generation:', this.frontendLogs.length);
+      }
+      
       this.isLoadingFrontend = false;
     } catch (error) {
       console.error('Failed to load frontend logs:', error);
@@ -232,10 +250,89 @@ export class LogsTabComponent implements OnInit, OnDestroy {
     try {
       this.frontendLogger.clearLogs();
       this.loadFrontendLogs();
-      this.snackBar.open('Frontend logs cleared', 'Close', { duration: 3000 });
+      this.snackBar.open('Frontend logs and text buffer cleared', 'Close', { duration: 3000 });
     } catch (error) {
       this.snackBar.open('Failed to clear frontend logs', 'Close', { duration: 3000 });
     }
+  }
+
+  /**
+   * Download current text buffer before clearing
+   */
+  downloadCurrentBuffer(): void {
+    try {
+      this.frontendLogger.downloadCurrentTextBuffer();
+      this.snackBar.open('Text buffer downloaded', 'Close', { duration: 3000 });
+    } catch (error) {
+      this.snackBar.open('Failed to download text buffer', 'Close', { duration: 3000 });
+    }
+  }
+
+  /**
+   * Clear backend logs
+   */
+  clearBackendLogs(): void {
+    if (this.isLoadingBackend) return;
+    
+    this.isLoadingBackend = true;
+    this.apiService.clearBackendLogs(this.selectedLogType)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.backendLogs = []; // Clear the displayed logs immediately
+          this.snackBar.open(`${this.selectedLogType} logs cleared successfully`, 'Close', { 
+            duration: 3000,
+            panelClass: ['success-snackbar']
+          });
+          this.isLoadingBackend = false;
+          // Refresh to confirm clearing
+          this.loadBackendLogs();
+        },
+        error: (error) => {
+          console.error('Failed to clear backend logs:', error);
+          this.snackBar.open(`Failed to clear ${this.selectedLogType} logs: ${error.message}`, 'Close', { 
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+          this.isLoadingBackend = false;
+        }
+      });
+  }
+
+  /**
+   * Generate test frontend logs for debugging
+   */
+  generateTestLogs(): void {
+    const testLogs = [
+      { method: 'GET', endpoint: '/health', data: { test: 'health check' } },
+      { method: 'POST', endpoint: '/api/test', data: { message: 'test log entry' } },
+      { method: 'GET', endpoint: '/processes', data: { filter: 'active' } }
+    ];
+
+    testLogs.forEach((log, index) => {
+      setTimeout(() => {
+        this.frontendLogger.logRequest(log.endpoint, log.method, log.data);
+        if (index === 0) {
+          // Simulate a response for the first log
+          setTimeout(() => {
+            this.frontendLogger.logResponse('test-id', log.endpoint, { success: true }, 200, 250);
+          }, 100);
+        }
+      }, index * 100);
+    });
+
+    // Add a file operation log
+    setTimeout(() => {
+      this.frontendLogger.logFileOperation('upload', [new File(['test'], 'test.txt')]);
+    }, 400);
+
+    setTimeout(() => {
+      this.loadFrontendLogs();
+      this.snackBar.open('Test logs generated successfully!', 'Close', { 
+        duration: 3000,
+        panelClass: ['success-snackbar']
+      });
+    }, 600);
   }
 
   /**

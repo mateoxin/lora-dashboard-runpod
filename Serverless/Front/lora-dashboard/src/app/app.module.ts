@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Angular Material Modules
 import { MatButtonModule } from '@angular/material/button';
@@ -34,6 +34,7 @@ import { ProcessesTabComponent } from './dashboard/processes-tab/processes-tab.c
 import { LoraTabComponent } from './dashboard/lora-tab/lora-tab.component';
 import { LogsTabComponent } from './dashboard/logs-tab/logs-tab.component';
 import { AuthModule } from './auth/auth.module';
+import { LoggingInterceptor } from './core/logging.interceptor';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,13 @@ import { AuthModule } from './auth/auth.module';
     // Custom Modules
     AuthModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoggingInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { } 

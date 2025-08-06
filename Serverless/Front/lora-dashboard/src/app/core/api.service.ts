@@ -931,4 +931,77 @@ export class ApiService {
       );
     }
   }
+
+  /**
+   * DELETE /logs/{logType} - Clear backend logs
+   */
+  clearBackendLogs(logType: string): Observable<any> {
+    // NEW: Log request
+    const requestId = this.frontendLogger.logRequest(this.baseUrl, 'DELETE', { 
+      endpoint: `/logs/${logType}`,
+      logType: logType
+    });
+    const startTime = Date.now();
+
+    // Check if this is a RunPod endpoint
+    const isRunPodEndpoint = this.baseUrl.includes('api.runpod.ai');
+    
+    if (environment.mockMode) {
+      return of({
+        success: true,
+        message: `Mock: ${logType} logs cleared successfully`,
+        cleared_lines: 42,
+        log_type: logType
+      });
+    }
+
+    if (isRunPodEndpoint) {
+      // RunPod format - use /runsync for log clearing
+      const runpodPayload = {
+        input: {
+          type: 'clear_logs',
+          log_type: logType
+        }
+      };
+      
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${environment.runpodToken}`
+      });
+      
+      return this.http.post<any>(`${this.baseUrl}/runsync`, runpodPayload, { headers }).pipe(
+        map(response => {
+          const data = response.output || response;
+          const result = {
+            success: !data.error,
+            data: data.error ? null : data,
+            message: data.message || (data.error ? data.error : `${logType} logs cleared successfully`),
+            error: data.error || undefined
+          };
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/clear_logs', result, 200, Date.now() - startTime);
+          return result;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/clear_logs', error, { logType });
+          return this.handleError(error);
+        })
+      );
+    } else {
+      // Regular FastAPI format
+      const endpoint = `${this.baseUrl}/logs/${logType}`;
+      return this.http.delete<any>(endpoint, {
+        headers: this.getHeaders()
+      }).pipe(
+        map(response => {
+          const result = response.data || response;
+          this.frontendLogger.logResponse(requestId, endpoint, result, 200, Date.now() - startTime);
+          return result;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, endpoint, error, { logType });
+          return this.handleError(error);
+        })
+      );
+    }
+  }
 }
