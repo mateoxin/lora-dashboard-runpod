@@ -39,7 +39,7 @@ export class ConfigTabComponent implements OnInit {
     private snackBar: MatSnackBar,
     private apiService: ApiService,
     private authService: AuthService,
-    private frontendLogger: FrontendLoggerService
+    public frontendLogger: FrontendLoggerService  // Changed to public for template access
   ) { }
 
   ngOnInit(): void {
@@ -404,13 +404,48 @@ export class ConfigTabComponent implements OnInit {
         console.log('📊 [UPLOAD] Response Type:', typeof response);
         console.log('📋 [UPLOAD] Response Keys:', Object.keys(response || {}));
         
+        // Log detailed uploaded files information
+        if (response.uploaded_files && response.uploaded_files.length > 0) {
+          console.log(`📂 [UPLOAD] Uploaded Files Details (${response.uploaded_files.length} files):`);
+          response.uploaded_files.forEach((file, index) => {
+            console.log(`   ${index + 1}. ${file.filename} (${(file.size / 1024).toFixed(1)}KB)`);
+            console.log(`      📁 Local path: ${file.path}`);
+            if (file.runpod_workspace_path) {
+              console.log(`      🚀 RunPod path: ${file.runpod_workspace_path}`);
+            }
+            if (file.runpod_relative_path) {
+              console.log(`      📁 Relative path: ${file.runpod_relative_path}`);
+            }
+          });
+        }
+        
+        // Log RunPod environment information
+        if (response.runpod_info) {
+          console.log('⚡ [UPLOAD] RunPod Environment Info:');
+          console.log(`   Worker ID: ${response.runpod_info.worker_id}`);
+          console.log(`   Pod ID: ${response.runpod_info.pod_id}`);
+          console.log(`   Endpoint ID: ${response.runpod_info.endpoint_id || 'N/A'}`);
+          console.log(`   Workspace: ${response.runpod_info.workspace_path}`);
+          console.log(`   Training folder (relative): ${response.runpod_info.training_folder_relative}`);
+        }
+        
         // 📝 LOG TO FILE - Upload response
         this.frontendLogger.logResponse(requestId, 'upload_training_data', response, 200);
         
+        // Create detailed upload summary message
+        const filesListText = response.uploaded_files?.slice(0, 3).map(f => f.filename).join(', ') || '';
+        const moreFilesText = (response.uploaded_files?.length || 0) > 3 ? 
+          ` and ${(response.uploaded_files?.length || 0) - 3} more files` : '';
+        
+        const detailedMessage = `✅ Successfully uploaded ${response.total_images} images and ${response.total_captions} captions! 
+📁 Files: ${filesListText}${moreFilesText}
+🗂️ Training folder: ${response.runpod_info?.training_folder_relative || 'N/A'}
+⚡ RunPod Worker: ${response.runpod_info?.worker_id || 'local'}`;
+
         this.snackBar.open(
-          `Successfully uploaded ${response.total_images} images and ${response.total_captions} captions!`,
+          detailedMessage,
           'Close',
-          { duration: 5000, panelClass: ['success-snackbar'] }
+          { duration: 8000, panelClass: ['success-snackbar'] }
         );
         
         // Update YAML config with training folder
@@ -449,7 +484,18 @@ export class ConfigTabComponent implements OnInit {
    */
   downloadFrontendLogs(): void {
     this.frontendLogger.downloadLogs();
-    this.snackBar.open('Frontend logs downloaded', 'Close', {
+    this.snackBar.open('Frontend logs downloaded (JSON)', 'Close', {
+      duration: 3000,
+      panelClass: ['success-snackbar']
+    });
+  }
+
+  /**
+   * NEW: Download frontend logs as readable text file
+   */
+  downloadFrontendLogsAsText(): void {
+    this.frontendLogger.downloadLogsAsText();
+    this.snackBar.open('Frontend logs downloaded (TXT)', 'Close', {
       duration: 3000,
       panelClass: ['success-snackbar']
     });
@@ -460,6 +506,17 @@ export class ConfigTabComponent implements OnInit {
    */
   getFrontendLogStats(): any {
     return this.frontendLogger.getLogStats();
+  }
+
+  /**
+   * NEW: Download current text buffer
+   */
+  downloadCurrentBuffer(): void {
+    this.frontendLogger.downloadCurrentTextBuffer();
+    this.snackBar.open('Current log buffer downloaded', 'Close', {
+      duration: 3000,
+      panelClass: ['success-snackbar']
+    });
   }
 
   /**

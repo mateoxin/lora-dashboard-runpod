@@ -9,7 +9,7 @@ import time
 import json
 
 # UPDATE THIS WITH NEW ENDPOINT ID IF NEEDED
-ENDPOINT_ID = "4z7x4al6ars9ou"  # ✅ UPDATED - New working endpoint
+ENDPOINT_ID = "x5l9m5aptspdta"  # ✅ UPDATED - New working endpoint
 # Import config loader
 try:
     from config_loader_shared import get_runpod_token

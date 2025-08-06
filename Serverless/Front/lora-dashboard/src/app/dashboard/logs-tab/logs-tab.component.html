@@ -1,0 +1,264 @@
+<div class="p-6 bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
+  <!-- Header Section -->
+  <div class="mb-6">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-3">
+        <div class="p-3 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl text-white shadow-lg">
+          <mat-icon class="text-2xl">description</mat-icon>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-gray-800">System Logs</h2>
+          <p class="text-sm text-gray-600">View and download backend and frontend logs</p>
+        </div>
+      </div>
+      
+      <!-- Header Controls -->
+      <div class="flex items-center gap-3">
+        <!-- Auto Refresh Toggle -->
+        <div class="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-gray-200 shadow-sm">
+          <mat-slide-toggle 
+            [(ngModel)]="autoRefresh" 
+            (change)="toggleAutoRefresh()"
+            color="primary">
+          </mat-slide-toggle>
+          <span class="text-sm font-medium text-gray-700">Auto Refresh</span>
+        </div>
+
+        <!-- Download All Button -->
+        <button mat-raised-button 
+                color="primary" 
+                (click)="downloadAllLogs()"
+                class="shadow-lg">
+          <mat-icon>download</mat-icon>
+          Download All
+        </button>
+      </div>
+    </div>
+
+    <!-- Log Statistics Card (if available) -->
+    <div *ngIf="logStats && logStats.files" 
+         class="bg-white rounded-xl p-4 shadow-lg border border-gray-200 mb-4">
+      <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+        <mat-icon class="text-blue-600">folder</mat-icon>
+        Log Directory Statistics
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div *ngFor="let file of logStats.files" 
+             class="bg-gray-50 rounded-lg p-3 border border-gray-100">
+          <div class="text-sm font-medium text-gray-800">{{file.name}}</div>
+          <div class="text-xs text-gray-600">Size: {{formatFileSize(file.size)}}</div>
+          <div class="text-xs text-gray-600">Modified: {{formatTimestamp(file.modified)}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+    
+    <!-- Backend Logs Section -->
+    <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+      <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <mat-icon>cloud</mat-icon>
+            <h3 class="text-lg font-semibold">Backend Logs</h3>
+          </div>
+          <div class="flex items-center gap-2">
+            <mat-spinner *ngIf="isLoadingBackend" diameter="20" color="accent"></mat-spinner>
+            <button mat-icon-button (click)="loadBackendLogs()" [disabled]="isLoadingBackend">
+              <mat-icon>refresh</mat-icon>
+            </button>
+            <button mat-icon-button (click)="downloadBackendLogs()">
+              <mat-icon>download</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Backend Log Controls -->
+      <div class="p-4 bg-gray-50 border-b border-gray-200">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Log Type Selection -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Log Type</mat-label>
+            <mat-select [(value)]="selectedLogType" (selectionChange)="onLogTypeChange()">
+              <mat-option *ngFor="let logType of logTypes" [value]="logType.value">
+                {{logType.label}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Max Lines Selection -->
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Max Lines</mat-label>
+            <mat-select [(value)]="maxLines" (selectionChange)="onMaxLinesChange()">
+              <mat-option [value]="50">50 lines</mat-option>
+              <mat-option [value]="100">100 lines</mat-option>
+              <mat-option [value]="200">200 lines</mat-option>
+              <mat-option [value]="500">500 lines</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Backend Log Content -->
+      <div class="h-96 overflow-y-auto bg-gray-900 text-green-400 font-mono text-sm">
+        <div *ngIf="isLoadingBackend" class="flex items-center justify-center h-full">
+          <div class="text-center">
+            <mat-spinner diameter="40" color="accent"></mat-spinner>
+            <p class="mt-2 text-gray-400">Loading logs...</p>
+          </div>
+        </div>
+        
+        <div *ngIf="!isLoadingBackend && backendLogs.length === 0" 
+             class="flex items-center justify-center h-full text-gray-400">
+          <div class="text-center">
+            <mat-icon class="text-4xl mb-2 opacity-50">description</mat-icon>
+            <p>No logs available</p>
+          </div>
+        </div>
+
+        <div *ngIf="!isLoadingBackend && backendLogs.length > 0" class="p-4">
+          <div *ngFor="let logLine of backendLogs; trackBy: trackByIndex" 
+               class="mb-1 hover:bg-gray-800 p-1 rounded cursor-pointer group"
+               (click)="copyToClipboard(logLine)">
+            <span [class]="getLogLevelColor(logLine)">{{logLine}}</span>
+            <mat-icon class="text-xs opacity-0 group-hover:opacity-50 ml-2">content_copy</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Frontend Logs Section -->
+    <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+      <div class="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <mat-icon>web</mat-icon>
+            <h3 class="text-lg font-semibold">Frontend Logs</h3>
+          </div>
+          <div class="flex items-center gap-2">
+            <mat-spinner *ngIf="isLoadingFrontend" diameter="20" color="accent"></mat-spinner>
+            <button mat-icon-button (click)="loadFrontendLogs()" [disabled]="isLoadingFrontend">
+              <mat-icon>refresh</mat-icon>
+            </button>
+            <button mat-icon-button (click)="downloadFrontendLogs()">
+              <mat-icon>download</mat-icon>
+            </button>
+            <button mat-icon-button (click)="clearFrontendLogs()" 
+                    matTooltip="Clear frontend logs">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Frontend Log Content -->
+      <div class="h-96 overflow-y-auto bg-gray-900 text-blue-400 font-mono text-sm">
+        <div *ngIf="isLoadingFrontend" class="flex items-center justify-center h-full">
+          <div class="text-center">
+            <mat-spinner diameter="40" color="accent"></mat-spinner>
+            <p class="mt-2 text-gray-400">Loading logs...</p>
+          </div>
+        </div>
+        
+        <div *ngIf="!isLoadingFrontend && frontendLogs.length === 0" 
+             class="flex items-center justify-center h-full text-gray-400">
+          <div class="text-center">
+            <mat-icon class="text-4xl mb-2 opacity-50">web</mat-icon>
+            <p>No frontend logs available</p>
+          </div>
+        </div>
+
+        <div *ngIf="!isLoadingFrontend && frontendLogs.length > 0" class="p-4">
+          <div *ngFor="let logEntry of frontendLogs; trackBy: trackByLogEntry" 
+               class="mb-3 hover:bg-gray-800 p-2 rounded cursor-pointer group border-l-2 border-gray-600"
+               (click)="copyToClipboard(toJsonString(logEntry))">
+            
+            <!-- Log Header -->
+            <div class="flex items-center justify-between mb-1">
+              <div class="flex items-center gap-2">
+                <span [class]="getFrontendLogLevelColor(logEntry)" 
+                      class="font-bold text-xs px-2 py-1 rounded bg-gray-800">
+                  {{logEntry.level || 'INFO'}}
+                </span>
+                <span class="text-gray-400 text-xs">
+                  {{formatTimestamp(logEntry.timestamp)}}
+                </span>
+              </div>
+              <mat-icon class="text-xs opacity-0 group-hover:opacity-50">content_copy</mat-icon>
+            </div>
+
+            <!-- Log Content -->
+            <div class="text-sm">
+              <div *ngIf="logEntry.message" class="text-green-400 mb-1">
+                {{logEntry.message}}
+              </div>
+              <div *ngIf="logEntry.url" class="text-blue-300 text-xs">
+                {{logEntry.method}} {{logEntry.url}}
+              </div>
+              <div *ngIf="logEntry.statusCode" class="text-yellow-300 text-xs">
+                Status: {{logEntry.statusCode}} | Duration: {{logEntry.duration}}ms
+              </div>
+              <div *ngIf="logEntry.error" class="text-red-400 text-xs mt-1">
+                Error: {{logEntry.error}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Log Summary Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+    <div class="bg-white rounded-xl p-4 shadow-lg border border-gray-200">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-blue-100 rounded-lg">
+          <mat-icon class="text-blue-600">cloud</mat-icon>
+        </div>
+        <div>
+          <div class="text-sm text-gray-600">Backend Logs</div>
+          <div class="text-xl font-bold text-gray-800">{{backendLogs.length}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-4 shadow-lg border border-gray-200">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-purple-100 rounded-lg">
+          <mat-icon class="text-purple-600">web</mat-icon>
+        </div>
+        <div>
+          <div class="text-sm text-gray-600">Frontend Logs</div>
+          <div class="text-xl font-bold text-gray-800">{{frontendLogs.length}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-4 shadow-lg border border-gray-200">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-green-100 rounded-lg">
+          <mat-icon class="text-green-600">refresh</mat-icon>
+        </div>
+        <div>
+          <div class="text-sm text-gray-600">Auto Refresh</div>
+          <div class="text-xl font-bold text-gray-800">{{autoRefresh ? 'ON' : 'OFF'}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl p-4 shadow-lg border border-gray-200">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-orange-100 rounded-lg">
+          <mat-icon class="text-orange-600">category</mat-icon>
+        </div>
+        <div>
+          <div class="text-sm text-gray-600">Log Type</div>
+          <div class="text-xl font-bold text-gray-800">{{selectedLogType.toUpperCase()}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

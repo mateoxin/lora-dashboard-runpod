@@ -4,7 +4,7 @@ config:
 
   process:
     - type: sd_trainer
-      training_folder: "/workspace/ai-toolkit/output"
+      training_folder: "/workspace/output"              # POPRAWIONE: Backend szuka w /workspace/output
       device: cuda:0
       trigger_word: "Matt"
 
@@ -27,9 +27,9 @@ config:
         save_model_as: "safetensors"
         save_precision: "fp16"
 
-      # Dataset - ZACHOWANE jak w działającym + subtelne ulepszenia
+      # Dataset - POPRAWIONE ścieżki dla Backend compatibility
       datasets:
-        - folder_path: "/workspace/my_lora_images"
+        - folder_path: "/workspace/training_data"       # POPRAWIONE: Backend automatycznie tworzy subfolders
           caption_ext: "txt"
           caption_dropout_rate: 0.04      # DELIKATNIE zmniejszone z 0.05 → 0.04
           shuffle_tokens: false
@@ -71,9 +71,9 @@ config:
         seed: 42
         noise_offset: 0.06                # DELIKATNIE zwiększone z 0.05 → 0.06
 
-      # Model - JAK W DZIAŁAJĄCYM
+      # Model - POPRAWIONE na HuggingFace Hub
       model:
-        name_or_path: "/workspace/models/FLUX.1-dev"
+        name_or_path: "black-forest-labs/FLUX.1-dev"   # POPRAWIONE: HF Hub zamiast lokalnej ścieżki
         is_flux: true
         quantize: true                    # JAK W DZIAŁAJĄCYM
         low_vram: false

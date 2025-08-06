@@ -1,0 +1,46 @@
+{
+  "start_time": "2025-08-05T21:18:18.656685",
+  "strategy": "async_only_with_polling",
+  "tests": [
+    {
+      "test_name": "health_async",
+      "timestamp": "2025-08-05T21:18:24.523098",
+      "success": true,
+      "data": {
+        "environment": "serverless",
+        "services": {
+          "gpu_manager": {
+            "count": 1,
+            "gpus": [
+              {
+                "memory_free": "24135MB",
+                "memory_total": "24576MB",
+                "name": "NVIDIA GeForce RTX 3090"
+              }
+            ],
+            "status": "healthy"
+          },
+          "process_manager": "healthy",
+          "storage": "healthy"
+        },
+        "status": "healthy",
+        "worker_id": "local"
+      },
+      "error": null
+    },
+    {
+      "test_name": "upload_async",
+      "timestamp": "2025-08-05T21:18:25.138330",
+      "success": true,
+      "data": {
+        "training_folder": "/workspace/training_data/test_async_faef4c78"
+      },
+      "error": null
+    }
+  ],
+  "summary": {
+    "total_tests": 2,
+    "passed_tests": 2,
+    "success_rate": "100.0%"
+  }
+}

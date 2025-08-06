@@ -1,6 +1,6 @@
 {
-  "runpodToken": "rpa_G4713KLVTYYBJYWPO157LX7VVPGV7NZ2K87SX6B17otl1t",
-  "runpodEndpointUrl": "https://your-endpoint-id.runpod.net/api",
+  "runpodToken": "rpa_368WKEP3YB46OY691TYZFO4GZ2DTDQ081NUCICGEi5luyf",
+  "runpodEndpointUrl": "https://api.runpod.ai/v2/x5l9m5aptspdta",
   "apiBaseUrl": "http://localhost:8000/api",
   "encryptionKey": "LoRA-Dashboard-Secret-Key-2024",
   "autoRefreshInterval": 5000,

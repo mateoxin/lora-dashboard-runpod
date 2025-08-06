@@ -7,7 +7,7 @@ Sprawdzić który typ job się wykonuje
 import requests
 import time
 
-ENDPOINT_ID = "4z7x4al6ars9ou"
+ENDPOINT_ID = "x5l9m5aptspdta"
 # Import config loader
 try:
     from config_loader_shared import get_runpod_token

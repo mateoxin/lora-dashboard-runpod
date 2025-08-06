@@ -21,7 +21,9 @@ export class FrontendLoggerService {
   private maxLogs = 1000;
   private logToConsole = true;
   private logToStorage = true;
+  private logToFile = true; // NEW: Enable file logging
   private storageKey = 'lora_dashboard_logs';
+  private logFilePrefix = 'lora_dashboard_log';
 
   constructor() {
     this.loadLogsFromStorage();
@@ -220,6 +222,11 @@ export class FrontendLoggerService {
     if (this.logToStorage) {
       this.saveLogsToStorage();
     }
+    
+    // NEW: Auto-save to text file
+    if (this.logToFile) {
+      this.appendToTextFile(logEntry);
+    }
   }
 
   private sanitizeData(data: any): any {
@@ -292,5 +299,159 @@ export class FrontendLoggerService {
     } catch (e) {
       return 0;
     }
+  }
+
+  /**
+   * NEW: Append single log entry to text file
+   */
+  private appendToTextFile(logEntry: LogEntry): void {
+    try {
+      const logLine = this.formatLogEntryAsText(logEntry);
+      
+      // Since we can't directly append to files in browser, we'll create periodic downloads
+      // Store in localStorage with rotation
+      this.appendToFileBuffer(logLine);
+      
+    } catch (e) {
+      console.warn('Failed to append to text file:', e);
+    }
+  }
+
+  /**
+   * NEW: Format log entry as readable text line
+   */
+  private formatLogEntryAsText(logEntry: LogEntry): string {
+    const timestamp = new Date(logEntry.timestamp).toLocaleString();
+    const level = logEntry.level.padEnd(5);
+    const type = logEntry.type.padEnd(12);
+    
+    let line = `[${timestamp}] ${level} ${type}`;
+    
+    if (logEntry.requestId) {
+      line += ` ID:${logEntry.requestId}`;
+    }
+    
+    if (logEntry.method && logEntry.endpoint) {
+      line += ` ${logEntry.method} ${logEntry.endpoint}`;
+    }
+    
+    if (logEntry.duration) {
+      line += ` (${logEntry.duration}ms)`;
+    }
+    
+    if (logEntry.data) {
+      const dataStr = typeof logEntry.data === 'string' ? 
+        logEntry.data : JSON.stringify(logEntry.data);
+      line += ` | Data: ${dataStr.substring(0, 200)}${dataStr.length > 200 ? '...' : ''}`;
+    }
+    
+    if (logEntry.error) {
+      const errorStr = typeof logEntry.error === 'string' ? 
+        logEntry.error : JSON.stringify(logEntry.error);
+      line += ` | ERROR: ${errorStr}`;
+    }
+    
+    return line;
+  }
+
+  /**
+   * NEW: Manage text file buffer with rotation
+   */
+  private appendToFileBuffer(logLine: string): void {
+    const bufferKey = this.storageKey + '_text_buffer';
+    const maxBufferSize = 50000; // ~50KB per buffer
+    
+    try {
+      let buffer = localStorage.getItem(bufferKey) || '';
+      buffer += logLine + '\n';
+      
+      // If buffer is getting too large, auto-download and clear
+      if (buffer.length > maxBufferSize) {
+        this.downloadTextBuffer(buffer);
+        buffer = logLine + '\n'; // Start new buffer with current line
+      }
+      
+      localStorage.setItem(bufferKey, buffer);
+    } catch (e) {
+      console.warn('Text buffer full, triggering download:', e);
+      this.downloadCurrentTextBuffer();
+    }
+  }
+
+  /**
+   * NEW: Download text buffer as file
+   */
+  private downloadTextBuffer(buffer: string): void {
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const filename = `${this.logFilePrefix}_${timestamp}.txt`;
+    
+    const blob = new Blob([buffer], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    URL.revokeObjectURL(url);
+    
+    console.log(`📁 [FRONTEND] Log file downloaded: ${filename}`);
+  }
+
+  /**
+   * NEW: Download current text buffer
+   */
+  downloadCurrentTextBuffer(): void {
+    const bufferKey = this.storageKey + '_text_buffer';
+    const buffer = localStorage.getItem(bufferKey) || '';
+    
+    if (buffer.trim()) {
+      this.downloadTextBuffer(buffer);
+      localStorage.removeItem(bufferKey);
+    } else {
+      console.log('📁 [FRONTEND] No text buffer to download');
+    }
+  }
+
+  /**
+   * NEW: Download all logs as formatted text file
+   */
+  downloadLogsAsText(): void {
+    const textContent = this.logs
+      .map(log => this.formatLogEntryAsText(log))
+      .join('\n');
+    
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const filename = `${this.logFilePrefix}_full_${timestamp}.txt`;
+    
+    const blob = new Blob([textContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+    
+    URL.revokeObjectURL(url);
+    
+    console.log(`📁 [FRONTEND] Full log file downloaded: ${filename} (${this.logs.length} entries)`);
+  }
+
+  /**
+   * NEW: Enable/disable file logging
+   */
+  setFileLogging(enabled: boolean): void {
+    this.logToFile = enabled;
+    console.log(`📁 [FRONTEND] File logging ${enabled ? 'enabled' : 'disabled'}`);
+  }
+
+  /**
+   * NEW: Get file logging status
+   */
+  isFileLoggingEnabled(): boolean {
+    return this.logToFile;
   }
 } 

@@ -32,6 +32,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ConfigTabComponent } from './dashboard/config-tab/config-tab.component';
 import { ProcessesTabComponent } from './dashboard/processes-tab/processes-tab.component';
 import { LoraTabComponent } from './dashboard/lora-tab/lora-tab.component';
+import { LogsTabComponent } from './dashboard/logs-tab/logs-tab.component';
 import { AuthModule } from './auth/auth.module';
 
 @NgModule({
@@ -40,7 +41,8 @@ import { AuthModule } from './auth/auth.module';
     DashboardComponent,
     ConfigTabComponent,
     ProcessesTabComponent,
-    LoraTabComponent
+    LoraTabComponent,
+    LogsTabComponent
   ],
   imports: [
     BrowserModule,
