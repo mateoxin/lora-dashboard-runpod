@@ -77,6 +77,10 @@ export class ApiService {
    * GET /health - Health check
    */
   getHealth(): Observable<ApiResponse> {
+    // NEW: Log request
+    const requestId = this.frontendLogger.logRequest(this.baseUrl, 'GET', { endpoint: '/health' });
+    const startTime = Date.now();
+
     if (environment.mockMode) {
       return this.mockApiService.getHealth();
     }
@@ -91,11 +95,15 @@ export class ApiService {
       });
       
       return this.http.get<any>(`${this.baseUrl}/health`, { headers }).pipe(
-        map(response => ({
-          success: true,
-          data: response,
-          message: 'RunPod endpoint health check'
-        })),
+        map(response => {
+          const result = {
+            success: true,
+            data: response,
+            message: 'RunPod endpoint health check'
+          };
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/health', result, 200, Date.now() - startTime);
+          return result;
+        }),
         catchError(error => {
           // If native health fails, try custom health job
           const runpodPayload = {
@@ -115,14 +123,25 @@ export class ApiService {
               data: response.output || response,
               message: 'Custom health check via handler'
             })),
-            catchError(this.handleError)
+            catchError(error => {
+              this.frontendLogger.logError(requestId, this.baseUrl + '/health', error);
+              return this.handleError(error);
+            })
           );
         })
       );
     } else {
       // Regular FastAPI format
-      return this.http.get<ApiResponse>(`${this.baseUrl}/health`)
-        .pipe(catchError(this.handleError));
+      return this.http.get<ApiResponse>(`${this.baseUrl}/health`).pipe(
+        map(response => {
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/health', response, 200, Date.now() - startTime);
+          return response;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/health', error);
+          return this.handleError(error);
+        })
+      );
     }
   }
 
@@ -168,6 +187,10 @@ export class ApiService {
    * GET /processes - Get all processes
    */
   getProcesses(): Observable<Process[]> {
+    // NEW: Log request
+    const requestId = this.frontendLogger.logRequest(this.baseUrl, 'GET', { endpoint: '/processes' });
+    const startTime = Date.now();
+
     if (environment.mockMode) {
       return this.mockApiService.getProcesses();
     }
@@ -191,8 +214,9 @@ export class ApiService {
       return this.http.post<any>(`${this.baseUrl}/runsync`, runpodPayload, { headers }).pipe(
         map(response => {
           const data = response.output || response;
+          let result;
           if (data.status === 'success' && data.processes) {
-            return data.processes.map((p: any) => ({
+            result = data.processes.map((p: any) => ({
               id: p.id,
               status: p.status || 'unknown',
               type: p.type || 'training',
@@ -201,18 +225,30 @@ export class ApiService {
               progress: p.progress || 0,
               error: p.error || null
             }));
+          } else {
+            result = data.processes || [];
           }
-          return data.processes || [];
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/processes', { processes: result, count: result.length }, 200, Date.now() - startTime);
+          return result;
         }),
-        catchError(this.handleError)
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/processes', error);
+          return this.handleError(error);
+        })
       );
     } else {
       // Regular FastAPI format
       return this.http.get<ProcessesResponse>(`${this.baseUrl}/processes`, {
         headers: this.getHeaders()
       }).pipe(
-        map(response => response.processes),
-        catchError(this.handleError)
+        map(response => {
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/processes', response, 200, Date.now() - startTime);
+          return response.processes;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/processes', error);
+          return this.handleError(error);
+        })
       );
     }
   }
@@ -221,6 +257,10 @@ export class ApiService {
    * GET /lora - Get available LoRA models (maps to list_models for simple backend)
    */
   getLoRAModels(): Observable<LoRAModel[]> {
+    // NEW: Log request
+    const requestId = this.frontendLogger.logRequest(this.baseUrl, 'GET', { endpoint: '/lora' });
+    const startTime = Date.now();
+
     if (environment.mockMode) {
       return this.mockApiService.getLoRAModels();
     }
@@ -244,9 +284,10 @@ export class ApiService {
       return this.http.post<any>(`${this.baseUrl}/runsync`, runpodPayload, { headers }).pipe(
         map(response => {
           const data = response.output || response;
+          let result = [];
           if (data.models) {
             // Convert simple backend format to frontend format
-            return data.models.map((model: any) => ({
+            result = data.models.map((model: any) => ({
               id: model.filename || model.id,
               name: model.filename || model.name,
               path: model.path || `/workspace/ai-toolkit/output/${model.filename}`,
@@ -255,17 +296,27 @@ export class ApiService {
               status: 'ready'
             }));
           }
-          return [];
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/lora', { models: result, count: result.length }, 200, Date.now() - startTime);
+          return result;
         }),
-        catchError(this.handleError)
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/lora', error);
+          return this.handleError(error);
+        })
       );
     } else {
       // Regular FastAPI format
       return this.http.get<LoRAResponse>(`${this.baseUrl}/lora`, {
         headers: this.getHeaders()
       }).pipe(
-        map(response => response.models),
-        catchError(this.handleError)
+        map(response => {
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/lora', response, 200, Date.now() - startTime);
+          return response.models;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/lora', error);
+          return this.handleError(error);
+        })
       );
     }
   }
@@ -274,6 +325,14 @@ export class ApiService {
    * POST /train - Start training process
    */
   startTraining(request: TrainRequest): Observable<ApiResponse> {
+    // NEW: Log request with config details
+    const requestId = this.frontendLogger.logRequest(this.baseUrl, 'POST', { 
+      endpoint: '/train',
+      configLength: request.config?.length || 0,
+      hasConfig: !!request.config
+    });
+    const startTime = Date.now();
+
     if (environment.mockMode) {
       return this.mockApiService.startTraining(request);
     }
@@ -286,7 +345,7 @@ export class ApiService {
       const runpodPayload = {
         input: {
           type: 'train_with_yaml',
-          yaml_config: request.config
+          config: request.config
         }
       };
       
@@ -296,14 +355,30 @@ export class ApiService {
       });
       
       return this.http.post<any>(`${this.baseUrl}/runsync`, runpodPayload, { headers }).pipe(
-        map(response => response.output || response),
-        catchError(this.handleError)
+        map(response => {
+          const result = response.output || response;
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/train', result, 200, Date.now() - startTime);
+          return result;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/train', error, { request });
+          return this.handleError(error);
+        })
       );
     } else {
       // Regular FastAPI format
       return this.http.post<ApiResponse>(`${this.baseUrl}/train`, request, {
         headers: this.getHeaders()
-      }).pipe(catchError(this.handleError));
+      }).pipe(
+        map(response => {
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/train', response, 200, Date.now() - startTime);
+          return response;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/train', error, { request });
+          return this.handleError(error);
+        })
+      );
     }
   }
 
@@ -311,6 +386,14 @@ export class ApiService {
    * POST /generate - Start generation process
    */
   startGeneration(request: GenerateRequest): Observable<ApiResponse> {
+    // NEW: Log request
+    const requestId = this.frontendLogger.logRequest(this.baseUrl, 'POST', { 
+      endpoint: '/generate',
+      configLength: request.config?.length || 0,
+      hasConfig: !!request.config
+    });
+    const startTime = Date.now();
+
     if (environment.mockMode) {
       return this.mockApiService.startGeneration(request);
     }
@@ -333,14 +416,30 @@ export class ApiService {
       });
       
       return this.http.post<any>(`${this.baseUrl}/run`, runpodPayload, { headers }).pipe(
-        map(response => response.output || response),
-        catchError(this.handleError)
+        map(response => {
+          const result = response.output || response;
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/generate', result, 200, Date.now() - startTime);
+          return result;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/generate', error, { request });
+          return this.handleError(error);
+        })
       );
     } else {
       // Regular FastAPI format
       return this.http.post<ApiResponse>(`${this.baseUrl}/generate`, request, {
         headers: this.getHeaders()
-      }).pipe(catchError(this.handleError));
+      }).pipe(
+        map(response => {
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/generate', response, 200, Date.now() - startTime);
+          return response;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/generate', error, { request });
+          return this.handleError(error);
+        })
+      );
     }
   }
 
@@ -391,6 +490,13 @@ export class ApiService {
    * DELETE /processes/{id} - Cancel process
    */
   cancelProcess(id: string): Observable<ApiResponse> {
+    // NEW: Log request
+    const requestId = this.frontendLogger.logRequest(this.baseUrl, 'DELETE', { 
+      endpoint: `/processes/${id}`,
+      processId: id
+    });
+    const startTime = Date.now();
+
     if (environment.mockMode) {
       return this.mockApiService.cancelProcess(id);
     }
@@ -416,20 +522,34 @@ export class ApiService {
         map(response => {
           const data = response.output || response;
           // Convert RunPod response to ApiResponse format for consistency
-          return {
+          const result = {
             success: !data.error,
             data: data.error ? null : data,
             message: data.message || (data.error ? data.error : 'Process cancelled successfully'),
             error: data.error || undefined
           };
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/cancel', result, 200, Date.now() - startTime);
+          return result;
         }),
-        catchError(this.handleError)
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/cancel', error, { processId: id });
+          return this.handleError(error);
+        })
       );
     } else {
       // Regular FastAPI format
       return this.http.delete<ApiResponse>(`${this.baseUrl}/processes/${id}`, {
         headers: this.getHeaders()
-      }).pipe(catchError(this.handleError));
+      }).pipe(
+        map(response => {
+          this.frontendLogger.logResponse(requestId, this.baseUrl + `/processes/${id}`, response, 200, Date.now() - startTime);
+          return response;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + `/processes/${id}`, error, { processId: id });
+          return this.handleError(error);
+        })
+      );
     }
   }
 
