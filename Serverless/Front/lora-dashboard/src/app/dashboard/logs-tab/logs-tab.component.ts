@@ -31,6 +31,11 @@ export class LogsTabComponent implements OnInit, OnDestroy {
   isLoadingFrontend = false;
   autoRefresh = false;
   maxLines = 100;
+  showFullContent = false;
+  searchTerm = '';
+  filteredBackendLogs: string[] = [];
+  filteredFrontendLogs: any[] = [];
+  showFrontendAsText = true; // Show frontend logs in readable text format
   
   private destroy$ = new Subject<void>();
 
@@ -44,6 +49,7 @@ export class LogsTabComponent implements OnInit, OnDestroy {
     this.loadBackendLogs();
     this.loadBackendLogStats();
     this.loadFrontendLogs();
+    this.updateFilteredLogs();
   }
 
   ngOnDestroy(): void {
@@ -58,7 +64,9 @@ export class LogsTabComponent implements OnInit, OnDestroy {
     if (this.isLoadingBackend) return;
     
     this.isLoadingBackend = true;
-    this.apiService.getBackendLogs(this.selectedLogType, this.maxLines)
+    // Use -1 for unlimited lines when showFullContent is true
+    const linesToLoad = this.showFullContent ? -1 : this.maxLines;
+    this.apiService.getBackendLogs(this.selectedLogType, linesToLoad)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
@@ -68,6 +76,7 @@ export class LogsTabComponent implements OnInit, OnDestroy {
             // For RunPod endpoints where logs are not directly accessible
             this.backendLogs = [response.message];
           }
+          this.updateFilteredLogs();
           this.isLoadingBackend = false;
         },
         error: (error) => {
@@ -100,6 +109,14 @@ export class LogsTabComponent implements OnInit, OnDestroy {
   loadFrontendLogs(): void {
     this.isLoadingFrontend = true;
     try {
+      // Enable full content mode for frontend logs when showFullContent is true
+      this.frontendLogger.setDataTruncation(!this.showFullContent);
+      if (this.showFullContent) {
+        this.frontendLogger.setMaxLogs(10000); // Higher limit for full content
+      } else {
+        this.frontendLogger.setMaxLogs(1000); // Normal limit
+      }
+      
       this.frontendLogs = this.frontendLogger.getLogs();
       
       // DEBUG: Log frontend logs loading
@@ -119,6 +136,7 @@ export class LogsTabComponent implements OnInit, OnDestroy {
         console.log('🔍 [DEBUG] After test log generation:', this.frontendLogs.length);
       }
       
+      this.updateFilteredLogs();
       this.isLoadingFrontend = false;
     } catch (error) {
       console.error('Failed to load frontend logs:', error);
@@ -138,6 +156,53 @@ export class LogsTabComponent implements OnInit, OnDestroy {
    */
   onMaxLinesChange(): void {
     this.loadBackendLogs();
+  }
+
+  /**
+   * Toggle show full content
+   */
+  toggleFullContent(): void {
+    this.showFullContent = !this.showFullContent;
+    this.loadBackendLogs();
+    this.loadFrontendLogs(); // Also reload frontend logs with new settings
+  }
+
+  /**
+   * Handle search term change
+   */
+  onSearchChange(): void {
+    this.updateFilteredLogs();
+  }
+
+  /**
+   * Clear search term
+   */
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.updateFilteredLogs();
+  }
+
+  /**
+   * Update filtered logs based on search term
+   */
+  updateFilteredLogs(): void {
+    if (!this.searchTerm) {
+      this.filteredBackendLogs = [...this.backendLogs];
+      this.filteredFrontendLogs = [...this.frontendLogs];
+    } else {
+      const searchLower = this.searchTerm.toLowerCase();
+      
+      // Filter backend logs
+      this.filteredBackendLogs = this.backendLogs.filter(log => 
+        log.toLowerCase().includes(searchLower)
+      );
+      
+      // Filter frontend logs
+      this.filteredFrontendLogs = this.frontendLogs.filter(log => {
+        const logStr = JSON.stringify(log).toLowerCase();
+        return logStr.includes(searchLower);
+      });
+    }
   }
 
   /**
@@ -207,18 +272,20 @@ export class LogsTabComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const content = JSON.stringify(this.frontendLogs, null, 2);
-    const blob = new Blob([content], { type: 'application/json' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `frontend-logs-${new Date().toISOString().slice(0, 19).replace(/[:.]/g, '-')}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+    try {
+      console.log('📁 [LOGS-TAB] Starting frontend logs download...', {
+        logsCount: this.frontendLogs.length,
+        browser: navigator.userAgent
+      });
 
-    this.snackBar.open('Frontend logs downloaded', 'Close', { duration: 3000 });
+      // Use the enhanced logger service download method
+      this.frontendLogger.downloadLogs();
+      this.snackBar.open('Frontend logs downloaded', 'Close', { duration: 3000 });
+    } catch (error) {
+      console.error('📁 [LOGS-TAB] Frontend download failed:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      this.snackBar.open('Download failed: ' + errorMessage, 'Close', { duration: 5000 });
+    }
   }
 
   /**
@@ -426,5 +493,94 @@ export class LogsTabComponent implements OnInit, OnDestroy {
    */
   toJsonString(obj: any): string {
     return JSON.stringify(obj, null, 2);
+  }
+
+  /**
+   * Format frontend log entry as readable text
+   */
+  formatFrontendLogAsText(logEntry: any): string {
+    const timestamp = new Date(logEntry.timestamp).toLocaleString();
+    const level = (logEntry.level || 'INFO').padEnd(5);
+    const type = logEntry.type?.padEnd(12) || 'LOG'.padEnd(12);
+    
+    let line = `[${timestamp}] ${level} ${type}`;
+    
+    if (logEntry.requestId) {
+      line += ` ID:${logEntry.requestId}`;
+    }
+    
+    // Add method and endpoint for API calls
+    if (logEntry.method && logEntry.endpoint) {
+      line += ` ${logEntry.method} ${logEntry.endpoint}`;
+    }
+    
+    // Add duration for responses
+    if (logEntry.duration) {
+      line += ` (${logEntry.duration}ms)`;
+    }
+    
+    // Add main message or data
+    if (logEntry.type === 'REQUEST') {
+      line += ` | Request sent`;
+      if (logEntry.data && typeof logEntry.data === 'object') {
+        const dataKeys = Object.keys(logEntry.data).filter(key => !['endpoint', 'method'].includes(key));
+        if (dataKeys.length > 0) {
+          line += ` | Params: {${dataKeys.join(', ')}}`;
+        }
+      }
+    } else if (logEntry.type === 'RESPONSE') {
+      line += ` | Response received`;
+      if (logEntry.data) {
+        if (logEntry.data.success !== undefined) {
+          line += ` | Success: ${logEntry.data.success}`;
+        }
+        if (logEntry.data.message) {
+          line += ` | ${logEntry.data.message}`;
+        }
+        if (logEntry.data.processes && Array.isArray(logEntry.data.processes)) {
+          line += ` | Processes: ${logEntry.data.processes.length}`;
+        }
+        if (logEntry.data.models && Array.isArray(logEntry.data.models)) {
+          line += ` | Models: ${logEntry.data.models.length}`;
+        }
+        if (logEntry.data.count !== undefined) {
+          line += ` | Count: ${logEntry.data.count}`;
+        }
+      }
+    } else if (logEntry.type === 'ERROR') {
+      line += ` | ERROR`;
+      if (logEntry.error) {
+        const errorMsg = typeof logEntry.error === 'string' ? 
+          logEntry.error : 
+          logEntry.error.message || JSON.stringify(logEntry.error);
+        line += `: ${errorMsg}`;
+      }
+    } else if (logEntry.type === 'FILE_OPERATION') {
+      line += ` | File operation`;
+      if (logEntry.data?.operation) {
+        line += `: ${logEntry.data.operation}`;
+      }
+      if (logEntry.data?.files?.length) {
+        line += ` | Files: ${logEntry.data.files.length}`;
+        const fileNames = logEntry.data.files.map((f: any) => f.name).slice(0, 3);
+        if (fileNames.length > 0) {
+          line += ` (${fileNames.join(', ')}${logEntry.data.files.length > 3 ? '...' : ''})`;
+        }
+        // Add total size info
+        const totalSize = logEntry.data.files.reduce((sum: number, f: any) => sum + (f.size || 0), 0);
+        if (totalSize > 0) {
+          line += ` | Size: ${this.formatFileSize(totalSize)}`;
+        }
+      }
+    }
+    
+    return line;
+  }
+
+  /**
+   * Toggle frontend logs display format
+   */
+  toggleFrontendFormat(): void {
+    this.showFrontendAsText = !this.showFrontendAsText;
   }
 }

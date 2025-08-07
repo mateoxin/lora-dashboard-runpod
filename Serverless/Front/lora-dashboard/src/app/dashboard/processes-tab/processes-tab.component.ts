@@ -16,6 +16,10 @@ export class ProcessesTabComponent implements OnInit, OnDestroy {
   isLoading = false;
   autoRefresh = true;
   private destroy$ = new Subject<void>();
+  
+  // 🚀 SERVERLESS INFO
+  isRunPodServerless = environment.apiBaseUrl?.includes('api.runpod.ai') || false;
+  showServerlessInfo = false;
 
   displayedColumns: string[] = [
     'name', 'type', 'status', 'progress', 'lora_info', 'gpu_id', 'elapsed_time', 'eta', 'actions'
@@ -54,6 +58,20 @@ export class ProcessesTabComponent implements OnInit, OnDestroy {
           this.processes = processes.sort((a, b) => 
             new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
           );
+          
+          // 🚀 Show serverless info if no processes on RunPod
+          this.showServerlessInfo = this.isRunPodServerless && processes.length === 0;
+          
+          // 🔍 Enhanced debugging for frontend
+          if (this.isRunPodServerless) {
+            console.log('🔍 [FRONTEND] Processes loaded:', {
+              count: processes.length,
+              showInfo: this.showServerlessInfo,
+              serverless: this.isRunPodServerless,
+              environment: environment.apiBaseUrl
+            });
+          }
+          
           this.isLoading = false;
         },
         error: (error) => {
@@ -76,6 +94,8 @@ export class ProcessesTabComponent implements OnInit, OnDestroy {
             this.processes = processes.sort((a, b) => 
               new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
             );
+            // Update serverless info for auto-refresh too
+            this.showServerlessInfo = this.isRunPodServerless && processes.length === 0;
           },
           error: (error) => {
             console.error('Auto-refresh failed:', error);
@@ -149,17 +169,56 @@ export class ProcessesTabComponent implements OnInit, OnDestroy {
     if (process.status !== 'completed') return;
     
     this.apiService.getDownloadUrl(process.id).subscribe({
-      next: (url) => {
-        if (url) {
-          window.open(url, '_blank');
+      next: (downloadData) => {
+        if (downloadData && downloadData.type === 'file_data') {
+          // Handle base64 file download for RunPod Serverless
+          this.downloadBase64File(downloadData.data, downloadData.filename, downloadData.content_type);
+          this.snackBar.open(`Downloaded: ${downloadData.filename}`, 'Close', { duration: 3000 });
+        } else if (typeof downloadData === 'string') {
+          // Handle URL-based download for regular API
+          window.open(downloadData, '_blank');
         } else {
           this.snackBar.open('No download available for this process', 'Close', { duration: 3000 });
         }
       },
       error: (error) => {
-        this.snackBar.open('Failed to get download URL: ' + error.message, 'Close', { duration: 5000 });
+        this.snackBar.open('Failed to get download: ' + error.message, 'Close', { duration: 5000 });
       }
     });
+  }
+
+  /**
+   * Download file from base64 data
+   */
+  downloadBase64File(base64Data: string, filename: string, contentType: string = 'application/octet-stream'): void {
+    try {
+      // Convert base64 to blob
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: contentType });
+
+      // Create download link
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.href = url;
+      link.download = filename;
+      
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      
+      // Cleanup
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+    } catch (error) {
+      console.error('Error downloading file:', error);
+      this.snackBar.open('Error downloading file', 'Close', { duration: 3000 });
+    }
   }
 
   getProcessCountByStatus(status: string): number {
@@ -360,14 +419,20 @@ export class ProcessesTabComponent implements OnInit, OnDestroy {
    * Download individual file
    */
   downloadFile(item: any): void {
-    window.open(item.url, '_blank');
+    if (item.data) {
+      // Handle base64 download for RunPod Serverless
+      this.downloadBase64File(item.data, item.filename, item.content_type);
+    } else if (item.url) {
+      // Handle URL-based download for regular API
+      window.open(item.url, '_blank');
+    }
   }
 
   /**
    * Copy download URL to clipboard
    */
   copyDownloadUrl(item: any): void {
-    if (navigator.clipboard) {
+    if (item.url && navigator.clipboard) {
       navigator.clipboard.writeText(item.url).then(() => {
         this.snackBar.open('Download URL copied to clipboard', 'Close', {
           duration: 2000,
@@ -379,27 +444,39 @@ export class ProcessesTabComponent implements OnInit, OnDestroy {
           panelClass: ['error-snackbar']
         });
       });
+    } else if (item.data) {
+      // For base64 files, we can't copy a URL but we can notify about the alternative
+      this.snackBar.open('File will be downloaded directly (no URL available)', 'Close', {
+        duration: 3000,
+        panelClass: ['info-snackbar']
+      });
     }
   }
 
   /**
-   * Download all files (open all URLs)
+   * Download all files
    */
   downloadAllFiles(): void {
     if (this.downloadItems.length === 0) return;
 
     // Ask for confirmation for many files
     if (this.downloadItems.length > 10) {
-      const confirmed = confirm(`This will open ${this.downloadItems.length} download links. Continue?`);
+      const confirmed = confirm(`This will download ${this.downloadItems.length} files. Continue?`);
       if (!confirmed) return;
     }
 
-    // Open all download URLs
+    // Download all files
     this.downloadItems.forEach((item, index) => {
       // Add small delay between downloads to avoid browser blocking
       setTimeout(() => {
-        window.open(item.url, '_blank');
-      }, index * 100);
+        if (item.data) {
+          // Handle base64 download for RunPod Serverless
+          this.downloadBase64File(item.data, item.filename, item.content_type);
+        } else if (item.url) {
+          // Handle URL-based download for regular API
+          window.open(item.url, '_blank');
+        }
+      }, index * 200); // Increased delay for base64 processing
     });
 
     this.snackBar.open(

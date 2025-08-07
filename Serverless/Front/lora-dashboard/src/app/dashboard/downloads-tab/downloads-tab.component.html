@@ -1,0 +1,252 @@
+<div class="downloads-tab">
+  <!-- Header Controls -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-800">Downloads</h2>
+    
+    <div class="flex items-center space-x-4">
+      <!-- Auto Refresh Toggle -->
+      <mat-slide-toggle 
+        [(ngModel)]="autoRefresh" 
+        (change)="toggleAutoRefresh()"
+        color="primary">
+        Auto Refresh (10s)
+      </mat-slide-toggle>
+      
+      <!-- Manual Refresh -->
+      <button mat-raised-button 
+              color="primary" 
+              (click)="loadFiles()"
+              [disabled]="isLoading">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter and Sort Controls -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+    <div class="flex flex-wrap items-center gap-4">
+      <!-- File Type Filter -->
+      <div class="flex items-center gap-2">
+        <span class="text-sm font-medium text-gray-700">Type:</span>
+        <mat-button-toggle-group 
+          [(ngModel)]="filterType" 
+          (change)="filterAndSortFiles()"
+          aria-label="File type filter">
+          <mat-button-toggle value="all">All</mat-button-toggle>
+          <mat-button-toggle value="lora">LoRAs</mat-button-toggle>
+          <mat-button-toggle value="images">Images</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <!-- Sort Controls -->
+      <div class="flex items-center gap-2">
+        <span class="text-sm font-medium text-gray-700">Sort by:</span>
+        <mat-select [(ngModel)]="sortBy" (selectionChange)="filterAndSortFiles()" class="w-24">
+          <mat-option value="date">Date</mat-option>
+          <mat-option value="name">Name</mat-option>
+          <mat-option value="size">Size</mat-option>
+        </mat-select>
+        
+        <button mat-icon-button 
+                (click)="sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'; filterAndSortFiles()"
+                [attr.title]="sortOrder === 'asc' ? 'Ascending' : 'Descending'">
+          <mat-icon>{{ sortOrder === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+        </button>
+      </div>
+
+      <!-- Spacer -->
+      <div class="flex-1"></div>
+
+      <!-- Selection Controls -->
+      <div class="flex items-center gap-2" *ngIf="(loraFiles.length + imageFiles.length) > 0">
+        <span class="text-sm text-gray-600">{{ selectedFiles.size }} selected</span>
+        <button mat-stroked-button 
+                (click)="selectAllFiles()"
+                [disabled]="isLoading">
+          Select All
+        </button>
+        <button mat-stroked-button 
+                (click)="clearSelection()"
+                [disabled]="selectedFiles.size === 0">
+          Clear
+        </button>
+        <button mat-raised-button 
+                color="accent"
+                (click)="downloadSelectedFiles()"
+                [disabled]="selectedFiles.size === 0 || isDownloading">
+          <mat-icon>download</mat-icon>
+          Download Selected
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="flex justify-center items-center py-8">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span class="ml-3 text-gray-600">Loading files...</span>
+  </div>
+
+  <!-- No Files Message -->
+  <div *ngIf="!isLoading && (loraFiles.length + imageFiles.length) === 0" 
+       class="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+    <mat-icon class="text-6xl text-gray-400 mb-4">folder_open</mat-icon>
+    <h3 class="text-xl font-semibold text-gray-600 mb-2">No Generated Files Found</h3>
+    <p class="text-gray-500 mb-4">
+      Complete some training or generation processes to see downloadable files here.
+    </p>
+    <button mat-raised-button color="primary" routerLink="/dashboard">
+      <mat-icon>play_arrow</mat-icon>
+      Start Training or Generation
+    </button>
+  </div>
+
+  <!-- LoRA Files Section -->
+  <div *ngIf="!isLoading && loraFiles.length > 0" class="mb-8">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+      <mat-icon class="mr-2 text-purple-600">memory</mat-icon>
+      LoRA Models ({{ loraFiles.length }})
+    </h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div *ngFor="let file of loraFiles" 
+           class="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+        
+        <!-- File Header -->
+        <div class="p-4 border-b border-gray-100">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center min-w-0 flex-1">
+              <mat-checkbox 
+                [checked]="selectedFiles.has(file.id)"
+                (change)="toggleFileSelection(file.id)"
+                color="primary"
+                class="mr-3">
+              </mat-checkbox>
+              
+              <div class="min-w-0 flex-1">
+                <h4 class="font-semibold text-gray-800 truncate" [title]="file.filename">
+                  {{ file.filename }}
+                </h4>
+                <p class="text-sm text-gray-500">
+                  {{ file.size_formatted }} • {{ file.created_at | date:'medium' }}
+                </p>
+              </div>
+            </div>
+            
+            <mat-icon [class]="getFileTypeColor(file)" class="ml-2">
+              {{ getFileIcon(file) }}
+            </mat-icon>
+          </div>
+        </div>
+
+        <!-- File Actions -->
+        <div class="p-4">
+          <div class="flex flex-wrap gap-2">
+            <button mat-raised-button 
+                    color="primary"
+                    (click)="downloadFile(file)"
+                    [disabled]="!file.downloadable || isDownloading"
+                    class="flex-1">
+              <mat-icon>download</mat-icon>
+              Download
+            </button>
+            
+            <button mat-icon-button 
+                    (click)="copyPath(file)"
+                    matTooltip="Copy path to clipboard"
+                    color="primary">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </div>
+          
+          <!-- File Path -->
+          <div class="mt-3 p-2 bg-gray-50 rounded text-xs text-gray-600 font-mono truncate" 
+               [title]="file.path">
+            {{ file.path }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generated Images Section -->
+  <div *ngIf="!isLoading && imageFiles.length > 0" class="mb-8">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+      <mat-icon class="mr-2 text-green-600">image</mat-icon>
+      Generated Images ({{ imageFiles.length }})
+    </h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div *ngFor="let file of imageFiles" 
+           class="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+        
+        <!-- File Header -->
+        <div class="p-4 border-b border-gray-100">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center min-w-0 flex-1">
+              <mat-checkbox 
+                [checked]="selectedFiles.has(file.id)"
+                (change)="toggleFileSelection(file.id)"
+                color="primary"
+                class="mr-3">
+              </mat-checkbox>
+              
+              <div class="min-w-0 flex-1">
+                <h4 class="font-semibold text-gray-800 truncate" [title]="file.filename">
+                  {{ file.filename }}
+                </h4>
+                <p class="text-sm text-gray-500">
+                  {{ file.size_formatted }} • {{ file.created_at | date:'medium' }}
+                </p>
+                <p class="text-xs text-gray-400" *ngIf="file.process_id">
+                  Process: {{ file.process_id }}
+                </p>
+              </div>
+            </div>
+            
+            <mat-icon [class]="getFileTypeColor(file)" class="ml-2">
+              {{ getFileIcon(file) }}
+            </mat-icon>
+          </div>
+        </div>
+
+        <!-- File Actions -->
+        <div class="p-4">
+          <div class="flex flex-wrap gap-2">
+            <button mat-raised-button 
+                    color="primary"
+                    (click)="downloadFile(file)"
+                    [disabled]="!file.downloadable || isDownloading"
+                    class="flex-1">
+              <mat-icon>download</mat-icon>
+              Download
+            </button>
+            
+            <button mat-icon-button 
+                    (click)="copyPath(file)"
+                    matTooltip="Copy path to clipboard"
+                    color="primary">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          </div>
+          
+          <!-- File Path -->
+          <div class="mt-3 p-2 bg-gray-50 rounded text-xs text-gray-600 font-mono truncate" 
+               [title]="file.path">
+            {{ file.path }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download Progress -->
+  <div *ngIf="isDownloading" 
+       class="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg border border-gray-200 p-4 z-50">
+    <div class="flex items-center">
+      <mat-spinner diameter="24" class="mr-3"></mat-spinner>
+      <span class="text-sm font-medium text-gray-700">Preparing download...</span>
+    </div>
+  </div>
+</div>

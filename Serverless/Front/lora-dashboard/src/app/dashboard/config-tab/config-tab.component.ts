@@ -404,11 +404,14 @@ export class ConfigTabComponent implements OnInit {
         console.log('📊 [UPLOAD] Response Type:', typeof response);
         console.log('📋 [UPLOAD] Response Keys:', Object.keys(response || {}));
         
-        // Log detailed uploaded files information
+        // Log detailed uploaded files information with enhanced details
         if (response.uploaded_files && response.uploaded_files.length > 0) {
-          console.log(`📂 [UPLOAD] Uploaded Files Details (${response.uploaded_files.length} files):`);
+          console.log(`📂 [UPLOAD] Uploaded Files Details (${response.uploaded_files.length} files, ${response.total_size_formatted || 'N/A'} total):`);
           response.uploaded_files.forEach((file, index) => {
-            console.log(`   ${index + 1}. ${file.filename} (${(file.size / 1024).toFixed(1)}KB)`);
+            const sizeInfo = file.size_formatted || `${(file.size / 1024).toFixed(1)}KB`;
+            const typeInfo = file.file_type ? ` [${file.file_type}]` : '';
+            console.log(`   ${index + 1}. ${file.filename} (${sizeInfo})${typeInfo}`);
+            console.log(`      📁 Folder: ${file.folder || 'training_data'}`);
             console.log(`      📁 Local path: ${file.path}`);
             if (file.runpod_workspace_path) {
               console.log(`      🚀 RunPod path: ${file.runpod_workspace_path}`);
@@ -417,6 +420,16 @@ export class ConfigTabComponent implements OnInit {
               console.log(`      📁 Relative path: ${file.runpod_relative_path}`);
             }
           });
+          
+          // Log file types summary if available
+          if (response.file_types_summary) {
+            console.log(`📊 [UPLOAD] File Types Summary:`);
+            console.log(`   📷 Images: ${response.file_types_summary.images?.length || 0}`);
+            console.log(`   📝 Captions: ${response.file_types_summary.captions?.length || 0}`);
+            if (response.file_types_summary.other?.length > 0) {
+              console.log(`   📄 Other: ${response.file_types_summary.other.length}`);
+            }
+          }
         }
         
         // Log RunPod environment information
@@ -432,15 +445,40 @@ export class ConfigTabComponent implements OnInit {
         // 📝 LOG TO FILE - Upload response
         this.frontendLogger.logResponse(requestId, 'upload_training_data', response, 200);
         
-        // Create detailed upload summary message
-        const filesListText = response.uploaded_files?.slice(0, 3).map(f => f.filename).join(', ') || '';
-        const moreFilesText = (response.uploaded_files?.length || 0) > 3 ? 
-          ` and ${(response.uploaded_files?.length || 0) - 3} more files` : '';
+        // Create enhanced upload summary message using backend detailed_message
+        // FIXED: Handle undefined/null values gracefully to prevent "undefined" from showing
+        const totalImages = response.total_images ?? 0;
+        const totalCaptions = response.total_captions ?? 0;
         
-        const detailedMessage = `✅ Successfully uploaded ${response.total_images} images and ${response.total_captions} captions! 
-📁 Files: ${filesListText}${moreFilesText}
-🗂️ Training folder: ${response.runpod_info?.training_folder_relative || 'N/A'}
-⚡ RunPod Worker: ${response.runpod_info?.worker_id || 'local'}`;
+        let detailedMessage = response.detailed_message || 
+          `✅ Successfully uploaded ${totalImages} images and ${totalCaptions} captions!`;
+        
+        // Add debug info if available
+        if (response.debug_info) {
+          const debug = response.debug_info;
+          if (debug.all_files_failed) {
+            detailedMessage += '\n⚠️ Warning: All files failed to upload. Check file format and content.';
+          } else if (debug.total_files_failed && debug.total_files_failed > 0) {
+            detailedMessage += `\n⚠️ Note: ${debug.total_files_failed} files failed to upload.`;
+          }
+        }
+        
+        // Add files list if available
+        if (response.uploaded_files && response.uploaded_files.length > 0) {
+          const filesList = response.uploaded_files.slice(0, 3).map((f: any) => 
+            `${f.filename} (${f.size_formatted || (f.size ? (f.size / 1024).toFixed(1) + 'KB' : 'N/A')})`
+          ).join(', ');
+          const moreFiles = response.uploaded_files.length > 3 ? 
+            ` and ${response.uploaded_files.length - 3} more files` : '';
+          
+          detailedMessage += `\n📄 Files: ${filesList}${moreFiles}`;
+        }
+        
+        // Add RunPod worker info
+        if (response.runpod_info) {
+          detailedMessage += `\n🗂️ Folder: ${response.runpod_info.training_folder_relative || 'training_data'}`;
+          detailedMessage += `\n⚡ Worker: ${response.runpod_info.worker_id || 'local'}`;
+        }
 
         this.snackBar.open(
           detailedMessage,
@@ -483,22 +521,56 @@ export class ConfigTabComponent implements OnInit {
    * Download frontend logs as JSON file
    */
   downloadFrontendLogs(): void {
-    this.frontendLogger.downloadLogs();
-    this.snackBar.open('Frontend logs downloaded (JSON)', 'Close', {
-      duration: 3000,
-      panelClass: ['success-snackbar']
-    });
+    const logStats = this.frontendLogger.getLogStats();
+    if (logStats.total === 0) {
+      this.snackBar.open('No frontend logs to download', 'Close', { duration: 3000 });
+      return;
+    }
+
+    try {
+      console.log('📁 [CONFIG-TAB] Starting frontend logs download...', {
+        logsCount: logStats.total,
+        browser: navigator.userAgent
+      });
+
+      this.frontendLogger.downloadLogs();
+      this.snackBar.open('Frontend logs downloaded (JSON)', 'Close', {
+        duration: 3000,
+        panelClass: ['success-snackbar']
+      });
+    } catch (error) {
+      console.error('📁 [CONFIG-TAB] Frontend download failed:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      this.snackBar.open('Download failed: ' + errorMessage, 'Close', { duration: 5000 });
+    }
   }
 
   /**
    * NEW: Download frontend logs as readable text file
    */
   downloadFrontendLogsAsText(): void {
-    this.frontendLogger.downloadLogsAsText();
-    this.snackBar.open('Frontend logs downloaded (TXT)', 'Close', {
-      duration: 3000,
-      panelClass: ['success-snackbar']
-    });
+    const logStats = this.frontendLogger.getLogStats();
+    if (logStats.total === 0) {
+      this.snackBar.open('No frontend logs to download', 'Close', { duration: 3000 });
+      return;
+    }
+
+    try {
+      console.log('📁 [CONFIG-TAB] Starting frontend logs text download...', {
+        logsCount: logStats.total,
+        browser: navigator.userAgent
+      });
+
+      this.frontendLogger.downloadLogsAsText();
+      this.snackBar.open('Frontend logs downloaded (TXT)', 'Close', {
+        duration: 3000,
+        panelClass: ['success-snackbar']
+      });
+    } catch (error) {
+      console.error('📁 [CONFIG-TAB] Frontend text download failed:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      this.snackBar.open('Download failed: ' + errorMessage, 'Close', { duration: 5000 });
+    }
   }
 
   /**
@@ -512,11 +584,30 @@ export class ConfigTabComponent implements OnInit {
    * NEW: Download current text buffer
    */
   downloadCurrentBuffer(): void {
-    this.frontendLogger.downloadCurrentTextBuffer();
-    this.snackBar.open('Current log buffer downloaded', 'Close', {
-      duration: 3000,
-      panelClass: ['success-snackbar']
-    });
+    const bufferKey = 'lora_dashboard_logs_text_buffer';
+    const buffer = localStorage.getItem(bufferKey) || '';
+    
+    if (!buffer.trim()) {
+      this.snackBar.open('No text buffer to download', 'Close', { duration: 3000 });
+      return;
+    }
+
+    try {
+      console.log('📁 [CONFIG-TAB] Downloading text buffer...', {
+        bufferSize: buffer.length,
+        browser: navigator.userAgent
+      });
+
+      this.frontendLogger.downloadCurrentTextBuffer();
+      this.snackBar.open('Current log buffer downloaded', 'Close', {
+        duration: 3000,
+        panelClass: ['success-snackbar']
+      });
+    } catch (error) {
+      console.error('📁 [CONFIG-TAB] Buffer download failed:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      this.snackBar.open('Download failed: ' + errorMessage, 'Close', { duration: 5000 });
+    }
   }
 
   /**

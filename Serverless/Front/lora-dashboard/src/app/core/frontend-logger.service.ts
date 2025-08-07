@@ -18,12 +18,13 @@ export interface LogEntry {
 })
 export class FrontendLoggerService {
   private logs: LogEntry[] = [];
-  private maxLogs = 1000;
+  private maxLogs = 5000; // Increased for full content viewing
   private logToConsole = true;
   private logToStorage = true;
   private logToFile = true; // NEW: Enable file logging
   private storageKey = 'lora_dashboard_logs';
   private logFilePrefix = 'lora_dashboard_log';
+  private truncateData = false; // Control data truncation
 
   constructor() {
     this.loadLogsFromStorage();
@@ -203,16 +204,25 @@ export class FrontendLoggerService {
    * Download logs as file
    */
   downloadLogs(): void {
-    const dataStr = this.exportLogs();
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `lora_dashboard_logs_${new Date().toISOString().split('T')[0]}.json`;
-    link.click();
-    
-    URL.revokeObjectURL(url);
+    try {
+      const dataStr = this.exportLogs();
+      console.log('📁 [FRONTEND] Starting download...', {
+        logsCount: this.logs.length,
+        dataSize: dataStr.length,
+        browser: navigator.userAgent
+      });
+
+      // Enhanced download with error handling and fallback
+      this.downloadFileWithFallback(
+        dataStr, 
+        `lora_dashboard_logs_${new Date().toISOString().split('T')[0]}.json`,
+        'application/json'
+      );
+    } catch (error) {
+      console.error('📁 [FRONTEND] Download failed:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      alert('Download failed: ' + errorMessage);
+    }
   }
 
   /**
@@ -269,8 +279,8 @@ export class FrontendLoggerService {
           return '***HIDDEN***';
         }
         
-        // Truncate large content
-        if (typeof value === 'string' && value.length > 500) {
+        // Truncate large content only if truncation is enabled
+        if (this.truncateData && typeof value === 'string' && value.length > 500) {
           return `${value.substring(0, 500)}... [TRUNCATED - ${value.length} chars]`;
         }
         
@@ -446,24 +456,29 @@ export class FrontendLoggerService {
    * NEW: Download all logs as formatted text file
    */
   downloadLogsAsText(): void {
-    const textContent = this.logs
-      .map(log => this.formatLogEntryAsText(log))
-      .join('\n');
-    
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const filename = `${this.logFilePrefix}_full_${timestamp}.txt`;
-    
-    const blob = new Blob([textContent], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    link.click();
-    
-    URL.revokeObjectURL(url);
-    
-    console.log(`📁 [FRONTEND] Full log file downloaded: ${filename} (${this.logs.length} entries)`);
+    try {
+      const textContent = this.logs
+        .map(log => this.formatLogEntryAsText(log))
+        .join('\n');
+      
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      const filename = `${this.logFilePrefix}_full_${timestamp}.txt`;
+      
+      console.log('📁 [FRONTEND] Starting text download...', {
+        logsCount: this.logs.length,
+        contentSize: textContent.length,
+        filename: filename
+      });
+
+      // Enhanced download with error handling and fallback
+      this.downloadFileWithFallback(textContent, filename, 'text/plain');
+      
+      console.log(`📁 [FRONTEND] Full log file downloaded: ${filename} (${this.logs.length} entries)`);
+    } catch (error) {
+      console.error('📁 [FRONTEND] Text download failed:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      alert('Text download failed: ' + errorMessage);
+    }
   }
 
   /**
@@ -479,5 +494,141 @@ export class FrontendLoggerService {
    */
   isFileLoggingEnabled(): boolean {
     return this.logToFile;
+  }
+
+  /**
+   * NEW: Enable/disable data truncation
+   */
+  setDataTruncation(enabled: boolean): void {
+    this.truncateData = enabled;
+    console.log(`📝 [FRONTEND] Data truncation ${enabled ? 'enabled' : 'disabled'}`);
+  }
+
+  /**
+   * NEW: Get data truncation status
+   */
+  isDataTruncationEnabled(): boolean {
+    return this.truncateData;
+  }
+
+  /**
+   * NEW: Set maximum logs limit
+   */
+  setMaxLogs(max: number): void {
+    this.maxLogs = max;
+    // Trim current logs if needed
+    if (this.logs.length > this.maxLogs) {
+      this.logs = this.logs.slice(-this.maxLogs);
+      this.saveLogsToStorage();
+    }
+    console.log(`📊 [FRONTEND] Max logs set to ${max}`);
+  }
+
+  /**
+   * NEW: Enhanced download method with fallback options
+   */
+  private downloadFileWithFallback(content: string, filename: string, mimeType: string): void {
+    console.log('📁 [FRONTEND] Attempting download...', {
+      filename,
+      mimeType,
+      contentLength: content.length,
+      browserSupport: {
+        blob: !!window.Blob,
+        objectURL: !!URL.createObjectURL,
+        download: 'download' in document.createElement('a')
+      }
+    });
+
+    // Method 1: Standard Blob download (primary method)
+    try {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.style.display = 'none';
+      
+      // Add to DOM, click, then remove
+      document.body.appendChild(link);
+      
+      console.log('📁 [FRONTEND] Triggering download click...', {
+        href: link.href,
+        download: link.download,
+        linkInDOM: document.body.contains(link)
+      });
+      
+      link.click();
+      
+      // Clean up after a short delay
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        console.log('📁 [FRONTEND] Download cleanup completed');
+      }, 100);
+      
+      return;
+    } catch (error) {
+      console.error('📁 [FRONTEND] Standard download failed:', error);
+    }
+
+    // Method 2: Data URI fallback
+    try {
+      console.log('📁 [FRONTEND] Trying data URI fallback...');
+      const dataUri = `data:${mimeType};charset=utf-8,${encodeURIComponent(content)}`;
+      
+      const link = document.createElement('a');
+      link.href = dataUri;
+      link.download = filename;
+      link.style.display = 'none';
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      console.log('📁 [FRONTEND] Data URI download succeeded');
+      return;
+    } catch (error) {
+      console.error('📁 [FRONTEND] Data URI download failed:', error);
+    }
+
+    // Method 3: Open in new window fallback
+    try {
+      console.log('📁 [FRONTEND] Trying new window fallback...');
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      
+      const newWindow = window.open(url, '_blank');
+      if (newWindow) {
+        console.log('📁 [FRONTEND] Content opened in new window');
+        // Clean up URL after window opens
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      } else {
+        throw new Error('Popup blocked');
+      }
+      return;
+    } catch (error) {
+      console.error('📁 [FRONTEND] New window fallback failed:', error);
+    }
+
+    // Method 4: Last resort - copy to clipboard
+    try {
+      console.log('📁 [FRONTEND] Using clipboard fallback...');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(content);
+        alert(`Download failed, but content has been copied to clipboard.\nFilename: ${filename}\nPlease paste into a text editor and save manually.`);
+        console.log('📁 [FRONTEND] Content copied to clipboard as fallback');
+        return;
+      }
+    } catch (error) {
+      console.error('📁 [FRONTEND] Clipboard fallback failed:', error);
+    }
+
+    // All methods failed
+    console.error('📁 [FRONTEND] All download methods failed!');
+    alert(`Download failed! Please check browser settings and allow downloads from this site.\n\nTroubleshooting:\n1. Check if downloads are blocked\n2. Disable popup blocker\n3. Try different browser\n4. Content is available in browser console`);
+    
+    // Debug info to console
+    console.log('📁 [FRONTEND] Content for manual copy:', content);
   }
 } 

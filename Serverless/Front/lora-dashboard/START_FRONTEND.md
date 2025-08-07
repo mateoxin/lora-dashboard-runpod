@@ -24,7 +24,7 @@ npm install
 ```bash
 npm run start:runpod
 ```
-- Łączy się z RunPod endpoint: `x64wt6hgrh9sai`
+- Łączy się z RunPod endpoint: `5h149ose0nfbjd`
 - Używa prawdziwego tokena: `rpa_368WKEP3YB46OY691TYZFO4GZ2DTDQ081NUCICGEi5luyf`
 - URL: http://localhost:4200
 

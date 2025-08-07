@@ -14,6 +14,33 @@
       
       <!-- Header Controls -->
       <div class="flex items-center gap-3">
+        <!-- Search Box -->
+        <mat-form-field appearance="outline" class="w-64">
+          <mat-label>Search logs...</mat-label>
+          <input matInput 
+                 [(ngModel)]="searchTerm" 
+                 (input)="onSearchChange()" 
+                 placeholder="Search in logs">
+          <button *ngIf="searchTerm" 
+                  matSuffix 
+                  mat-icon-button 
+                  (click)="clearSearch()"
+                  matTooltip="Clear search">
+            <mat-icon>clear</mat-icon>
+          </button>
+          <mat-icon *ngIf="!searchTerm" matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <!-- Show Full Content Toggle -->
+        <div class="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-gray-200 shadow-sm">
+          <mat-slide-toggle 
+            [(ngModel)]="showFullContent" 
+            (change)="toggleFullContent()"
+            color="accent">
+          </mat-slide-toggle>
+          <span class="text-sm font-medium text-gray-700">Full Content</span>
+        </div>
+
         <!-- Auto Refresh Toggle -->
         <div class="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-gray-200 shadow-sm">
           <mat-slide-toggle 
@@ -93,8 +120,8 @@
             </mat-select>
           </mat-form-field>
 
-          <!-- Max Lines Selection -->
-          <mat-form-field appearance="outline" class="w-full">
+          <!-- Max Lines Selection (only show when not in full content mode) -->
+          <mat-form-field *ngIf="!showFullContent" appearance="outline" class="w-full">
             <mat-label>Max Lines</mat-label>
             <mat-select [(value)]="maxLines" (selectionChange)="onMaxLinesChange()">
               <mat-option [value]="50">50 lines</mat-option>
@@ -103,11 +130,18 @@
               <mat-option [value]="500">500 lines</mat-option>
             </mat-select>
           </mat-form-field>
+
+          <!-- Full Content Info -->
+          <div *ngIf="showFullContent" class="flex items-center gap-2 px-3 py-2 bg-green-50 rounded-lg border border-green-200">
+            <mat-icon class="text-green-600">info</mat-icon>
+            <span class="text-sm text-green-700">Showing complete file content</span>
+          </div>
         </div>
       </div>
 
       <!-- Backend Log Content -->
-      <div class="h-96 overflow-y-auto bg-gray-900 text-green-400 font-mono text-sm">
+      <div [class]="showFullContent ? 'h-[600px]' : 'h-96'" 
+           class="overflow-y-auto bg-gray-900 text-green-400 font-mono text-sm">
         <div *ngIf="isLoadingBackend" class="flex items-center justify-center h-full">
           <div class="text-center">
             <mat-spinner diameter="40" color="accent"></mat-spinner>
@@ -115,16 +149,42 @@
           </div>
         </div>
         
-        <div *ngIf="!isLoadingBackend && backendLogs.length === 0" 
+        <div *ngIf="!isLoadingBackend && filteredBackendLogs.length === 0" 
              class="flex items-center justify-center h-full text-gray-400">
           <div class="text-center">
             <mat-icon class="text-4xl mb-2 opacity-50">description</mat-icon>
-            <p>No logs available</p>
+            <p *ngIf="!searchTerm">No logs available</p>
+            <p *ngIf="searchTerm">No logs match your search: "{{searchTerm}}"</p>
+            <p *ngIf="searchTerm" class="text-xs mt-2">Try a different search term or clear the search</p>
           </div>
         </div>
 
-        <div *ngIf="!isLoadingBackend && backendLogs.length > 0" class="p-4">
-          <div *ngFor="let logLine of backendLogs; trackBy: trackByIndex" 
+        <div *ngIf="!isLoadingBackend && filteredBackendLogs.length > 0" class="p-4">
+          <!-- Search/Filter Summary -->
+          <div *ngIf="searchTerm" class="mb-4 p-2 bg-blue-900 rounded border-l-4 border-blue-400">
+            <div class="text-blue-200 text-sm">
+              <mat-icon class="text-xs">search</mat-icon>
+              Found {{filteredBackendLogs.length}} of {{backendLogs.length}} logs matching "{{searchTerm}}"
+            </div>
+          </div>
+          
+          <!-- Full Content Warning -->
+          <div *ngIf="showFullContent && filteredBackendLogs.length > 500" class="mb-4 p-2 bg-yellow-900 rounded border-l-4 border-yellow-400">
+            <div class="text-yellow-200 text-sm">
+              <mat-icon class="text-xs">warning</mat-icon>
+              Displaying {{filteredBackendLogs.length}} log entries. Large file - use Ctrl+F to search within the page.
+            </div>
+          </div>
+
+          <!-- Performance Tip for Very Large Files -->
+          <div *ngIf="showFullContent && filteredBackendLogs.length > 2000" class="mb-4 p-2 bg-orange-900 rounded border-l-4 border-orange-400">
+            <div class="text-orange-200 text-sm">
+              <mat-icon class="text-xs">info</mat-icon>
+              Large file ({{filteredBackendLogs.length}} entries). Consider using the search box above to filter results for better performance.
+            </div>
+          </div>
+
+          <div *ngFor="let logLine of filteredBackendLogs; trackBy: trackByIndex" 
                class="mb-1 hover:bg-gray-800 p-1 rounded cursor-pointer group"
                (click)="copyToClipboard(logLine)">
             <span [class]="getLogLevelColor(logLine)">{{logLine}}</span>
@@ -144,6 +204,10 @@
           </div>
           <div class="flex items-center gap-2">
             <mat-spinner *ngIf="isLoadingFrontend" diameter="20" color="accent"></mat-spinner>
+            <button mat-icon-button (click)="toggleFrontendFormat()" 
+                    [matTooltip]="showFrontendAsText ? 'Show as JSON' : 'Show as Text'">
+              <mat-icon>{{showFrontendAsText ? 'code' : 'text_fields'}}</mat-icon>
+            </button>
             <button mat-icon-button (click)="loadFrontendLogs()" [disabled]="isLoadingFrontend">
               <mat-icon>refresh</mat-icon>
             </button>
@@ -163,7 +227,8 @@
       </div>
 
       <!-- Frontend Log Content -->
-      <div class="h-96 overflow-y-auto bg-gray-900 text-blue-400 font-mono text-sm">
+      <div [class]="showFullContent ? 'h-[600px]' : 'h-96'" 
+           class="overflow-y-auto bg-gray-900 text-blue-400 font-mono text-sm">
         <div *ngIf="isLoadingFrontend" class="flex items-center justify-center h-full">
           <div class="text-center">
             <mat-spinner diameter="40" color="accent"></mat-spinner>
@@ -171,12 +236,13 @@
           </div>
         </div>
         
-        <div *ngIf="!isLoadingFrontend && frontendLogs.length === 0" 
+        <div *ngIf="!isLoadingFrontend && filteredFrontendLogs.length === 0" 
              class="flex items-center justify-center h-full text-gray-400">
           <div class="text-center">
             <mat-icon class="text-4xl mb-2 opacity-50">web</mat-icon>
-            <p>No frontend logs available</p>
-            <div class="mt-4 text-xs text-gray-500 max-w-md">
+            <p *ngIf="!searchTerm">No frontend logs available</p>
+            <p *ngIf="searchTerm">No frontend logs match your search: "{{searchTerm}}"</p>
+            <div *ngIf="!searchTerm" class="mt-4 text-xs text-gray-500 max-w-md">
               <p>💡 Frontend logs include API requests, responses, and file operations.</p>
               <p>📁 Text logs are automatically saved to downloadable .txt files.</p>
               <p>🧹 <strong>Clear button</strong> removes both JSON logs AND text file buffer.</p>
@@ -185,38 +251,68 @@
           </div>
         </div>
 
-        <div *ngIf="!isLoadingFrontend && frontendLogs.length > 0" class="p-4">
-          <div *ngFor="let logEntry of frontendLogs; trackBy: trackByLogEntry" 
-               class="mb-3 hover:bg-gray-800 p-2 rounded cursor-pointer group border-l-2 border-gray-600"
-               (click)="copyToClipboard(toJsonString(logEntry))">
-            
-            <!-- Log Header -->
-            <div class="flex items-center justify-between mb-1">
-              <div class="flex items-center gap-2">
-                <span [class]="getFrontendLogLevelColor(logEntry)" 
-                      class="font-bold text-xs px-2 py-1 rounded bg-gray-800">
-                  {{logEntry.level || 'INFO'}}
-                </span>
-                <span class="text-gray-400 text-xs">
-                  {{formatTimestamp(logEntry.timestamp)}}
-                </span>
-              </div>
-              <mat-icon class="text-xs opacity-0 group-hover:opacity-50">content_copy</mat-icon>
+        <div *ngIf="!isLoadingFrontend && filteredFrontendLogs.length > 0" class="p-4">
+          <!-- Search/Filter Summary for Frontend -->
+          <div *ngIf="searchTerm" class="mb-4 p-2 bg-purple-900 rounded border-l-4 border-purple-400">
+            <div class="text-purple-200 text-sm">
+              <mat-icon class="text-xs">search</mat-icon>
+              Found {{filteredFrontendLogs.length}} of {{frontendLogs.length}} frontend logs matching "{{searchTerm}}"
             </div>
+          </div>
 
-            <!-- Log Content -->
-            <div class="text-sm">
-              <div *ngIf="logEntry.message" class="text-green-400 mb-1">
-                {{logEntry.message}}
+          <!-- Display Format Info -->
+          <div class="mb-4 p-2 bg-indigo-900 rounded border-l-4 border-indigo-400">
+            <div class="text-indigo-200 text-sm">
+              <mat-icon class="text-xs">{{showFrontendAsText ? 'text_fields' : 'code'}}</mat-icon>
+              Displaying in {{showFrontendAsText ? 'readable text' : 'JSON'}} format
+              <span class="text-xs opacity-75"> - Click the format button to switch</span>
+            </div>
+          </div>
+
+          <!-- Text Format Display -->
+          <div *ngIf="showFrontendAsText">
+            <div *ngFor="let logEntry of filteredFrontendLogs; trackBy: trackByLogEntry" 
+                 class="mb-1 hover:bg-gray-800 p-1 rounded cursor-pointer group"
+                 (click)="copyToClipboard(formatFrontendLogAsText(logEntry))">
+              <span [class]="getFrontendLogLevelColor(logEntry)">{{formatFrontendLogAsText(logEntry)}}</span>
+              <mat-icon class="text-xs opacity-0 group-hover:opacity-50 ml-2">content_copy</mat-icon>
+            </div>
+          </div>
+
+          <!-- JSON Format Display -->
+          <div *ngIf="!showFrontendAsText">
+            <div *ngFor="let logEntry of filteredFrontendLogs; trackBy: trackByLogEntry" 
+                 class="mb-3 hover:bg-gray-800 p-2 rounded cursor-pointer group border-l-2 border-gray-600"
+                 (click)="copyToClipboard(toJsonString(logEntry))">
+              
+              <!-- Log Header -->
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-2">
+                  <span [class]="getFrontendLogLevelColor(logEntry)" 
+                        class="font-bold text-xs px-2 py-1 rounded bg-gray-800">
+                    {{logEntry.level || 'INFO'}}
+                  </span>
+                  <span class="text-gray-400 text-xs">
+                    {{formatTimestamp(logEntry.timestamp)}}
+                  </span>
+                </div>
+                <mat-icon class="text-xs opacity-0 group-hover:opacity-50">content_copy</mat-icon>
               </div>
-              <div *ngIf="logEntry.url" class="text-blue-300 text-xs">
-                {{logEntry.method}} {{logEntry.url}}
-              </div>
-              <div *ngIf="logEntry.statusCode" class="text-yellow-300 text-xs">
-                Status: {{logEntry.statusCode}} | Duration: {{logEntry.duration}}ms
-              </div>
-              <div *ngIf="logEntry.error" class="text-red-400 text-xs mt-1">
-                Error: {{logEntry.error}}
+
+              <!-- Log Content -->
+              <div class="text-sm">
+                <div *ngIf="logEntry.message" class="text-green-400 mb-1">
+                  {{logEntry.message}}
+                </div>
+                <div *ngIf="logEntry.url" class="text-blue-300 text-xs">
+                  {{logEntry.method}} {{logEntry.url}}
+                </div>
+                <div *ngIf="logEntry.statusCode" class="text-yellow-300 text-xs">
+                  Status: {{logEntry.statusCode}} | Duration: {{logEntry.duration}}ms
+                </div>
+                <div *ngIf="logEntry.error" class="text-red-400 text-xs mt-1">
+                  Error: {{logEntry.error}}
+                </div>
               </div>
             </div>
           </div>
@@ -234,7 +330,10 @@
         </div>
         <div>
           <div class="text-sm text-gray-600">Backend Logs</div>
-          <div class="text-xl font-bold text-gray-800">{{backendLogs.length}}</div>
+          <div class="text-xl font-bold text-gray-800">
+            {{filteredBackendLogs.length}}
+            <span *ngIf="searchTerm" class="text-sm text-gray-500"> / {{backendLogs.length}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -246,7 +345,10 @@
         </div>
         <div>
           <div class="text-sm text-gray-600">Frontend Logs</div>
-          <div class="text-xl font-bold text-gray-800">{{frontendLogs.length}}</div>
+          <div class="text-xl font-bold text-gray-800">
+            {{filteredFrontendLogs.length}}
+            <span *ngIf="searchTerm" class="text-sm text-gray-500"> / {{frontendLogs.length}}</span>
+          </div>
         </div>
       </div>
     </div>

@@ -23,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 // Monaco Editor - REMOVED (using simple textarea instead)
 
@@ -33,6 +34,7 @@ import { ConfigTabComponent } from './dashboard/config-tab/config-tab.component'
 import { ProcessesTabComponent } from './dashboard/processes-tab/processes-tab.component';
 import { LoraTabComponent } from './dashboard/lora-tab/lora-tab.component';
 import { LogsTabComponent } from './dashboard/logs-tab/logs-tab.component';
+import { DownloadsTabComponent } from './dashboard/downloads-tab/downloads-tab.component';
 import { AuthModule } from './auth/auth.module';
 import { LoggingInterceptor } from './core/logging.interceptor';
 
@@ -43,7 +45,8 @@ import { LoggingInterceptor } from './core/logging.interceptor';
     ConfigTabComponent,
     ProcessesTabComponent,
     LoraTabComponent,
-    LogsTabComponent
+    LogsTabComponent,
+    DownloadsTabComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +75,7 @@ import { LoggingInterceptor } from './core/logging.interceptor';
     MatSlideToggleModule,
     MatTooltipModule,
     MatCheckboxModule,
+    MatButtonToggleModule,
     
     // Custom Modules
     AuthModule

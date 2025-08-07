@@ -1,0 +1,289 @@
+.downloads-tab {
+  padding: 0;
+
+  // Loading spinner center alignment
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+  }
+
+  // File cards hover effects
+  .file-card {
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // Filter controls styling
+  .filter-controls {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+
+  // File type icons
+  .file-icon {
+    &.lora-icon {
+      color: #8b5cf6; // Purple
+    }
+    
+    &.image-icon {
+      color: #10b981; // Green
+    }
+    
+    &.other-icon {
+      color: #6b7280; // Gray
+    }
+  }
+
+  // File path display
+  .file-path {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Fira Mono', 'Droid Sans Mono', 'Consolas', 'Source Code Pro', monospace;
+    font-size: 11px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 8px;
+    color: #475569;
+    word-break: break-all;
+    line-height: 1.4;
+    
+    &:hover {
+      background: #e2e8f0;
+      cursor: pointer;
+    }
+  }
+
+  // Download progress indicator
+  .download-progress {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    padding: 16px;
+    z-index: 1000;
+    
+    .progress-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+  }
+
+  // Selection controls
+  .selection-info {
+    padding: 8px 16px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 6px;
+    color: #1e40af;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  // Empty state styling
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    
+    .empty-icon {
+      font-size: 64px;
+      color: #94a3b8;
+      margin-bottom: 16px;
+    }
+    
+    .empty-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #475569;
+      margin-bottom: 8px;
+    }
+    
+    .empty-description {
+      color: #64748b;
+      margin-bottom: 24px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  // File grid responsiveness
+  .file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Checkbox styling
+  .mat-checkbox {
+    .mat-checkbox-frame {
+      border-color: #d1d5db;
+    }
+    
+    &.mat-checkbox-checked {
+      .mat-checkbox-background {
+        background-color: #3b82f6;
+      }
+    }
+  }
+
+  // Button styling overrides
+  .download-btn {
+    &.mat-raised-button {
+      background-color: #3b82f6;
+      color: white;
+      
+      &:hover:not([disabled]) {
+        background-color: #2563eb;
+      }
+      
+      &[disabled] {
+        background-color: #e5e7eb;
+        color: #9ca3af;
+      }
+    }
+  }
+
+  .bulk-download-btn {
+    &.mat-raised-button {
+      background-color: #059669;
+      color: white;
+      
+      &:hover:not([disabled]) {
+        background-color: #047857;
+      }
+    }
+  }
+
+  // Section headers
+  .section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    
+    .section-icon {
+      margin-right: 8px;
+      font-size: 20px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+    
+    .section-count {
+      background: #e5e7eb;
+      color: #374151;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-left: 8px;
+    }
+  }
+
+  // Sort controls
+  .sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    .sort-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #4b5563;
+    }
+    
+    .sort-direction-btn {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      
+      .mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  // Filter toggle buttons
+  .mat-button-toggle-group {
+    border-radius: 6px;
+    overflow: hidden;
+    
+    .mat-button-toggle {
+      border: none;
+      
+      &.mat-button-toggle-checked {
+        background-color: #3b82f6;
+        color: white;
+      }
+    }
+  }
+
+  // Animations
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .file-card {
+    animation: fadeInUp 0.3s ease-out;
+  }
+}
+
+// Responsive design
+@media (max-width: 1024px) {
+  .downloads-tab {
+    .filter-controls {
+      .flex {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .downloads-tab {
+    .filter-controls {
+      padding: 12px;
+    }
+    
+    .file-grid {
+      gap: 12px;
+    }
+    
+    .section-header {
+      .section-title {
+        font-size: 16px;
+      }
+    }
+  }
+}

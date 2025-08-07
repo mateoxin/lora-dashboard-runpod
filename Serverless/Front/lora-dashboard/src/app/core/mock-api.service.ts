@@ -316,21 +316,52 @@ export class MockApiService {
    * Mock upload training data
    */
   uploadTrainingData(request: any): Observable<any> {
-    const mockResponse = {
-      uploaded_files: request.files.map((file: any, index: number) => ({
+    const uploadedFiles = request.files.map((file: any, index: number) => {
+      const fileSize = file.size || 1024000;
+      const isImage = file.type?.startsWith('image/');
+      const isCaption = file.name?.endsWith('.txt');
+      
+      return {
         filename: file.name || `image_${index}.jpg`,
         path: `/workspace/training_data/mock_training/${file.name || `image_${index}.jpg`}`,
-        size: file.size || 1024000,
+        size: fileSize,
+        size_formatted: this.formatFileSize(fileSize),
         content_type: file.type || 'image/jpeg',
+        file_type: isImage ? 'image' : (isCaption ? 'caption' : 'other'),
+        folder: 'training_data',
         uploaded_at: new Date().toISOString()
-      })),
+      };
+    });
+
+    const totalSize = uploadedFiles.reduce((sum: number, file: any) => sum + file.size, 0);
+    
+    const mockResponse = {
+      uploaded_files: uploadedFiles,
       training_folder: `/workspace/training_data/mock_training`,
       total_images: request.files.filter((f: any) => f.type?.startsWith('image/')).length,
       total_captions: request.files.filter((f: any) => f.name?.endsWith('.txt')).length,
-      message: 'Training data uploaded successfully (Mock Mode)'
+      total_size: totalSize,
+      total_size_formatted: this.formatFileSize(totalSize),
+      file_types_summary: {
+        images: uploadedFiles.filter((f: any) => f.file_type === 'image'),
+        captions: uploadedFiles.filter((f: any) => f.file_type === 'caption'),
+        other: uploadedFiles.filter((f: any) => f.file_type === 'other')
+      },
+      message: 'Training data uploaded successfully (Mock Mode)',
+      detailed_message: `📁 Uploaded to training_data folder:\n📷 ${uploadedFiles.filter((f: any) => f.file_type === 'image').length} images\n📝 ${uploadedFiles.filter((f: any) => f.file_type === 'caption').length} captions\n💾 Total size: ${this.formatFileSize(totalSize)}`
     };
 
     return of(mockResponse).pipe(delay(2000));
+  }
+
+  private formatFileSize(bytes: number): string {
+    for (const unit of ['B', 'KB', 'MB', 'GB']) {
+      if (bytes < 1024.0) {
+        return `${bytes.toFixed(1)} ${unit}`;
+      }
+      bytes /= 1024.0;
+    }
+    return `${bytes.toFixed(1)} TB`;
   }
 
   /**

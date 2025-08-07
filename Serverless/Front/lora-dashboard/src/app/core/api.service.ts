@@ -228,7 +228,22 @@ export class ApiService {
           } else {
             result = data.processes || [];
           }
-          this.frontendLogger.logResponse(requestId, this.baseUrl + '/processes', { processes: result, count: result.length }, 200, Date.now() - startTime);
+          
+          // 🔍 DEBUG: Enhanced logging for serverless worker tracking
+          console.log('🔍 [DEBUG] RunPod Processes Response:', {
+            worker_id: data.worker_id || response.workerId || 'unknown',
+            processes_count: result.length,
+            total_response_keys: Object.keys(data),
+            environment: data.environment || 'unknown',
+            serverless_note: result.length === 0 ? 'Empty processes may indicate different worker' : null
+          });
+          
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/processes', { 
+            processes: result, 
+            count: result.length,
+            worker_id: data.worker_id || response.workerId,
+            serverless_isolation: true
+          }, 200, Date.now() - startTime);
           return result;
         }),
         catchError(error => {
@@ -286,15 +301,31 @@ export class ApiService {
           const data = response.output || response;
           let result = [];
           if (data.models) {
-            // Convert simple backend format to frontend format
-            result = data.models.map((model: any) => ({
-              id: model.filename || model.id,
-              name: model.filename || model.name,
-              path: model.path || `/workspace/ai-toolkit/output/${model.filename}`,
-              size: model.size_mb ? `${model.size_mb}MB` : 'Unknown',
-              created_at: model.modified_date || new Date().toISOString(),
-              status: 'ready'
-            }));
+            // Convert backend format to frontend format
+            result = data.models.map((model: any) => {
+              // Handle both object format (new) and string format (old fallback)
+              if (typeof model === 'string') {
+                // Old format - just filename string
+                return {
+                  id: model.replace('.safetensors', ''),
+                  name: model.replace('.safetensors', ''),
+                  path: `/workspace/ai-toolkit/output/${model}`,
+                  size: 'Unknown',
+                  created_at: new Date().toISOString(),
+                  status: 'ready'
+                };
+              } else {
+                // New format - complete object
+                return {
+                  id: model.id || model.filename?.replace('.safetensors', '') || 'unknown',
+                  name: model.name || model.filename?.replace('.safetensors', '') || 'Unknown Model',
+                  path: model.path || `/workspace/ai-toolkit/output/${model.filename}`,
+                  size: model.size_mb ? `${model.size_mb}MB` : 'Unknown',
+                  created_at: model.modified_date || new Date().toISOString(),
+                  status: model.status || 'ready'
+                };
+              }
+            });
           }
           this.frontendLogger.logResponse(requestId, this.baseUrl + '/lora', { models: result, count: result.length }, 200, Date.now() - startTime);
           return result;
@@ -444,9 +475,9 @@ export class ApiService {
   }
 
   /**
-   * GET /download/{id} - Get download URL for generated content
+   * GET /download/{id} - Get download data for generated content
    */
-  getDownloadUrl(id: string): Observable<string> {
+  getDownloadUrl(id: string): Observable<any> {
     if (environment.mockMode) {
       return this.mockApiService.getDownloadUrl(id);
     }
@@ -455,7 +486,7 @@ export class ApiService {
     const isRunPodEndpoint = this.baseUrl.includes('api.runpod.ai');
     
     if (isRunPodEndpoint) {
-      // RunPod format - use /runsync for quick URL generation
+      // RunPod format - use /runsync for file data retrieval
       const runpodPayload = {
         input: {
           type: 'download',
@@ -471,7 +502,11 @@ export class ApiService {
       return this.http.post<any>(`${this.baseUrl}/runsync`, runpodPayload, { headers }).pipe(
         map(response => {
           const data = response.output || response;
-          return data.url || '';
+          if (data.error) {
+            throw new Error(data.error);
+          }
+          // Return the file data object or null
+          return data.type === 'file_data' ? data : null;
         }),
         catchError(this.handleError)
       );
@@ -922,12 +957,174 @@ export class ApiService {
       });
     } else {
       // Regular FastAPI format
-      const endpoint = `${this.baseUrl}/logs/tail/${logType}?lines=${lines}`;
+      // If lines is -1, don't include the lines parameter to get all logs
+      const endpoint = lines === -1 ? 
+        `${this.baseUrl}/logs/tail/${logType}` : 
+        `${this.baseUrl}/logs/tail/${logType}?lines=${lines}`;
       return this.http.get<any>(endpoint, {
         headers: this.getHeaders()
       }).pipe(
         map(response => response.data || response),
         catchError(this.handleError)
+      );
+    }
+  }
+
+  /**
+   * GET /files/list - List all generated files (LoRAs and images)
+   */
+  listGeneratedFiles(): Observable<any> {
+    // NEW: Log request
+    const requestId = this.frontendLogger.logRequest(this.baseUrl, 'GET', { 
+      endpoint: '/files/list'
+    });
+    const startTime = Date.now();
+
+    if (environment.mockMode) {
+      // Mock implementation - return some sample files
+      return of({
+        lora_files: [
+          {
+            id: 'mock_lora_1',
+            filename: 'my_lora_model.safetensors',
+            path: '/workspace/output/my_lora_model.safetensors',
+            size: 144000000,
+            size_formatted: '144.0 MB',
+            created_at: new Date().toISOString(),
+            type: 'lora'
+          }
+        ],
+        image_files: [
+          {
+            id: 'mock_img_1',
+            filename: 'generated_image_001.png',
+            path: '/workspace/generated_images/generated_image_001.png',
+            size: 2048000,
+            size_formatted: '2.0 MB',
+            created_at: new Date().toISOString(),
+            type: 'image',
+            process_id: 'gen_123456'
+          }
+        ],
+        total_files: 2
+      });
+    }
+    
+    // Check if this is a RunPod endpoint
+    const isRunPodEndpoint = this.baseUrl.includes('api.runpod.ai');
+    
+    if (isRunPodEndpoint) {
+      // RunPod format - use /runsync for file listing
+      const runpodPayload = {
+        input: {
+          type: 'list_files'
+        }
+      };
+      
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${environment.runpodToken}`
+      });
+      
+      return this.http.post<any>(`${this.baseUrl}/runsync`, runpodPayload, { headers }).pipe(
+        map(response => {
+          const data = response.output || response;
+          const result = data.error ? { error: data.error } : data;
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/files/list', result, 200, Date.now() - startTime);
+          return result;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/files/list', error);
+          return this.handleError(error);
+        })
+      );
+    } else {
+      // Regular FastAPI format
+      const endpoint = `${this.baseUrl}/files/list`;
+      return this.http.get<any>(endpoint, {
+        headers: this.getHeaders()
+      }).pipe(
+        map(response => {
+          const result = response.data || response;
+          this.frontendLogger.logResponse(requestId, endpoint, result, 200, Date.now() - startTime);
+          return result;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, endpoint, error);
+          return this.handleError(error);
+        })
+      );
+    }
+  }
+
+  /**
+   * GET /files/download-direct/{file_path} - Download file directly by path
+   */
+  downloadFileDirect(filePath: string): Observable<any> {
+    // NEW: Log request
+    const requestId = this.frontendLogger.logRequest(this.baseUrl, 'GET', { 
+      endpoint: `/files/download-direct`,
+      filePath: filePath
+    });
+    const startTime = Date.now();
+
+    if (environment.mockMode) {
+      // Mock implementation
+      return of({
+        type: 'file_data',
+        filename: filePath.split('/').pop() || 'file',
+        data: 'VGhpcyBpcyBhIG1vY2sgZmlsZSBjb250ZW50', // Base64 encoded "This is a mock file content"
+        size: 1024,
+        content_type: 'application/octet-stream'
+      });
+    }
+    
+    // Check if this is a RunPod endpoint
+    const isRunPodEndpoint = this.baseUrl.includes('api.runpod.ai');
+    
+    if (isRunPodEndpoint) {
+      // RunPod format - use /runsync for direct file download
+      const runpodPayload = {
+        input: {
+          type: 'download_file',
+          file_path: filePath
+        }
+      };
+      
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${environment.runpodToken}`
+      });
+      
+      return this.http.post<any>(`${this.baseUrl}/runsync`, runpodPayload, { headers }).pipe(
+        map(response => {
+          const data = response.output || response;
+          if (data.error) {
+            throw new Error(data.error);
+          }
+          this.frontendLogger.logResponse(requestId, this.baseUrl + '/files/download-direct', data, 200, Date.now() - startTime);
+          return data;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, this.baseUrl + '/files/download-direct', error, { filePath });
+          return this.handleError(error);
+        })
+      );
+    } else {
+      // Regular FastAPI format
+      const endpoint = `${this.baseUrl}/files/download-direct`;
+      return this.http.post<any>(endpoint, { file_path: filePath }, {
+        headers: this.getHeaders()
+      }).pipe(
+        map(response => {
+          const result = response.data || response;
+          this.frontendLogger.logResponse(requestId, endpoint, result, 200, Date.now() - startTime);
+          return result;
+        }),
+        catchError(error => {
+          this.frontendLogger.logError(requestId, endpoint, error, { filePath });
+          return this.handleError(error);
+        })
       );
     }
   }
